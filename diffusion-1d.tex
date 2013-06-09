@@ -1,0 +1,212 @@
+\documentclass[ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{amsmath}
+
+\begin{document}
+
+\chapter{1D-Diffusionsgleichung mit FVM}
+
+\begin{equation} \label{base-formula}
+\alpha \frac{\partial^2 \phi}{\partial x^2} = f
+\end{equation}
+
+Bei Integralbildung über den Bereich eines Kontrollvolumens von $x_w$ bis $x_e$
+und der Anwendung des Gaußschen Integralsatzes kann das wie folgt umgeschrieben werden.
+
+\begin{align*}
+\int_{x_w}^{x_e}\alpha \frac{\partial^2 \phi}{\partial x^2} dx
+&= \alpha \frac{\partial \phi}{\partial x}\Big|_{x_w}^{x_e}\\
+&= \alpha \frac{\partial \phi}{\partial x}\Big|_{x_e}
+ - \alpha \frac{\partial \phi}{\partial x}\Big|_{x_w}\\
+&= \alpha (\phi'_e - \phi'_w)
+\end{align*}
+
+Nun müssen die auftretenden Ableitungen durch Variablenwerte in den Mittelpunkten
+der Kontrollvolumen ausgedrückt werden.
+
+\begin{equation*}
+\int_{x_w}^{x_e}f dx \approx f_P (x_e - x_w)
+\end{equation*}
+
+\begin{equation*}
+\phi'_e \approx \frac{\phi_E - \phi_P}{x_E - x_P}
+\end{equation*}
+
+\begin{equation*}
+\phi'_w \approx \frac{\phi_P - \phi_W}{x_P - x_W}
+\end{equation*}
+
+Eingesetzt in Gleichung~\ref{base-formula} ergibt dies:
+
+\begin{equation}
+\alpha \frac{\phi_E - \phi_P}{x_E - x_P} + \alpha \frac{\phi_W - \phi_P}{x_W - x_P}
+= f_P (x_e - x_w)
+\end{equation}
+
+Diese Gleichung kann in folgende Beziehung umgeformt werden.
+
+\newcommand{\diffEP}{(x_E-x_P)}
+\newcommand{\diffWP}{(x_W-x_P)}
+\newcommand{\diffew}{(x_e-x_w)}
+
+\begin{equation}
+a_P \phi_P + a_E \phi_E + a_W \phi_W = b_P
+\end{equation}
+
+Die Koeffizienten $a_i$ und $b_P$ nehmen hierbei die folgenden Werte an.
+
+\begin{align*}
+  a_P &= -\left( \frac{\alpha}{\diffEP \diffew} + \frac{\alpha}{\diffWP \diffew} \right) \\
+a_E &= \frac{\alpha}{\diffEP \diffew}\\
+a_W &= \frac{\alpha}{\diffWP \diffew}\\
+b_P &= f_P
+\end{align*}
+
+Für äquidistante Gitter ergeben sich vereinfachte Terme für die Koeffizienten $a$.
+
+\begin{align*}
+  a_W &= \frac{\alpha}{\Delta x^2} = a\\
+  a_E &= \frac{\alpha}{\Delta x^2} = a\\
+  a_P &= - \frac{2 \alpha}{\Delta x^2} = -2a
+\end{align*}
+
+Betrachtet man nun alle Kontrollvolumen, kann mit diesen Beziehungen ein 
+Gleichungssystem der Form $A\phi = b$ aufgestellt werden.
+
+\section{Randbedingungen}
+\label{sec:Randbedingungen}
+
+Es wird angenommen, das der Randwert $\phi_w= \phi^0$ gegeben ist. Damit kann die
+Ableitung $\frac{\partial \phi}{\partial x}$ wie folgt approximiert werden:
+
+\begin{equation*}
+\left(\frac{\partial \phi}{\partial x}\right)_W = \frac{\phi_P - \phi_W}{x_P - x_W} =
+  \frac{\phi_P - \phi^0}{x_P - x_w}
+\end{equation*}
+
+Die Koeffizienten für ein Randkontrollvolumen ergeben sich damit zu:
+
+\begin{align*}
+  a_W &= 0\\
+  a_P &=  -\left( \frac{\alpha}{\diffEP \diffew} + \frac{\alpha}{\diffWP \diffew} \right) \\
+  a_E &= \frac{\alpha}{\diffEP \diffew}\\
+  b_P &= f_P - \frac{\alpha}{(x_P -x_w)\diffew}
+\end{align*}
+
+beziehungsweise für den äquidistanten Fall:
+
+\begin{align*}
+  a_W &= 0\\
+  a_P &=  -\frac{3 \alpha}{\Delta x^2} = -3a\\
+  a_E &= \frac{\alpha}{\Delta x^2} = a\\
+  b_P &= f_P - \frac{\alpha}{\Delta x \cdot \frac{1}{2} \Delta x}\phi^0 = f_P - 
+  \frac{2\alpha}{\Delta x^2} \phi^0 = f_P - 2a \phi^0
+\end{align*}
+
+\chapter{Manufactured Solution}
+
+Wir wählen die folgende Lösung für $\phi$ und berechnen die Ableitungen.
+
+\begin{align*}
+  \phi(x) &= A + \sin(Bx)\\
+  \phi'(x) &= B \cos(Bx)\\
+  \phi''(x) &= -B^2\sin(Bx)
+\end{align*}
+
+Nun führen wir den zusätzlichen Quellterm $f_{ad}$ ein und setzen $\phi(x)$ ein.
+
+\begin{equation*}
+  \alpha\frac{\partial^2 \phi}{\partial x^2}-f=f_{ad}
+\end{equation*}
+
+so erhält man:
+
+\begin{equation*}
+  f_{ad} = -\alpha B^2\sin(BX)-f
+\end{equation*}
+
+Damit ergibt sich als Manufactured Solution:
+\begin{align}
+  \alpha\frac{\partial^2 \phi}{\partial x^2} &= f -\alpha B^2\sin(Bx)-f\\
+                                             &= -\alpha B^2\sin(Bx)
+\end{align}
+
+\section{Randbedingungen}
+\label{sec:Randbedingungen}
+
+Um die Konstanten $A$ und $B$ in der Manufactured Solution bestimmen zu können,
+müssen konkrete Randbedingungen für das Problem festgelegt werden. Beispielhaft
+soll das hier mit den Randwerten $\phi(0) = 1$ und $\phi(1) = 2$ geschehen.
+Damit ergeben sich die Konstanten zu $A = 1$ sowie $B = \frac{\pi}{2}$. Die 
+konstruierte Lösung $\phi(x)$ hat damit die folgende Form und der Quellterm $f$
+ergibt sich zu:
+\begin{equation*}
+  \phi(x) = 1 + \sin(\frac{\pi}{2}x)
+\end{equation*}
+\begin{equation*}
+  f=-\frac{\pi^2}{4}\sin(\frac{\pi}{2}x)
+\end{equation*}
+
+\section{Konvergenzuntersuchung}
+\label{sec:Konvergenzuntersuchung}
+
+Der Fehler $E$ wird definiert als Differenz zwischen diskreter Lösung $f(\Delta)$ sowie
+der exakten Lösung $f_{exakt}$.
+\begin{equation*}
+  E=f(\Delta) - f_{exakt}
+\end{equation*}
+
+Für finite Methoden der Ordnung $p$ sollte sich der Fehler $DE$ proportional zu
+$h^p$ verhalten. Daraus folgt mit dem Proportionalitätskoeffizienten $C$:
+
+\begin{equation*}
+  DE=f(\Delta) - f_{exakt}=C h^p + HOT
+\end{equation*}
+
+Wird nun die Gitterweite $h$ systematisch verkleinert, so lässst sich der beobachtete
+Genauigkeitsgrad $p$ wie folgt berechnen.
+
+\begin{equation}
+  p=\frac{\ln \left(\frac{DE_2}{DE_1}\right)}{\ln \left(\frac{h_2}{h_1}\right)}
+\end{equation}
+
+\chapter{Truncation Error}
+\label{cha:Truncation Error}
+
+\newcommand{\ab}{\frac{a+b}{2}}
+\newcommand{\abk}{\left(\frac{a+b}{2}\right)}
+
+Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $\ab$
+liefert:
+
+\begin{equation*}
+  f(x) = f\abk +
+  f'\abk\left(x-\ab\right) +
+  \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 + HOT
+\end{equation*}
+
+Nach Integration im Intervall $a$ bis $b$ ergibt sich:
+
+\begin{align*}
+  \int_a^b f(x) dx &= \int_a^b f\abk dx +
+  \underbrace{\int_a^b f'\abk \left( x - \ab\right) dx}_{=0} +
+  \int_a^b \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 dx + HOT\\
+  &= f\abk (b-a) + \frac{1}{6} f''\abk
+  \left[\left( b-\ab \right)^3 - \left(a-\ab\right)^3 \right] + HOT
+\end{align*}
+
+Truncation Error bei Approximation der Ableitung:
+
+\begin{equation*}
+  f(x) = f(a) + f'(a)(x-a) + \frac{1}{2} f''(x) (x-a)^2 + HOT
+\end{equation*}
+
+Daraus folgt:
+
+\begin{align*}
+  f'(a) &= \frac{f(x) - f(a)}{x-a} + \frac{f''(a)}{2(x-a)}(x-a)^2 + HOT\\
+        &= \frac{f(x) - f(a)}{x-a} + \frac{1}{2} f''(a)(x-a) + HOT
+\end{align*}
+
+\end{document}
