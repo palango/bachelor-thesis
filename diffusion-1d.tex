@@ -177,6 +177,10 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 \newcommand{\ab}{\frac{a+b}{2}}
 \newcommand{\abk}{\left(\frac{a+b}{2}\right)}
 
+\section{Quellterm}
+\label{sec:Quellterm}
+
+
 Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $\ab$
 liefert:
 
@@ -186,7 +190,7 @@ liefert:
   \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 + HOT
 \end{equation*}
 
-Nach Integration im Intervall $a$ bis $b$ ergibt sich:
+Nach Integration im Intervall $a$ bis $b$ ergibt sich für äquidistante Gitter:
 
 \begin{align*}
   \int_a^b f(x) dx &= \int_a^b f\abk dx +
@@ -196,17 +200,55 @@ Nach Integration im Intervall $a$ bis $b$ ergibt sich:
   \left[\left( b-\ab \right)^3 - \left(a-\ab\right)^3 \right] + HOT
 \end{align*}
 
-Truncation Error bei Approximation der Ableitung:
+Angewendet auf ein Kontrollvolumen ergibt sich daraus die folgende Formel:
 
 \begin{equation*}
-  f(x) = f(a) + f'(a)(x-a) + \frac{1}{2} f''(x) (x-a)^2 + HOT
+  \int_a^b f(x)dx = f_P(x_E-x_W) + \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
 \end{equation*}
 
-Daraus folgt:
+Der Truncation Error der Diskretisierung des Quelltermes lässt sich somit ablesen:
 
-\begin{align*}
-  f'(a) &= \frac{f(x) - f(a)}{x-a} + \frac{f''(a)}{2(x-a)}(x-a)^2 + HOT\\
-        &= \frac{f(x) - f(a)}{x-a} + \frac{1}{2} f''(a)(x-a) + HOT
-\end{align*}
+\begin{equation}
+  TE = \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
+\end{equation}
+
+\section{Diffusionsterme}
+\label{sec:Diffusionsterme}
+
+
+Um den Truncation Error der Diffusionsterme zu bestimmen, leiten wir die Differenzenquotienten
+für die Ableitungen erster Ordnung aus den Taylorreihendarstellungen her. Beispielhaft
+soll das anhand des östlichen Randes des Kontrollvolumens geschehen.
+
+Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
+Kontrollvolumenmittelpunkte.
+
+\begin{align}
+  \phi_e &= \phi_E + \phi'_e(x_e-x_E)+\frac{1}{2}\phi''_e(x_e-x_E)^2+HOT
+  \label{eq:taylor_eE}\\
+  \phi_e &= \phi_P + \phi'_e(x_e-x_P)+\frac{1}{2}\phi''_e(x_e-x_P)^2+HOT
+  \label{eq:taylor_eP}
+\end{align}
+
+Wird nun Gleichung~\ref{eq:taylor_eE} von Gleichung~\ref{eq:taylor_eP} subtrahiert, 
+so ergibt sich:
+
+\begin{equation*}
+  0 = \phi_P-\phi_E+\phi'_e(x_E-x_P)+
+  \frac{1}{2}\phi''_e\left({{(x_e-x_P)}^2-{(x_e-x_E)}^2}\right)+HOT
+\end{equation*}
+
+Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
+
+\begin{equation}
+  \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
+\left({\frac{{(x_e-x_E)}^2-{(x_e-x_P)}^2}{x_E-x_P}}\right)+HOT
+\end{equation}
+
+Der Truncation Error des Diffusionsterms lässt sich damit ablesen zu:
+
+\begin{equation*}
+  TE = \frac{1}{2}\phi''_e \left({\frac{{(x_e-x_E)}^2-{(x_e-x_P)}^2}{x_E-x_P}}\right)+HOT
+\end{equation*}
 
 \end{document}
