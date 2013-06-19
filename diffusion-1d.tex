@@ -3,6 +3,8 @@
 \usepackage{babel}
 \usepackage{amsmath}
 
+\usepackage[protrusion=true,expansion=true]{microtype}
+
 \begin{document}
 
 \chapter{1D-Diffusionsgleichung mit FVM}
@@ -208,11 +210,20 @@ Angewendet auf ein Kontrollvolumen ergibt sich daraus die folgende Formel:
   \int_a^b f(x)dx = f_P(x_E-x_W) + \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
 \end{equation*}
 
-Der Truncation Error der Diskretisierung des Quelltermes lässt sich somit ablesen:
+Hier muss nun die auftretende Ableitung durch einen Differenzenquotient beschriebn werden.
+
+\begin{equation*}
+  f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{equation*}
+
+Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über die
+folgende Gleichung beschrieben.
 
 \begin{equation}
-  TE = \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
+  TE = \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
 \end{equation}
+
 
 \section{Diffusionsterme}
 \label{sec:Diffusionsterme}
@@ -226,31 +237,51 @@ Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung de
 Kontrollvolumenmittelpunkte.
 
 \begin{align}
-  \phi_e &= \phi_E + \phi'_e(x_e-x_E)+\frac{1}{2}\phi''_e(x_e-x_E)^2+HOT
+  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
   \label{eq:taylor_eE}\\
-  \phi_e &= \phi_P + \phi'_e(x_e-x_P)+\frac{1}{2}\phi''_e(x_e-x_P)^2+HOT
+  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
   \label{eq:taylor_eP}
 \end{align}
 
-Wird nun Gleichung~\ref{eq:taylor_eE} von Gleichung~\ref{eq:taylor_eP} subtrahiert, 
+Wird nun Gleichung~\ref{eq:taylor_eP} von Gleichung~\ref{eq:taylor_eE} subtrahiert, 
 so ergibt sich:
 
 \begin{equation*}
-  0 = \phi_P-\phi_E+\phi'_e(x_E-x_P)+
-  \frac{1}{2}\phi''_e\left({{(x_e-x_P)}^2-{(x_e-x_E)}^2}\right)+HOT
+  \phi_E-\phi_P=\phi'_e(x_E-x_P)+
+  \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
+  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]HOT
 \end{equation*}
 
 Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
 
 \begin{equation}
   \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
-\left({\frac{{(x_e-x_E)}^2-{(x_e-x_P)}^2}{x_E-x_P}}\right)+HOT
+\left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+
+\frac{1}{6} \phi'''_e \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
 \end{equation}
 
-Der Truncation Error des Diffusionsterms lässt sich damit ablesen zu:
 
-\begin{equation*}
-  TE = \frac{1}{2}\phi''_e \left({\frac{{(x_e-x_E)}^2-{(x_e-x_P)}^2}{x_E-x_P}}\right)+HOT
-\end{equation*}
+Die westliche Seite des Kontrollvolumens kann auf die gleiche Weise hergeleitet werden.
+Damit verbleibt es, die auftretenden Ableitungen zu diskretisieren. Werden dafür
+möglichst lokale Differenzenquotienten genutzt ergeben sich die folgenden Ausdrücke.
+
+\begin{align*}
+  \phi''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right)\\
+ \phi'''_e &= \dots
+\end{align*}
+
+
+Der Truncation Error des Diffusionsterms an der östlichen Grenze des Kontrollvolumens
+lässt sich damit über folgende Gleichung beschreiben.
+
+\begin{align*}
+  {TE}_e &= \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
+&+\frac{1}{6 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
+\end{align*}
 
 \end{document}
