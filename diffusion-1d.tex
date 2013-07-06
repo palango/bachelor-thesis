@@ -176,33 +176,6 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
   p=\frac{\ln \left(\frac{DE_2}{DE_1}\right)}{\ln \left(\frac{h_2}{h_1}\right)}
 \end{equation}
 
-\scalebox{0.8}{\input{my_plot.tex}}
-
-\begin{tikzpicture}
-    \begin{axis}[
-        height=9cm,
-        width=0.9*\textwidth,
-        grid=major,
-        xlabel=$\sin x$,
-        ylabel=Test,
-    ]
-    \addplot {-x^5 - 242};
-    \addlegendentry{model}
-    \addplot coordinates {
-        (-4.77778,2027.60977)
-        (-3.55556,347.84069)
-        (-2.33333,22.58953)
-        (-1.11111,-493.50066)
-        (0.11111,46.66082)
-        (1.33333,-205.56286)
-        (2.55556,-341.40638)
-        (3.77778,-1169.24780)
-        (5.00000,-3269.56775)
-    };
-    \addlegendentry{estimate}
-    \end{axis}
-\end{tikzpicture}
-
 \begin{tikzpicture}
     \begin{axis}[
         height=8cm,
