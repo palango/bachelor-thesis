@@ -9,7 +9,7 @@
 \pgfplotsset{compat=1.8}
 
 \begin{document}
-\tableofcontents
+%\tableofcontents
 \chapter{1D-Diffusionsgleichung mit FVM}
 
 \begin{equation} \label{base-formula}
@@ -331,9 +331,45 @@ lässt sich damit über folgende Gleichung beschreiben.
 
 \begin{align*}
   {TE}_e &= \frac{1}{2 (x_E-x_P)}\left({
-\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
-&+\frac{1}{6 (x_E-x_P)}\left({
-\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+HOT
+%&+\frac{1}{6 (x_E-x_P)}\left({
+%\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
 \end{align*}
+
+Der Truncation Error im Westen ergibt sich äquivalent zu:
+
+\begin{align}
+  \phi_P &= \phi_w + \phi'_w(x_P-x_w)+\frac{1}{2}\phi''_w(x_P-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT
+  \label{eq:taylor_wP}\\
+  \phi_W &= \phi_w + \phi'_w(x_W-x_w)+\frac{1}{2}\phi''_w(x_W-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_W-x_w)^3+HOT
+  \label{eq:taylor_eP}
+\end{align}
+
+\begin{equation}
+  \phi'_w = \frac{\phi_P-\phi_W}{x_P-x_W}+\frac{1}{2}\phi''_w
+\left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+
+\frac{1}{6} \phi'''_w \left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)+HOT
+\end{equation}
+
+\begin{align*}
+  \phi''_w &= \frac{1}{(x_P-x_W)}\left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)\\
+ \phi'''_w &= \dots
+\end{align*}
+
+\begin{align*}
+  TE_w = \frac{1}{2 (x_P-x_W)} \left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
+  \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+HOT
+\end{align*}
+
+
+Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
+Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
+Kontrollvolumen am Rand angepasst werden. Es ergeben sich dafür:
+
+
 
 \end{document}
