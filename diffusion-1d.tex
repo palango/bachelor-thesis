@@ -1,12 +1,15 @@
 \documentclass[ngerman,colorback,accentcolor=tud2d]{tudreport}
 \usepackage[utf8]{inputenc}
-\usepackage{babel}
+\usepackage[ngerman]{babel}
 \usepackage{amsmath}
 
-\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
 
 \begin{document}
-
+\tableofcontents
 \chapter{1D-Diffusionsgleichung mit FVM}
 
 \begin{equation} \label{base-formula}
@@ -175,6 +178,55 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 
 \scalebox{0.8}{\input{my_plot.tex}}
 
+\begin{tikzpicture}
+    \begin{axis}[
+        height=9cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$\sin x$,
+        ylabel=Test,
+    ]
+    \addplot {-x^5 - 242};
+    \addlegendentry{model}
+    \addplot coordinates {
+        (-4.77778,2027.60977)
+        (-3.55556,347.84069)
+        (-2.33333,22.58953)
+        (-1.11111,-493.50066)
+        (0.11111,46.66082)
+        (1.33333,-205.56286)
+        (2.55556,-341.40638)
+        (3.77778,-1169.24780)
+        (5.00000,-3269.56775)
+    };
+    \addlegendentry{estimate}
+    \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$\phi$,
+    ]
+    \addplot[tud2d, mark=*] file {solution_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=Fehler,
+    ]
+    \addplot[tud2d, mark=*] file {error_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+
 \chapter{Truncation Error}
 \label{cha:Truncation Error}
 
@@ -251,7 +303,7 @@ so ergibt sich:
 \begin{equation*}
   \phi_E-\phi_P=\phi'_e(x_E-x_P)+
   \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
-  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]HOT
+  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]+HOT
 \end{equation*}
 
 Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
