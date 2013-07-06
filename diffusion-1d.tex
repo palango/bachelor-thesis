@@ -1,4 +1,4 @@
-\documentclass[ngerman,colorback,accentcolor=tud2d]{tudreport}
+\documentclass[10pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{amsmath}
@@ -222,6 +222,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         grid=major,
         xlabel=$x$,
         ylabel=Fehler,
+scaled y ticks = false,
     ]
     \addplot[tud2d, mark=*] file {error_20_aequi.txt};
     \end{axis}
@@ -368,8 +369,28 @@ Der Truncation Error im Westen ergibt sich äquivalent zu:
 
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
 Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
-Kontrollvolumen am Rand angepasst werden. Es ergeben sich dafür:
+Kontrollvolumen am Rand angepasst werden. Es ergeben sich für gegebenes $\phi_w$:
 
+\begin{equation*}
+  \phi''_{w, Rand} = \frac{1}{(x_P-x_w)}\left({
+\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)\\
+\end{equation*}
 
+Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
+durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
+
+\begin{equation}
+  \phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+\end{equation}
+
+Damit ergibt sich für $\phi_e$:
+
+\begin{equation}
+\phi_e  = \frac{1}{(x_P-x_w)}\left({
+\frac{
+  \left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+}\right)
+-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
+\end{equation}
 
 \end{document}
