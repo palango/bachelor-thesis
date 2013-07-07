@@ -246,7 +246,7 @@ Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über
 folgende Gleichung beschrieben.
 
 \begin{equation}
-  TE = \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  TE_{source} = \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
   \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
 \end{equation}
 
@@ -365,5 +365,18 @@ Damit ergibt sich für $\phi_e$:
 }\right)
 -\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
 \end{equation}
+
+Äquivalent ergibt sich $\phi''_{e, Rand}$:
+\begin{equation}
+  \phi''_{e, Rand} = \cdots
+\end{equation}
+
+
+Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von Quell-
+und Diffusionstermen zusammen:
+
+\begin{equation*}
+  TE = TE_{source} + TE_e + TE_w
+\end{equation*}
 
 \end{document}
