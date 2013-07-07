@@ -149,9 +149,10 @@ ergibt sich zu:
 \begin{equation*}
   \phi(x) = 1 + \sin(\frac{\pi}{2}x)
 \end{equation*}
-\begin{equation*}
+\begin{equation}
   f=-\frac{\pi^2}{4}\sin(\frac{\pi}{2}x)
-\end{equation*}
+  \label{eq:quellterm}
+\end{equation}
 
 \section{Konvergenzuntersuchung}
 \label{sec:Konvergenzuntersuchung}
@@ -176,6 +177,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
   p=\frac{\ln \left(\frac{DE_2}{DE_1}\right)}{\ln \left(\frac{h_2}{h_1}\right)}
 \end{equation}
 
+\begin{figure}
 \begin{tikzpicture}
     \begin{axis}[
         height=8cm,
@@ -187,7 +189,10 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
     \addplot[tud2d, mark=*] file {solution_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
+\caption{Lösung des Diffusionsproblems mit Quellterm aus Gleichung \ref{eq:quellterm}}
+\end{figure}
 
+\begin{figure}
 \begin{tikzpicture}
     \begin{axis}[
         height=8cm,
@@ -200,6 +205,10 @@ scaled y ticks = false,
     \addplot[tud2d, mark=*] file {error_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
+\caption{Fehlerverteilung der Lösung}
+\end{figure}
+
+
 
 \chapter{Truncation Error}
 \label{cha:Truncation Error}
@@ -339,6 +348,7 @@ Der Truncation Error im Westen ergibt sich äquivalent zu:
   \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+HOT
 \end{align*}
 
+\subsection{Kontrollvolumen am Rand}
 
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
 Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
@@ -346,7 +356,7 @@ Kontrollvolumen am Rand angepasst werden. Es ergeben sich für gegebenes $\phi_w
 
 \begin{equation*}
   \phi''_{w, Rand} = \frac{1}{(x_P-x_w)}\left({
-\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)\\
+\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
 \end{equation*}
 
 Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
@@ -356,21 +366,42 @@ durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
   \phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
 \end{equation}
 
-Damit ergibt sich für $\phi_e$:
+Damit ergibt sich für $\phi''_{w,Rand}$:
 
 \begin{equation}
-\phi_e  = \frac{1}{(x_P-x_w)}\left({
+  \phi''_{w,Rand}  = \frac{1}{(x_P-x_w)}\left({
 \frac{
   \left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
 }\right)
 -\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
 \end{equation}
 
-Äquivalent ergibt sich $\phi''_{e, Rand}$:
+Äquivalent ergibt sich $\phi''_{e, Rand}$ bei gegebenem $\phi_e$:
+
+\begin{equation*}
+  \phi''_{e, Rand} = \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-\phi_w}{x_e-x_w}}\right)
+\end{equation*}
+
+$\phi_w$ wird wie folgt linear interpoliert:
+
+\begin{equation*}
+  \phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+\end{equation*}
+
+Damit ergibt sich für $\phi''_{e,Rand}$:
+
 \begin{equation}
-  \phi''_{e, Rand} = \cdots
+  \phi''_{e,Rand} = \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-
+  \left({
+   \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+  }\right)
+}{x_e-x_w}}\right)
 \end{equation}
 
+\section{Truncation Error eines Kontrollvolumens}
+\label{sec:Truncation Error eines Kontrollvolumens}
 
 Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von Quell-
 und Diffusionstermen zusammen:
