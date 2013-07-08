@@ -1,0 +1,240 @@
+\documentclass[10pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+
+\begin{document}
+
+\chapter{Truncation Error}
+\label{cha:Truncation Error}
+
+\newcommand{\ab}{\frac{a+b}{2}}
+\newcommand{\abk}{\left(\frac{a+b}{2}\right)}
+
+\section{Quellterm}
+\label{sec:Quellterm}
+
+
+Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $\ab$
+liefert:
+
+\begin{equation*}
+  f(x) = f\abk +
+  f'\abk\left(x-\ab\right) +
+  \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 + HOT
+\end{equation*}
+
+Nach Integration im Intervall $a$ bis $b$ ergibt sich für äquidistante Gitter:
+
+\begin{align*}
+  \int_a^b f(x) dx &= \int_a^b f\abk dx +
+  \underbrace{\int_a^b f'\abk \left( x - \ab\right) dx}_{=0} +
+  \int_a^b \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 dx + HOT\\
+  &= f\abk (b-a) + \frac{1}{6} f''\abk
+  \left[\left( b-\ab \right)^3 - \left(a-\ab\right)^3 \right] + HOT
+\end{align*}
+
+Angewendet auf ein Kontrollvolumen ergibt sich daraus die folgende Formel:
+
+\begin{equation*}
+  \int_a^b f(x)dx = f_P(x_E-x_W) + \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
+\end{equation*}
+
+Hier muss nun die auftretende Ableitung durch einen Differenzenquotient beschriebn werden.
+
+\begin{equation*}
+  f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{equation*}
+
+Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über die
+folgende Gleichung beschrieben.
+
+\begin{equation}
+  TE_{source} = \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
+\end{equation}
+
+
+\section{Diffusionsterme}
+\label{sec:Diffusionsterme}
+
+
+Um den Truncation Error der Diffusionsterme zu bestimmen, leiten wir die Differenzenquotienten
+für die Ableitungen erster Ordnung aus den Taylorreihendarstellungen her. Beispielhaft
+soll das anhand des östlichen Randes des Kontrollvolumens geschehen.
+
+Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
+Kontrollvolumenmittelpunkte.
+
+\begin{align}
+  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
+  \label{eq:taylor_eE}\\
+  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
+  \label{eq:taylor_eP}
+\end{align}
+
+Wird nun Gleichung~\ref{eq:taylor_eP} von Gleichung~\ref{eq:taylor_eE} subtrahiert, 
+so ergibt sich:
+
+\begin{equation*}
+  \phi_E-\phi_P=\phi'_e(x_E-x_P)+
+  \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
+  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]+HOT
+\end{equation*}
+
+Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
+
+\begin{equation}
+  \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
+\left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+
+\frac{1}{6} \phi'''_e \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
+\end{equation}
+
+
+Die westliche Seite des Kontrollvolumens kann auf die gleiche Weise hergeleitet werden.
+Damit verbleibt es, die auftretenden Ableitungen zu diskretisieren. Werden dafür
+möglichst lokale Differenzenquotienten genutzt ergeben sich die folgenden Ausdrücke.
+
+\begin{align*}
+  \phi''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right)\\
+\phi'''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)
+\end{align*}
+
+
+Der Truncation Error des Diffusionsterms an der östlichen Grenze des Kontrollvolumens
+lässt sich damit über folgende Gleichung beschreiben.
+
+\begin{align*}
+  {TE}_e &= \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
+&+
+\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)\\
+&\frac{1}{6(x_E-x_P)}\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
++HOT
+\end{align*}
+
+Der Truncation Error im Westen ergibt sich äquivalent zu:
+
+\begin{align}
+  \phi_P &= \phi_w + \phi'_w(x_P-x_w)+\frac{1}{2}\phi''_w(x_P-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT
+  \label{eq:taylor_wP}\\
+  \phi_W &= \phi_w + \phi'_w(x_W-x_w)+\frac{1}{2}\phi''_w(x_W-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_W-x_w)^3+HOT
+  \label{eq:taylor_eP}
+\end{align}
+
+\begin{equation}
+  \phi'_w = \frac{\phi_P-\phi_W}{x_P-x_W}+\frac{1}{2}\phi''_w
+\left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+
+\frac{1}{6} \phi'''_w \left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)+HOT
+\end{equation}
+
+\begin{align*}
+  \phi''_w &= \frac{1}{(x_P-x_W)}\left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)\\
+ \phi'''_w &= \frac{1}{(x_P-x_W)}\left({
+\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+-\frac{1}{(x_w-x_{ww})}
+\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
+}\right)
+\end{align*}
+
+\begin{align*}
+  TE_w &= \frac{1}{2 (x_P-x_W)} \left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
+  \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)\\
+&+
+\left({
+\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+-\frac{1}{(x_w-x_{ww})}
+\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
+}\right)\\
+&\frac{1}{6(x_P-x_W)}\left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)
+  +HOT
+\end{align*}
+
+\subsection{Kontrollvolumen am Rand}
+
+Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
+Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
+Kontrollvolumen am Rand angepasst werden. Es ergeben sich für gegebenes $\phi_w$:
+
+\begin{equation*}
+  \phi''_{w, Rand} = \frac{1}{(x_P-x_w)}\left({
+\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
+\end{equation*}
+
+Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
+durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
+
+\begin{equation}
+  \phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+\end{equation}
+
+Damit ergibt sich für $\phi''_{w,Rand}$:
+
+\begin{equation}
+  \phi''_{w,Rand}  = \frac{1}{(x_P-x_w)}\left({
+\frac{
+  \left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+}\right)
+-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
+\end{equation}
+
+Äquivalent ergibt sich $\phi''_{e, Rand}$ bei gegebenem $\phi_e$:
+
+\begin{equation*}
+  \phi''_{e, Rand} = \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-\phi_w}{x_e-x_w}}\right)
+\end{equation*}
+
+$\phi_w$ wird wie folgt linear interpoliert:
+
+\begin{equation*}
+  \phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+\end{equation*}
+
+Damit ergibt sich für $\phi''_{e,Rand}$:
+
+\begin{equation}
+  \phi''_{e,Rand} = \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-
+  \left({
+   \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+  }\right)
+}{x_e-x_w}}\right)
+\end{equation}
+
+\section{Truncation Error eines Kontrollvolumens}
+\label{sec:Truncation Error eines Kontrollvolumens}
+
+Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von Quell-
+und Diffusionstermen zusammen:
+
+\begin{equation*}
+  TE = TE_{source} + TE_e + TE_w
+\end{equation*}
+
+
+\end{document}
