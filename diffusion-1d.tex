@@ -142,15 +142,15 @@ Damit ergibt sich als Manufactured Solution:
 
 Um die Konstanten $A$ und $B$ in der Manufactured Solution bestimmen zu können,
 müssen konkrete Randbedingungen für das Problem festgelegt werden. Beispielhaft
-soll das hier mit den Randwerten $\phi(0) = 1$ und $\phi(1) = 2$ geschehen.
-Damit ergeben sich die Konstanten zu $A = 1$ sowie $B = \frac{\pi}{2}$. Die 
+soll das hier mit den Randwerten $\phi(0) = 1$ und $\phi(1) = 1$ geschehen.
+Damit ergeben sich die Konstanten zu $A = 1$ sowie $B = \pi$. Die 
 konstruierte Lösung $\phi(x)$ hat damit die folgende Form und der Quellterm $f$
 ergibt sich zu:
 \begin{equation*}
-  \phi(x) = 1 + \sin(\frac{\pi}{2}x)
+  \phi(x) = 1 + \sin(\pi x)
 \end{equation*}
 \begin{equation}
-  f=-\frac{\pi^2}{4}\sin(\frac{\pi}{2}x)
+  f=-\pi^2 \sin(\pi x)
   \label{eq:quellterm}
 \end{equation}
 
@@ -180,7 +180,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 \begin{figure}
 \begin{tikzpicture}
     \begin{axis}[
-        height=8cm,
+        height=7cm,
         width=0.9*\textwidth,
         grid=major,
         xlabel=$x$,
@@ -195,12 +195,12 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 \begin{figure}
 \begin{tikzpicture}
     \begin{axis}[
-        height=8cm,
+        height=7cm,
         width=0.9*\textwidth,
         grid=major,
         xlabel=$x$,
         ylabel=Fehler,
-scaled y ticks = false,
+%scaled y ticks = false,
     ]
     \addplot[tud2d, mark=*] file {error_20_aequi.txt};
     \end{axis}
@@ -208,5 +208,36 @@ scaled y ticks = false,
 \caption{Fehlerverteilung der Lösung}
 \end{figure}
 
+\begin{figure}
+\begin{tikzpicture}
+    \begin{axis}[
+        height=7cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exact}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {residuum_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Residuum der Lösung}
+\end{figure}
+
+\begin{figure}
+\begin{tikzpicture}
+    \begin{axis}[
+        height=7cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=TE,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {te_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Truncation Error}
+\end{figure}
 
 \end{document}
