@@ -59,6 +59,13 @@ folgende Gleichung beschrieben.
   \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
 \end{equation}
 
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfacht sich der Term und es ergibt sich:
+
+\begin{equation*}
+  TE_{source} = \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
+\end{equation*}
 
 \section{Diffusionsterme}
 \label{sec:Diffusionsterme}
@@ -174,6 +181,38 @@ Der Truncation Error im Westen ergibt sich äquivalent zu:
   +HOT
 \end{align*}
 
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfache sich die Terme des Truncation Error. So löschen
+sich beispielsweise die quadratischen Terme gegenseitig aus. Es ergeben sich die
+folgenden Fehler:
+
+\begin{align*}
+  {TE}_e &= \left({
+\frac{1}{6\Delta x^2}
+\left({\frac{\phi_{EE}-\phi_E}{\Delta x}-\frac{\phi_E-\phi_P}{\Delta x} }\right)
+-\frac{1}{6\Delta x^2}
+\left({\frac{\phi_E-\phi_P}{\Delta x} - \frac{\phi_P-\phi_W}{\Delta x}  }\right)
+}\right)\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+&= -\frac{1}{24\Delta x}\left({
+\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)+HOT
+\end{align*}
+
+\begin{align*}
+  TE_w &=\left({
+\frac{1}{6 \Delta x^2}
+\left({\frac{\phi_E-\phi_P}{\Delta x}-\frac{\phi_P-\phi_W}{\Delta x} }\right)
+-\frac{1}{6\Delta x^2}
+\left({\frac{\phi_P-\phi_W}{\Delta x} - \frac{\phi_W-\phi_{WW}}{\Delta x}  }\right)
+}\right)
+\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+&= -\frac{1}{24 \Delta x}\left({
+\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)+HOT
+\end{align*}
+
+
+
+
 \subsection{Kontrollvolumen am Rand}
 
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
@@ -236,5 +275,18 @@ und Diffusionstermen zusammen:
   TE = TE_{source} + TE_e + TE_w
 \end{equation*}
 
+Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
+Truncation Error.
+
+\begin{align}
+  TE &= \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
+   -\frac{1}{24\Delta x}\left({
+\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)
+  -\frac{1}{24 \Delta x}\left({
+\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)\\
+&=  \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
+-\frac{1}{24\Delta x} \left({
+\phi_{EE}-2\phi_E+2\phi_W-\phi_{WW}}\right)
+\end{align}
 
 \end{document}
