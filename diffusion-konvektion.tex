@@ -240,4 +240,87 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 \caption{Truncation Error}
 \end{figure}
 
+
+
+\chapter{1D Konvektionsgleichung mit FVM}
+\label{chap:1D Konvektionsgleichung mit FVM}
+
+Hier soll nun ein Konvektionsproblem nach Gleichung~\ref{eq:konvektion} betrachtet
+werden. Hierbei wird $v$ als gegeben angenommen, da sonst ein iteratives
+Lösungsverfahren nötig wäre.
+
+\begin{equation}
+  \rho v \frac{\partial \phi}{\partial x} = f
+  \label{eq:konvektion}
+\end{equation}
+
+Gleichung~\ref{eq:konvektion} wird nun nach der finiten Volumen Methode über ein
+Kontrollvolumen $V$ integriert. Danach wendet man den Satz von Gauß an und stellt
+anschließend das Oberflächenintegral in die Summe der Integrale der Einzelflächen
+überführt.
+
+\begin{align*}
+  \int_V \rho v \frac{\partial \phi}{\partial x} dV &= \int_V f dV\\
+  \int_S \rho v \phi n_x dS &=\int_V f dV\\
+  \sum_c \int_{S_c} \rho v \phi n_{xc} dS_c &=\int_V f dV
+\end{align*}
+
+Das Integral $\int_V f dV$ kann mit der Mittelpunktsregel über den Funtionswert
+im Zentrum des Kontrollvolumens approximiert werden.
+
+\begin{equation*}
+  \int_V f dV \approx f_P (x_e-x_w)
+\end{equation*}
+
+Die Oberflächenintegrale müssen im eindimensionalen Fall für die Ost- und Westseite
+ausgewertet werden.
+
+\begin{align*}
+  \sum_c \int_{S_c} \rho v \phi n_{xc} dS_c &=
+  \int_{S_e} \rho v \phi n_{xe} dS_e +
+  \int_{S_w} \rho v \phi n_{xw} dS_w\\
+  &= \rho v \phi_e - \rho v \phi_w
+\end{align*}
+
+Die Gleichungen enthalten nun die Variablenwerte von $\phi$ an den Rändern der
+Kontrollvolumen. Da hier jedoch von einer zellenorientierten Anordnung ausgegangen
+wird, müssen diese im nächsten Schritt durch Werte in den Mittelpunkten des
+Kontrollvolumens ausgedrückt werden.
+
+\paragraph{Upwind-Verfahren}
+Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die
+von der Geschwindigkeit $v$ abhängt. Es soll hier nur erwähnt, aber im Beispiel
+nicht weiter berücksichtigt werden.
+
+\begin{equation*}
+\phi_e=\left\{\begin{array}{cl} \phi_P, & \mbox{falls }v>0\\
+\phi_E, & \mbox{falls } v<0\end{array}\right.
+\end{equation*}
+
+\paragraph{Zentraldifferenzen-Verfahren}
+Das Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
+Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonnen.
+
+\begin{equation*}
+  \phi_e \approx \phi_E\gamma_e + \phi_P (1-\gamma_e)
+\end{equation*}
+
+Der Interpolationsfaktor $\gamma_e$ ist hierbei gegeben als:
+
+\begin{equation*}
+  \gamma_e = \frac{x_e-x_E}{x_E-x_P}
+\end{equation*}
+
+\paragraph{Weitere Verfahren}
+Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
+die Variablen im Zentrum eines Kontrollvolumens.
+
+So wird beim QUICK-verfahren (Quadratic Upwind Interpolation for Convective
+Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
+zur Approximation genutzt.
+
+Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
+Ordnung zu verbinden.
+
+
 \end{document}
