@@ -199,7 +199,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         width=0.9*\textwidth,
         grid=major,
         xlabel=$x$,
-        ylabel=Fehler,
+        ylabel=$\phi - \phi_{exakt}$,
 %scaled y ticks = false,
     ]
     \addplot[tud2d, mark=*] file {error_20_aequi.txt};
@@ -215,7 +215,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         width=0.9*\textwidth,
         grid=major,
         xlabel=$x$,
-        ylabel=$A\phi_{exact}-b$,
+        ylabel=$A\phi_{exakt}-b$,
 %scaled y ticks = false,
     ]
     \addplot[tud2d, mark=*] file {residuum_20_aequi.txt};
@@ -259,28 +259,28 @@ Kontrollvolumen $V$ integriert. Danach wendet man den Satz von Gauß an und stel
 anschließend das Oberflächenintegral in die Summe der Integrale der Einzelflächen
 überführt.
 
-\begin{align*}
-  \int_V \rho v \frac{\partial \phi}{\partial x} dV &= \int_V f dV\\
-  \int_S \rho v \phi n_x dS &=\int_V f dV\\
-  \sum_c \int_{S_c} \rho v \phi n_{xc} dS_c &=\int_V f dV
-\end{align*}
+\begin{align}
+  \int_V \rho v \frac{\partial \phi}{\partial x} dV &= \int_V f dV \nonumber \\
+  \int_S \rho v \phi n_x dS &=\int_V f dV \nonumber\\
+  \sum_c \int_{S_c} \rho v \phi n_{xc} dS_c &=\int_V f dV \label{eq:base_conv_ready}
+\end{align}
 
 Das Integral $\int_V f dV$ kann mit der Mittelpunktsregel über den Funtionswert
 im Zentrum des Kontrollvolumens approximiert werden.
 
-\begin{equation*}
-  \int_V f dV \approx f_P (x_e-x_w)
-\end{equation*}
+\begin{equation}
+  \int_V f dV \approx f_P (x_e-x_w) \label{eq:source_term}
+\end{equation}
 
 Die Oberflächenintegrale müssen im eindimensionalen Fall für die Ost- und Westseite
 ausgewertet werden.
 
-\begin{align*}
+\begin{align}
   \sum_c \int_{S_c} \rho v \phi n_{xc} dS_c &=
-  \int_{S_e} \rho v \phi n_{xe} dS_e +
+  \int_{S_e} \rho v \phi n_{xe} dS_e +\nonumber
   \int_{S_w} \rho v \phi n_{xw} dS_w\\
-  &= \rho v \phi_e - \rho v \phi_w
-\end{align*}
+  &= \rho v \phi_e - \rho v \phi_w \label{eq:surface_east_west}
+\end{align}
 
 Die Gleichungen enthalten nun die Variablenwerte von $\phi$ an den Rändern der
 Kontrollvolumen. Da hier jedoch von einer zellenorientierten Anordnung ausgegangen
@@ -322,5 +322,43 @@ zur Approximation genutzt.
 Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
 Ordnung zu verbinden.
 
+\section{Gesamtgleichungssystem}
+
+Werden nun die Gleichungen \eqref{eq:surface_east_west} und \eqref{eq:source_term}
+in Gleichung~\eqref{eq:base_conv_ready} eingesetzt und das Zentraldifferenzen-Verfahren
+zur Approximation der Randvariablen genutzt, so ergibt sich:
+
+\begin{equation*}
+  \rho v \left[{
+  \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \frac{x_E-x_e}{x_E-x_P}
+  -\phi_W \frac{x_w-x_W}{x_P-x_W} - \phi_P \frac{x_P-x_w}{x_P-x_W}
+  }\right]
+  = f_P(x_e-x_w)
+\end{equation*}
+
+Diese Gleichung kann nun in die Form $a_P \phi_P + a_E \phi_E + a_W \phi_W = b_P$
+gebracht werden. Mit den Koeffizienten $a_i$ und $b_i$ aller Kontrollvolumen kann
+dann ein Gleichungssystem der Form $A\phi = b$ aufgestellt werden.
+
+Die Koeffizienten nehmen bei allgemeinen, nicht äquidistanten Gittern folgende Werte
+an:
+
+\begin{align*}
+  a_E &= \frac{\rho v}{x_e-x_w}\ \frac{x_e-x_P}{x_E-x_P}\\
+  a_W &=-\frac{\rho v}{x_e-x_w}\ \frac{x_w-x_W}{x_P-x_W}\\
+  a_P &= \frac{\rho v}{x_e-x_w} \left({\frac{x_E-x_e}{x_E-x_P}
+-\frac{x_P-x_w}{x_P-x_W}}\right)\\
+  b_P &= f_p
+\end{align*}
+
+Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
+
+\begin{align*}
+  a_E &= \frac{\rho v}{2\Delta x}\\
+  a_W &=-\frac{\rho v}{2\Delta x}\\
+  a_P &= \frac{\rho v}{\Delta x} \left({\frac{\Delta x}{2}
+-\frac{\Delta x}{2}}\right) = 0\\
+  b_P &= f_p
+\end{align*}
 
 \end{document}
