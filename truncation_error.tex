@@ -13,58 +13,59 @@
 \chapter{Truncation Error}
 \label{cha:Truncation Error}
 
-\newcommand{\ab}{\frac{a+b}{2}}
-\newcommand{\abk}{\left(\frac{a+b}{2}\right)}
-
 \section{Quellterm}
 \label{sec:Quellterm}
 
 
-Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $\ab$
+Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $x_0$
 liefert:
 
 \begin{equation*}
-  f(x) = f\abk +
-  f'\abk\left(x-\ab\right) +
-  \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 + HOT
+  f(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{1}{2} f''(x_0)(x-x_0)^2 + HOT
 \end{equation*}
 
-Nach Integration im Intervall $a$ bis $b$ ergibt sich für äquidistante Gitter:
+Nach Integration im Intervall $a$ bis $b$ ergibt sich:
 
 \begin{align*}
-  \int_a^b f(x) dx &= \int_a^b f\abk dx +
-  \underbrace{\int_a^b f'\abk \left( x - \ab\right) dx}_{=0} +
-  \int_a^b \frac{1}{2}f''\abk{\left(x-\ab\right)}^2 dx + HOT\\
-  &= f\abk (b-a) + \frac{1}{6} f''\abk
-  \left[\left( b-\ab \right)^3 - \left(a-\ab\right)^3 \right] + HOT
+  \int_a^b f(x) dx &= \int_a^b f(x_0) dx + \int_a^b f'(x_0)(x-x_0) dx
++ \int_a^b \frac{1}{2} f''(x_0)(x-x_0)^2 dx + HOT\\
+&= f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}
++ \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
 \end{align*}
 
-Angewendet auf ein Kontrollvolumen ergibt sich daraus die folgende Formel:
+Die Anwendung auf ein Kontrollvolumen mit den Randpunkten $x_e$ und
+$x_w$ sowie dem Mittelpunkt $x_P$ ergibt damit die folgende Formel:
 
 \begin{equation*}
-  \int_a^b f(x)dx = f_P(x_E-x_W) + \frac{1}{6} f''_P \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
+  \int_{x_w}^{x_e} f(x)dx = f_P(x_e-x_w)
++ \frac{1}{2} f'_P \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]
++ \frac{1}{6} f''_P \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
 \end{equation*}
 
-Hier muss nun die auftretende Ableitung durch einen Differenzenquotient beschriebn werden.
+Hier müssen nun die auftretenden Ableitungen durch einen Differenzenquotienten
+beschrieben werden.
 
-\begin{equation*}
-  f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
-\end{equation*}
+\begin{align*}
+  f'_P &=\frac{f_E-f_W}{x_E-x_W} \\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{align*}
 
 Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über die
 folgende Gleichung beschrieben.
 
-\begin{equation}
-  TE_{source} = \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
-  \left[{{(x_E-x_P)}^3-{(x_W-x_P)}^3}\right] + HOT
-\end{equation}
+\begin{align}
+  TE_{source} &=
+ \frac{f_E-f_W}{2(x_E-x_W)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
 
 \subsection{Äquidistante Gitter}
 
 Für äquidistante Gitter vereinfacht sich der Term und es ergibt sich:
 
 \begin{equation*}
-  TE_{source} = \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
+  TE_{source} = \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
 \end{equation*}
 
 \section{Diffusionsterme}
