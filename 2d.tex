@@ -1,0 +1,99 @@
+\documentclass[10pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+
+\usepackage{listings}
+\begin{document}
+
+\chapter{2D-Diffusionsgleichung für orthogonale Gitter}
+\label{chap:2D-Diffusionsgleichung}
+\newcommand{\dx}{(x_e-x_w)}
+\newcommand{\dy}{(y_n-y_s)}
+
+Es soll nun ein zweidimensionales Diffusionsproblem behandelt werden, welches durch
+Gleichung~\eqref{eq:gl_2d_konv} beschrieben werden kann.
+
+\begin{equation}
+  \alpha \frac{\partial^2\phi}{\partial x_i \partial x_i} = f
+  \label{eq:gl_2d_konv}
+\end{equation}
+
+Zur Lösung soll das Finite Volumen Verfahren eingesetzt werden. Der erste Schritt besteht
+deshalb in einer Integration über das rechteckige Kontrollvolumen $V$. Anschließend wird auf die
+entstandene Gleichung der Satz von Gauß angewendet und das Oberflächenintegral in die
+Summe der Integrale der Seitenflächen überführt.
+
+\begin{align*}
+  \alpha \frac{\partial^2\phi}{\partial x_i \partial x_i} &= f\\
+  \int_V \alpha \frac{\partial^2\phi}{\partial x_i \partial x_i} dV &= \int_V f dV\\
+  \int_S \alpha \frac{\partial \phi}{\partial x_i}n_i dS &= \int_V f dV\\
+  \sum_c \int_{S_c} \alpha \frac{\partial \phi}{\partial x_i}n_{ci} dS_c &= \int_V f dV
+\end{align*}
+
+Durch die Anwendung der Mittelpunktsregel können die beiden auftretenden Integralausdrücke
+approximiert werden, wobei $\delta S_c$ der Länge des betrachteten Abschnitts entspricht.
+
+\begin{align*}
+  \int_V f dV &\approx f_P \dx \dy\\
+  \sum_c \int_{S_c} \alpha \frac{\partial \phi}{\partial x_i}n_{ci} dS_c &\approx
+  \sum_c \alpha \left({\frac{\partial \phi}{\partial x_i}}\right)_c n_{ci} \delta S_c
+\end{align*}
+
+Werden nun die Approximationen genutzt und die Summe aufgelöst ergibt sich folgende
+Gleichung. In dieser werden dann die auftretenden Ableitungen durch zentrale
+Differenzenquotienten ersetzt.
+
+\begin{equation*}
+  \alpha \left({\frac{\partial \phi}{\partial x}}\right)_e \dy -
+  \alpha \left({\frac{\partial \phi}{\partial x}}\right)_w \dy +
+  \alpha \left({\frac{\partial \phi}{\partial y}}\right)_n \dx -
+  \alpha \left({\frac{\partial \phi}{\partial y}}\right)_s \dx =
+  f_P \dx \dy
+\end{equation*}
+
+\begin{equation*}
+  \alpha \frac{\phi_E-\phi_P}{x_E-x_P} \dy -
+  \alpha \frac{\phi_P-\phi_W}{x_P-x_W} \dy +
+  \alpha \frac{\phi_N-\phi_P}{y_N-y_P} \dx -
+  \alpha \frac{\phi_P-\phi_S}{y_P-y_S} \dx =
+  f_P \dx \dy
+\end{equation*}
+
+Diese Gleichung kann nun in die Form
+$a_P\phi_P +a_E\phi_E +a_W\phi_W +a_N\phi_N +a_S\phi_S =b_P$
+gebracht werden, welche für das spätere Aufstellen des Gesamtgleichungssystems
+hilfreich sein wird. Es ergeben sich dafür die folgenden Koeffizienten.
+
+\begin{align*}
+  a_P &= -\frac{\alpha}{\dx} \left({\frac{1}{x_E-x_P} + \frac{1}{x_P-x_W}}\right)
+  -\frac{\alpha}{\dy} \left({\frac{1}{(y_N-y_P} + \frac{1}{y_P-y_S}}\right)\\
+  &= -a_E-a_W-a_N-a_S\\
+  a_E &= \frac{\alpha}{(x_E-x_P)\dx} \\
+  a_W &= \frac{\alpha}{(x_P-x_W)\dx} \\
+  a_N &= \frac{\alpha}{(y_N-y_P)\dy} \\
+  a_S &= \frac{\alpha}{(y_P-y_S)\dy} \\
+  b_P &=f_P
+\end{align*}
+
+Für äquidistante Gitter ergibt sich:
+
+\begin{align*}
+  a_P &= -\frac{2 \alpha}{\Delta x^2} -\frac{2 \alpha}{\Delta y^2}\\
+  a_E &= \frac{\alpha}{\Delta x^2} \\
+  a_W &= \frac{\alpha}{\Delta x^2} \\
+  a_N &= \frac{\alpha}{\Delta y^2} \\
+  a_S &= \frac{\alpha}{\Delta y^2} \\
+  b_P &=f_P
+\end{align*}
+
+
+
+\chapter{2D-Konvektionsgleichung für orthogonale Gitter}
+
+\end{document}
