@@ -224,23 +224,6 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
 \caption{Residuum der Lösung}
 \end{figure}
 
-\begin{figure}
-\begin{tikzpicture}
-    \begin{axis}[
-        height=7cm,
-        width=0.9*\textwidth,
-        grid=major,
-        xlabel=$x$,
-        ylabel=TE,
-%scaled y ticks = false,
-    ]
-    \addplot[tud2d, mark=*] file {te_20_aequi.txt};
-    \end{axis}
-\end{tikzpicture}
-\caption{Truncation Error}
-\end{figure}
-
-
 
 \chapter{1D Konvektionsgleichung mit FVM}
 \label{chap:1D Konvektionsgleichung mit FVM}
@@ -360,5 +343,37 @@ Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
 -\frac{\Delta x}{2}}\right) = 0\\
   b_P &= f_p
 \end{align*}
+
+\section{Randbedingungen}
+
+Als Randbedingungen des Problems sollen $\phi_e = \phi^0$ und $\phi_w = \phi^1$ für die jeweiligen
+Ränder gegeben sein. Bei Betrachtung von Gleichung~\eqref{eq:surface_east_west}
+fällt auf, das für die Randkontrollvolumen nur noch eine Zentraldifferenz eingesetzt
+werden muss. Es ergibt sich für den östlichen Rand die folgende Formel und die
+Koeffizienten:
+
+\begin{equation*}
+  \rho v \left[{
+  \phi^0  -\phi_W \frac{x_w-x_W}{x_P-x_W} - \phi_P \frac{x_P-x_w}{x_P-x_W}
+  }\right]
+  = f_P(x_e-x_w)
+\end{equation*}
+
+\begin{align*}
+  a_E &= 0\\
+  a_W &= -\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_w}{x_P-x_W}\\
+  a_P &= -\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_W}{x_P-x_W}\\
+  b_P &= f_P - \frac{\rho v}{x_e-x_w} \phi^0
+\end{align*}
+
+Beziehungsweise für äquidistante Gitter:
+
+\begin{align*}
+  a_E &= 0\\
+  a_W &=-\frac{\rho v}{2\Delta x}\\
+  a_P &=-\frac{\rho v}{2 \Delta x}\\
+  b_P &= f_p- \frac{\rho v}{\Delta x}\phi^0
+\end{align*}
+
 
 \end{document}

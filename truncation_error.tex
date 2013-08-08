@@ -8,10 +8,11 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.8}
 
+\usepackage{listings}
 \begin{document}
 
 \chapter{Truncation Error}
-\label{cha:Truncation Error}
+\label{cha:Truncation_Error}
 
 \section{Quellterm}
 \label{sec:Quellterm}
@@ -55,7 +56,7 @@ folgende Gleichung beschrieben.
 
 \begin{align}
   TE_{source} &=
- \frac{f_E-f_W}{2(x_E-x_W)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\\
+ \frac{f_E-f_W}{2(x_E-x_W)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
 &+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
   \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
 \end{align}
@@ -88,7 +89,7 @@ Kontrollvolumenmittelpunkte.
   \label{eq:taylor_eP}
 \end{align}
 
-Wird nun Gleichung~\ref{eq:taylor_eP} von Gleichung~\ref{eq:taylor_eE} subtrahiert, 
+Wird nun Gleichung~\eqref{eq:taylor_eP} von Gleichung~\eqref{eq:taylor_eE} subtrahiert, 
 so ergibt sich:
 
 \begin{equation*}
@@ -141,14 +142,12 @@ lässt sich damit über folgende Gleichung beschreiben.
 
 Der Truncation Error im Westen ergibt sich äquivalent zu:
 
-\begin{align}
+\begin{align*}
   \phi_P &= \phi_w + \phi'_w(x_P-x_w)+\frac{1}{2}\phi''_w(x_P-x_w)^2
-  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT
-  \label{eq:taylor_wP}\\
+  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT\\
   \phi_W &= \phi_w + \phi'_w(x_W-x_w)+\frac{1}{2}\phi''_w(x_W-x_w)^2
   +\frac{1}{6}\phi'''_w(x_W-x_w)^3+HOT
-  \label{eq:taylor_eP}
-\end{align}
+\end{align*}
 
 \begin{equation}
   \phi'_w = \frac{\phi_P-\phi_W}{x_P-x_W}+\frac{1}{2}\phi''_w
@@ -212,8 +211,6 @@ folgenden Fehler:
 \end{align*}
 
 
-
-
 \subsection{Kontrollvolumen am Rand}
 
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
@@ -266,6 +263,24 @@ Damit ergibt sich für $\phi''_{e,Rand}$:
 }{x_e-x_w}}\right)
 \end{equation}
 
+
+
+\section{Konvektionsterme}
+
+\begin{align}
+  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
+  \label{eq:taylor_konv_eE}\\
+  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
+  \label{eq:taylor_konv_eP}
+\end{align}
+
+Werden die Gleichungen~\eqref{eq:taylor_konv_eE} und \eqref{eq:taylor_konv_eP} addiert,
+durch zwei dividiert und nach $\phi_e$ umgestellt
+
+
+
 \section{Truncation Error eines Kontrollvolumens}
 \label{sec:Truncation Error eines Kontrollvolumens}
 
@@ -277,17 +292,57 @@ und Diffusionstermen zusammen:
 \end{equation*}
 
 Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
-Truncation Error.
+Truncation Error. Wichtig ist es, hier die durch den Gauß'schen Integralsatz 
+entstehenden Vorzeichen mit zu beachten.
 
 \begin{align}
-  TE &= \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
+  TE &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
    -\frac{1}{24\Delta x}\left({
 \phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)
-  -\frac{1}{24 \Delta x}\left({
-\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)\\
-&=  \frac{\Delta x}{3} \left({f_E-2f_P+f_W}\right)
--\frac{1}{24\Delta x} \left({
-\phi_{EE}-2\phi_E+2\phi_W-\phi_{WW}}\right)
+  +\frac{1}{24 \Delta x}\left({
+\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)
 \end{align}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=7cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=TE,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {te_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Truncation Error}
+\end{figure}
+
+\section{Randwerte}
+\label{sec:Randwerte}
+
+Für die Auswertung der Ableitungen an Randpunkten ist es nicht möglich zentrale Differenzenquotienten
+zu finden, da man dazu Punkte außerhalb des betrachteten Gebietes einbeziehen müsste.
+
+Stattdessen erstellt man für die Randpunkte Interpolationspolynome und leitet diese ab.
+Sie können dann einfach an den gewünschten Punkten ausgewertet werden.
+
+Will man eine zweite Ableitung diskretisieren, so muss das Interpolationspolynom
+ebensfalls die Ordnung 2 haben, um genügend Ableitungen zur Verfügung zu stellen.
+Verallgemeinert bedeutet dies, dass für eine n-te Ableitung ein Polynom vom Grad n
+aufgestellt werden muss.
+
+Das Aufstellen der Polynome kann zum Beispiel über die Lagrange-Formel erfolgen.
+Für Polynomgrade größer zwei ist es sinnvoll ein CAS-System zur Berechnung zu verwenden.
+Ein möglicher Weg soll hier für das Programmpaket Maxima aufgezeigt werden.
+
+\begin{lstlisting}
+  load(interpol);
+  data: [[a, fa], [b, fb], [c, fc]];
+  poly: lagrange(data);
+  d_poly: diff(poly, x);
+  
+\end{lstlisting}
 
 \end{document}
