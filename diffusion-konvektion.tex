@@ -290,9 +290,27 @@ Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonne
 
 Der Interpolationsfaktor $\gamma_e$ ist hierbei gegeben als:
 
-\begin{equation*}
-  \gamma_e = \frac{x_e-x_E}{x_E-x_P}
-\end{equation*}
+\begin{equation}
+  \gamma_e = \frac{x_e-x_P}{x_E-x_P}
+  \label{eq:cds_faktor}
+\end{equation}
+
+\paragraph{``Flux-Blending''-Verfahren}
+
+Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
+Ordnung zu verbinden. So hat das UDS-Verfahren einen Interpolationsfehler erster Ordnung,
+während das CDS-Verfahren zu numerischen Oszillationen neigt.
+
+Beim Flux-Blending werden nun beide Verfahren gewichtet zusammengeführt. Der Gewichtungsfaktor
+wird hierbei $\beta$ genannt. Gilt $\beta = 1$, so ergibt sich das CDS-Verfahren, für
+$\beta = 0$ das UDS-Verfahren.
+
+\begin{equation}
+  \phi_e \approx (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS}
+  \label{eq:flux_blending}
+\end{equation}
+
+
 
 \paragraph{Weitere Verfahren}
 Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
@@ -302,19 +320,15 @@ So wird beim QUICK-verfahren (Quadratic Upwind Interpolation for Convective
 Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
 zur Approximation genutzt.
 
-Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
-Ordnung zu verbinden.
-
-\section{Gesamtgleichungssystem}
+\section{Gesamtgleichungssystem CDS}
 
 Werden nun die Gleichungen \eqref{eq:surface_east_west} und \eqref{eq:source_term}
 in Gleichung~\eqref{eq:base_conv_ready} eingesetzt und das Zentraldifferenzen-Verfahren
 zur Approximation der Randvariablen genutzt, so ergibt sich:
 
 \begin{equation*}
-  \rho v \left[{
-  \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \frac{x_E-x_e}{x_E-x_P}
-  -\phi_W \frac{x_w-x_W}{x_P-x_W} - \phi_P \frac{x_P-x_w}{x_P-x_W}
+  \rho v \left[{\phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \frac{x_E-x_e}{x_E-x_P}
+  -\phi_W \frac{x_P-x_w}{x_P-x_W} - \phi_P \frac{x_w-x_W}{x_P-x_W}
   }\right]
   = f_P(x_e-x_w)
 \end{equation*}
@@ -328,9 +342,9 @@ an:
 
 \begin{align*}
   a_E &= \frac{\rho v}{x_e-x_w}\ \frac{x_e-x_P}{x_E-x_P}\\
-  a_W &=-\frac{\rho v}{x_e-x_w}\ \frac{x_w-x_W}{x_P-x_W}\\
+  a_W &=-\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_w}{x_P-x_W}\\
   a_P &= \frac{\rho v}{x_e-x_w} \left({\frac{x_E-x_e}{x_E-x_P}
--\frac{x_P-x_w}{x_P-x_W}}\right)\\
+-\frac{x_w-x_W}{x_P-x_W}}\right)\\
   b_P &= f_p
 \end{align*}
 
@@ -354,7 +368,7 @@ Koeffizienten:
 
 \begin{equation*}
   \rho v \left[{
-  \phi^0  -\phi_W \frac{x_w-x_W}{x_P-x_W} - \phi_P \frac{x_P-x_w}{x_P-x_W}
+  \phi^0  -\phi_W \frac{x_P-x_w}{x_P-x_W} - \phi_P \frac{x_w-x_W}{x_P-x_W}
   }\right]
   = f_P(x_e-x_w)
 \end{equation*}
@@ -362,7 +376,7 @@ Koeffizienten:
 \begin{align*}
   a_E &= 0\\
   a_W &= -\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_w}{x_P-x_W}\\
-  a_P &= -\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_W}{x_P-x_W}\\
+  a_P &= -\frac{\rho v}{x_e-x_w}\ \frac{x_w-x_W}{x_P-x_W}\\
   b_P &= f_P - \frac{\rho v}{x_e-x_w} \phi^0
 \end{align*}
 
@@ -375,5 +389,67 @@ Beziehungsweise für äquidistante Gitter:
   b_P &= f_p- \frac{\rho v}{\Delta x}\phi^0
 \end{align*}
 
+
+
+
+
+
+\section{Gesamtgleichungssystem ``Flux-Blending''}
+
+Werden die Vorschriften von UDS- und CDS-Verfahren in Gleichung~\eqref{eq:flux_blending}
+eingesetzt sowie der Interpolationsfaktor~$\gamma_e$ aus Gleichung~\eqref{eq:cds_faktor} genutzt, so ergibt sich:
+
+\begin{align}
+  \phi_e &= (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS} \nonumber\\
+         &= (1-\beta)\phi_P + \beta \left({\phi_E\gamma_e + \phi_P (1-\gamma_e)}\right) \nonumber\\
+         &= (1-\beta \gamma) \phi_P + \beta \gamma \phi_E\\
+         &= \left({1-\beta \frac{x_e-x_P}{x_E-x_P}}\right) \phi_P + \beta \frac{x_e-x_P}{x_E-x_P} \phi_E
+\end{align}
+
+Für $\phi_w$ ergibt sich auf gleiche Weise:
+
+\begin{align}
+  \phi_w &= (1-\beta)\phi_w^{UDS} + \beta \phi_w^{CDS} \nonumber\\
+         &= (1-\beta)\phi_W + \beta \left({\phi_W \gamma_w + \phi_P (1-\gamma_w)}\right) \nonumber\\
+         &= (1-\beta +\beta \gamma_w)\phi_W + \beta (1-\gamma_w)\phi_P\\
+         &= \left({1-\beta + \beta \frac{x_P-x_w}{x_P-x_W}}\right) \phi_W + \beta \frac{x_w-x_W}{x_P-x_W} \phi_P
+\end{align}
+
+Werden nun die Gleichungen \eqref{eq:surface_east_west} und \eqref{eq:source_term}
+in Gleichung~\eqref{eq:base_conv_ready} eingesetzt sowie $\phi_e$ und $\phi_w$ über
+die oben hergeleiteten Approximationen ersetzt, ergibt sich folgende Gleichung.
+
+\begin{equation*}
+  \rho v \left[{
+    \left({1-\beta \frac{x_e-x_P}{x_E-x_P}}\right) \phi_P + \beta \frac{x_e-x_P}{x_E-x_P} \phi_E
+    -\left({1-\beta + \beta \frac{x_P-x_w}{x_P-x_W}}\right) \phi_W + \beta \frac{x_w-x_W}{x_P-x_W} \phi_P
+  }\right]
+  = f_P(x_e-x_w)
+\end{equation*}
+
+Diese Gleichung kann nun in die Form $a_P \phi_P + a_E \phi_E + a_W \phi_W = b_P$
+gebracht werden. Mit den Koeffizienten $a_i$ und $b_i$ aller Kontrollvolumen kann
+dann ein Gleichungssystem der Form $A\phi = b$ aufgestellt werden.
+
+Die Koeffizienten nehmen bei allgemeinen, nicht äquidistanten Gittern folgende Werte
+an:
+
+\begin{align*}
+  a_E &= \frac{\rho v \beta}{x_e-x_w}\ \frac{x_e-x_P}{x_E-x_P}\\
+  a_W &=-\frac{\rho v}{x_e-x_w}\ \left({1-\beta + \beta \frac{x_P-x_w}{x_P-x_W}}\right)\\
+  a_P &= \frac{\rho v}{x_e-x_w} \left({
+  \left({1-\beta \frac{x_e-x_P}{x_E-x_P}}\right)+ \beta \frac{x_w-x_W}{x_P-x_W} 
+  }\right)\\
+  b_P &= f_p
+\end{align*}
+
+Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
+
+\begin{align*}
+  a_E &= \frac{\rho v \beta}{2\Delta x}\\
+  a_W &=-\frac{\rho v}{\Delta x}\left({1-\frac{\beta}{2} }\right)\\
+  a_P &= \frac{\rho v}{\Delta x}\\
+  b_P &= f_p
+\end{align*}
 
 \end{document}
