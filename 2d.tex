@@ -92,6 +92,43 @@ Für äquidistante Gitter ergibt sich:
   b_P &=f_P
 \end{align*}
 
+\section{Randbedingungen}
+\label{sec:Randbedingungen}
+
+Als Randbedingungen sollen wiederum Dirichlet-Randbedingungen gelten. Die Herleitung
+soll hier beispielhaft für den östlichen Rand erfolgen.
+Die anderen Seiten können auf gleiche Art und Weise hergeleitet werden.
+
+Aus der Dirichlet-Randbedingung $\phi_e = \phi^0$ lässt sich nun die Ableitung
+$\left({\frac{\partial \phi}{\partial x}}\right)_e$ schreiben als:
+
+\begin{equation}
+  \left({\frac{\partial \phi}{\partial x}}\right)_e =
+  \frac{\phi_E-\phi_P}{x_E-x_P} = \frac{\phi^0-\phi_P}{x_e-x_P}
+\end{equation}
+
+Die Koeffizienten ergeben sich damit zu:
+
+\begin{align*}
+  a_P &= -\frac{\alpha}{\dx} \left({\frac{1}{x_e-x_P} + \frac{1}{x_P-x_W}}\right)
+  -\frac{\alpha}{\dy} \left({\frac{1}{(y_N-y_P} + \frac{1}{y_P-y_S}}\right)\\
+  a_E &= 0 \\
+  a_W &= \frac{\alpha}{(x_P-x_W)\dx} \\
+  a_N &= \frac{\alpha}{(y_N-y_P)\dy} \\
+  a_S &= \frac{\alpha}{(y_P-y_S)\dy} \\
+  b_P &=f_P- \frac{1}{(x_e-x_P)(x_e-x_w)} \phi^0
+\end{align*}
+
+Für äquidistante Gitter ergibt sich:
+
+\begin{align*}
+  a_P &= -\frac{3 \alpha}{\Delta x^2} -\frac{2 \alpha}{\Delta y^2}\\
+  a_E &= 0 \\
+  a_W &= \frac{\alpha}{\Delta x^2} \\
+  a_N &= \frac{\alpha}{\Delta y^2} \\
+  a_S &= \frac{\alpha}{\Delta y^2} \\
+  b_P &=f_P-\frac{2}{\Delta x^2} \phi^0
+\end{align*}
 
 
 \chapter{2D-Konvektionsgleichung für orthogonale Gitter}

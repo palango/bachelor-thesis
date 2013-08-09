@@ -267,18 +267,55 @@ Damit ergibt sich für $\phi''_{e,Rand}$:
 
 \section{Konvektionsterme}
 
+\subsection{CDS-Verfahren}
+Entwickelt man die Taylorreihe von $\phi$ um den Punkt $x_P$ und wertet sie anschließend
+an den Punkten $x_e$ und $x_E$ aus, so erhält man folgende Gleichungen.
+
 \begin{align}
-  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
-  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
-  \label{eq:taylor_konv_eE}\\
-  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
-  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
-  \label{eq:taylor_konv_eP}
+  \phi_e &= \phi_P + \phi'_P(x_e-x_P)+\frac{1}{2}\phi''_P(x_e-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_e-x_P)^3+HOT
+  \label{eq:taylor_konv_eP}\\
+  \phi_E &= \phi_P + \phi'_P(x_E-x_P)+\frac{1}{2}\phi''_P(x_E-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_E-x_P)^3+HOT
+  \label{eq:taylor_konv_eE}
 \end{align}
 
-Werden die Gleichungen~\eqref{eq:taylor_konv_eE} und \eqref{eq:taylor_konv_eP} addiert,
-durch zwei dividiert und nach $\phi_e$ umgestellt
+Werden die Gleichungen~\eqref{eq:taylor_konv_eE} und \eqref{eq:taylor_konv_eP} nun
+voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich:
 
+\begin{align*}
+  \frac{\phi_e}{x_e-x_P} &= \frac{\phi_E}{x_E-x_P} + \frac{\phi_P}{x_e-x_P} -
+  \frac{\phi_P}{x_E-x_P} + \frac{1}{2} \phi''_P \left({(x_e-x_P)-(x_E-x_P)}\right)
+  + \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)\\
+  \phi_e &= \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \left({1-\frac{x_e-x_P}{x_E-x_P} }\right)
+  + \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)
+  + \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)\\
+  \phi_e &= \phi_E \gamma_e + \phi_P (1-\gamma_e)+ \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)
+  + \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{align*}
+
+Der Truncation Error lässt sich damit ablesen zu:
+
+\begin{equation}
+  TE_{CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{equation}
+
+
+\subsection{UDS-Verfahren}
+
+Wertet man die Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_e$
+aus, so ergibt sich:
+
+\begin{equation*}
+  \phi_e = \phi_P +(x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
+\end{equation*}
+
+Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_e$ mit $\phi_P$
+gleichsetzt, lässt sich der Truncation Error hier direkt ablesen.
+
+\begin{equation}
+  TE_{UDS} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P
+\end{equation}
 
 
 \section{Truncation Error eines Kontrollvolumens}
