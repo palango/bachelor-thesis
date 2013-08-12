@@ -296,9 +296,37 @@ voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich:
 
 Der Truncation Error lässt sich damit ablesen zu:
 
-\begin{equation}
-  TE_{CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
-\end{equation}
+\begin{equation*}
+  TE_{e, CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{equation*}
+
+
+Hier müssen nun wiederum die auftretenden Ableitungen diskretisiert werden.
+
+\begin{align}
+  \phi'_P &= \frac{\phi_E-\phi_W}{x_E-x_W}\\
+  \phi''_P &= \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)\\
+  \phi'''_P &= \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right)
+\end{align}
+
+Der diskretisierte Truncation Error ergibt sich damit zu:
+
+\begin{align}
+  TE_{e, CDS} &=  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E)(x_e-x_P) \nonumber \\
+  &+
+ \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right) \nonumber \\
+  &\frac{1}{6} \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{align}
+
+
 
 
 \subsection{UDS-Verfahren}
@@ -313,9 +341,37 @@ aus, so ergibt sich:
 Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_e$ mit $\phi_P$
 gleichsetzt, lässt sich der Truncation Error hier direkt ablesen.
 
+\begin{equation*}
+  TE_{e, UDS} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P
+\end{equation*}
+
+Mit den diskretisierten Ableitungen von oben ergibt sich damit:
+
 \begin{equation}
-  TE_{UDS} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P
+  TE_{e, UDS} = (x_e-x_P) \frac{\phi_E-\phi_W}{x_E-x_W}+
+  \frac{(x_e-x_P)^2}{2(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)
 \end{equation}
+
+
+
+\subsection{``Flux-Blending''-Verfahren}
+
+Das Flux-Blending-Verfahren setzt sich aus UDS- und CDS-Verfahren zusammen. Beide
+Verfahren werden dabei über den Faktor $\beta$ gewichtet.
+
+\begin{equation*}
+\phi_e \approx (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS} 
+\end{equation*}
+
+Aufgrund dessen ist es möglich den Truncation Error des Flux-Blending-Verfahrens aus
+den vorangegenagen Betrachtungen zu UDS- und CDS-Verfahren herzuleiten.
+Dabei werden Die Abbruchfehler der einzelnen Verfahren ebenso über $\beta$ gewichtet.
+
+\begin{equation}
+  TE_{e, Flux} = (1-\beta) TE_{e, UDS} + \beta TE_{e, CDS}
+\end{equation}
+
 
 
 \section{Truncation Error eines Kontrollvolumens}

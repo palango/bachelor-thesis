@@ -452,4 +452,30 @@ Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
   b_P &= f_p
 \end{align*}
 
+Hier ist auch eine gute Überprüfung der Ergebnisse möglich. Wie oben beschrieben
+müssen sich für $\beta = 1$ für das ``Flux-Blending''-Verfahren die gleichen
+Koeffizienten wie beim CDS-Verfahren ergeben. Einsetzen und ein Vergleich bestätigen dies.
+
+\subsection{Randbedingungen}
+
+\paragraph{Östlicher Rand}
+
+\begin{align*}
+  a_E &= 0\\
+  a_W &=-\frac{\rho v}{x_e-x_w}\ \left({1-\beta + \beta \frac{x_P-x_w}{x_P-x_W}}\right)\\
+  a_P &=-\frac{\rho v}{x_e-x_w} \left({\beta \frac{x_w-x_W}{x_P-x_W}}\right)\\
+  b_P &= f_p-\frac{\rho v}{x_e-x_w} \phi^0
+\end{align*}
+
+
+\paragraph{Westlicher Rand}
+
+\begin{align*}
+  a_E &= \frac{\rho v \beta}{x_e-x_w}\ \frac{x_e-x_P}{x_E-x_P}\\
+  a_W &=0\\
+  a_P &= \frac{\rho v}{x_e-x_w} \left({1-\beta \frac{x_e-x_P}{x_E-x_P}}\right)\\
+  b_P &= f_p+\frac{\rho v}{x_e-x_w} \phi^0
+\end{align*}
+
+
 \end{document}
