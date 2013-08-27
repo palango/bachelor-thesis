@@ -69,6 +69,55 @@ Für äquidistante Gitter vereinfacht sich der Term und es ergibt sich:
   TE_{source} = \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
 \end{equation*}
 
+\subsection{Randkontrollvolumen}
+
+\paragraph{Westrand}
+
+%Mit der Interpolation:
+
+%\begin{equation}
+  %\phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+%\end{equation}
+
+\begin{align*}
+  f'_P &=\frac{f_e-f_w}{x_e-x_w}\\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_w}{x_P-x_w}\right)
+\end{align*}
+
+\begin{align}
+  TE_{source, W-Rand} &=
+ \frac{f_e-f_w}{2(x_e-x_w)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_w}{x_P-x_w}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
+
+\begin{equation*}
+  TE_{source, W-Rand, äquidistant} = \frac{\Delta x}{24} \left({f_E-3f_P+2f_w}\right)
+\end{equation*}
+
+
+\paragraph{Ostrand}
+
+\begin{align*}
+  f'_P &=\frac{f_e-f_w}{x_e-x_w}\\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_e-f_P}{x_e-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{align*}
+
+\begin{align}
+  TE_{source, E-Rand} &=
+ \frac{f_e-f_w}{2(x_e-x_w)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_e-f_P}{x_e-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
+
+\begin{equation*}
+  TE_{source, E-Rand, äquidistant} = \frac{\Delta x}{24} \left({2f_e-3f_P+f_W}\right)
+\end{equation*}
+
+
+
+
+
 \section{Diffusionsterme}
 \label{sec:Diffusionsterme}
 
@@ -213,11 +262,15 @@ folgenden Fehler:
 
 \subsection{Kontrollvolumen am Rand}
 
-\paragraph{Westlicher Rand}
 
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
 Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
-Kontrollvolumen am Rand angepasst werden. Es ergeben sich für gegebenes $\phi_w$:
+Kontrollvolumen am Rand angepasst werden.
+
+\paragraph{Westlicher Rand}
+
+Es ergeben sich für gegebenes $\phi_w$:
+
 
 \begin{equation*}
   \phi''_{w, W-Rand} = \frac{1}{(x_P-x_w)}\left({
@@ -274,8 +327,8 @@ Damit ergibt sich für $\phi''_{w,Rand}$und $\phi'''_{w, Rand}$:
   }\right)
 \end{align}
 
-\paragraph{Östlicher Rand}
 
+\paragraph{Östlicher Rand}
 Äquivalent ergibt sich $\phi''_{e, E-Rand}$ bei gegebenem $\phi_e$:
 
 \begin{align*}
@@ -326,6 +379,25 @@ Damit ergibt sich für $\phi''_{e,Rand}$:
     \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
     }\right)
   }\right)
+\end{align}
+
+
+\subsubsection{Äquidistante Gitter}
+
+\paragraph{Westlicher Rand}
+
+\begin{align}
+  \phi''_{w, W-Rand} &= \frac{1}{\Delta x^2} (\phi_E-3\phi_P+2\phi_w)\\
+  \phi'''_{w, W-Rand} &= 0\\
+  \phi'''_{e, W-Rand} &= \frac{1}{\Delta x^3} (\phi_{EE} -3\phi_E + 4\phi_P -2\phi_w)
+\end{align}
+
+\paragraph{Östlicher Rand}
+
+\begin{align}
+  \phi''_{e, E-Rand} &= \frac{1}{\Delta x^2} (\phi_W-3\phi_P+2\phi_e)\\
+  \phi'''_{e, E-Rand} &= 0\\
+  \phi'''_{w, E-Rand} &= \frac{1}{\Delta x^3} (-\phi_{WW} +3\phi_W - 4\phi_P +2\phi_e)
 \end{align}
 
 
@@ -446,7 +518,7 @@ Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von
 und Diffusionstermen zusammen:
 
 \begin{equation*}
-  TE = TE_{source} + TE_e + TE_w
+  TE = TE_{source} - TE_e - TE_w
 \end{equation*}
 
 Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
@@ -455,9 +527,9 @@ entstehenden Vorzeichen mit zu beachten.
 
 \begin{align}
   TE &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
-   -\frac{1}{24\Delta x}\left({
+   +\frac{1}{24\Delta x}\left({
 \phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)
-  +\frac{1}{24 \Delta x}\left({
+  -\frac{1}{24 \Delta x}\left({
 \phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)
 \end{align}
 
