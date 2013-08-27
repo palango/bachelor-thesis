@@ -1,0 +1,176 @@
+\documentclass[10pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3}
+
+\begin{document}
+
+\chapter{Diffusion}
+\section{Testfunktion 1}
+
+$1 + \sin(\pi x)$
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$\phi$,
+    ]
+    \addplot[tud2d, mark=*] file {solution_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Lösung des Diffusionsproblems}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$\phi - \phi_{exakt}$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {error_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Fehlerverteilung der Lösung}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exakt}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {residuum_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Residuum der Lösung}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exakt}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {te_20_aequi.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Truncation Error Lösung}
+\end{figure}
+
+
+
+
+
+
+\newpage
+\pagebreak
+\pagebreak
+
+\section{Testfunktion 2}
+
+$\cos(\pi x)-1$
+
+
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$\phi$,
+    ]
+    \addplot[tud2d, mark=*] file {solution_20_aequi_cos.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Lösung des Diffusionsproblems}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$\phi - \phi_{exakt}$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {error_20_aequi_cos.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Fehlerverteilung der Lösung}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exakt}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {residuum_20_aequi_cos.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Residuum der Lösung}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exakt}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {residuum_20_aequi_cos_without_border.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Residuum der Lösung (ohne Sprünge am Rand)}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \begin{axis}[
+        height=8cm,
+        width=0.9*\textwidth,
+        grid=major,
+        xlabel=$x$,
+        ylabel=$A\phi_{exakt}-b$,
+%scaled y ticks = false,
+    ]
+    \addplot[tud2d, mark=*] file {te_20_aequi_cos.txt};
+    \end{axis}
+\end{tikzpicture}
+\caption{Truncation Error Lösung}
+\end{figure}
+
+
+\end{document}
