@@ -213,14 +213,40 @@ folgenden Fehler:
 
 \subsection{Kontrollvolumen am Rand}
 
+\paragraph{Westlicher Rand}
+
 Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
 Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
 Kontrollvolumen am Rand angepasst werden. Es ergeben sich für gegebenes $\phi_w$:
 
 \begin{equation*}
-  \phi''_{w, Rand} = \frac{1}{(x_P-x_w)}\left({
+  \phi''_{w, W-Rand} = \frac{1}{(x_P-x_w)}\left({
 \frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
 \end{equation*}
+
+Da bei der dritten Ableitung zwei linke Kontrollvolumen genutzt werden, müssen hier
+vom Kontrollvolumen am Rand sowohl der westliche also auch der östliche Rand
+betrachtet werden.
+
+\begin{align*}
+  \phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right) -
+  \frac{1}{x_P-x_w} \left({
+    \frac{\phi_e-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+  \\
+  \phi'''_{e, W-Rand} &= \frac{1}{(x_E-x_P)} \left({
+  \frac{1}{(x_{ee}-x_e)} \left({
+      \frac{\phi_{EE}-\phi_E}{x_{EE}-x_E} - \frac{\phi_E-\phi_P}{x_E-x_P}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+\end{align*}
 
 Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
 durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
@@ -229,22 +255,51 @@ durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
   \phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
 \end{equation}
 
-Damit ergibt sich für $\phi''_{w,Rand}$:
+Damit ergibt sich für $\phi''_{w,Rand}$und $\phi'''_{w, Rand}$:
 
-\begin{equation}
-  \phi''_{w,Rand}  = \frac{1}{(x_P-x_w)}\left({
+\begin{align}
+  \phi''_{w, W-Rand} &= \frac{1}{(x_P-x_w)}\left({
 \frac{
   \left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
 }\right)
--\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
-\end{equation}
+-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)\\
+  \phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right) -
+  \frac{1}{x_P-x_w} \left({
+    \frac{ \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+\end{align}
 
-Äquivalent ergibt sich $\phi''_{e, Rand}$ bei gegebenem $\phi_e$:
+\paragraph{Östlicher Rand}
 
-\begin{equation*}
-  \phi''_{e, Rand} = \frac{1}{(x_e-x_P)}\left({
+Äquivalent ergibt sich $\phi''_{e, E-Rand}$ bei gegebenem $\phi_e$:
+
+\begin{align*}
+  \phi''_{e, E-Rand} &= \frac{1}{(x_e-x_P)}\left({
 \frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-\phi_w}{x_e-x_w}}\right)
-\end{equation*}
+\\
+  \phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  \frac{1}{(x_e-x_P)} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e-\phi_w}{x_e-x_w}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right)
+  }\right)
+  \\
+  \phi'''_{w, E-Rand} &= \frac{1}{(x_P-x_W)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+      \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right) -
+    \frac{1}{x_w-x_{ww}} \left({
+        \frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}
+    }\right)
+  }\right)
+\end{align*}
 
 $\phi_w$ wird wie folgt linear interpoliert:
 
@@ -254,14 +309,24 @@ $\phi_w$ wird wie folgt linear interpoliert:
 
 Damit ergibt sich für $\phi''_{e,Rand}$:
 
-\begin{equation}
-  \phi''_{e,Rand} = \frac{1}{(x_e-x_P)}\left({
+\begin{align}
+  \phi''_{e,Rand} &= \frac{1}{(x_e-x_P)}\left({
 \frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-
   \left({
    \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
   }\right)
 }{x_e-x_w}}\right)
-\end{equation}
+\\
+  \phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  \frac{1}{(x_e-x_P)} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e- \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+}{x_e-x_w}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right)
+  }\right)
+\end{align}
 
 
 
@@ -406,7 +471,7 @@ entstehenden Vorzeichen mit zu beachten.
         ylabel=TE,
 %scaled y ticks = false,
     ]
-    \addplot[tud2d, mark=*] file {te_20_aequi.txt};
+    \addplot[tud2d, mark=*] file {data/te_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
 \caption{Truncation Error}
