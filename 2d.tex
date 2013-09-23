@@ -99,12 +99,12 @@ Als Randbedingungen sollen wiederum Dirichlet-Randbedingungen gelten. Die Herlei
 soll hier beispielhaft für den östlichen Rand erfolgen.
 Die anderen Seiten können auf gleiche Art und Weise hergeleitet werden.
 
-Aus der Dirichlet-Randbedingung $\phi_e = \phi^0$ lässt sich nun die Ableitung
+Aus der Dirichlet-Randbedingung $\phi_e = \phi^e$ lässt sich nun die Ableitung
 $\left({\frac{\partial \phi}{\partial x}}\right)_e$ schreiben als:
 
 \begin{equation}
   \left({\frac{\partial \phi}{\partial x}}\right)_e =
-  \frac{\phi_E-\phi_P}{x_E-x_P} = \frac{\phi^0-\phi_P}{x_e-x_P}
+  \frac{\phi_E-\phi_P}{x_E-x_P} = \frac{\phi^e-\phi_P}{x_e-x_P}
 \end{equation}
 
 Die Koeffizienten ergeben sich damit zu:
@@ -116,7 +116,7 @@ Die Koeffizienten ergeben sich damit zu:
   a_W &= \frac{\alpha}{(x_P-x_W)\dx} \\
   a_N &= \frac{\alpha}{(y_N-y_P)\dy} \\
   a_S &= \frac{\alpha}{(y_P-y_S)\dy} \\
-  b_P &=f_P- \frac{1}{(x_e-x_P)(x_e-x_w)} \phi^0
+  b_P &=f_P- \frac{\alpha}{(x_e-x_P)(x_e-x_w)} \phi^e
 \end{align*}
 
 Für äquidistante Gitter ergibt sich:
@@ -127,9 +127,41 @@ Für äquidistante Gitter ergibt sich:
   a_W &= \frac{\alpha}{\Delta x^2} \\
   a_N &= \frac{\alpha}{\Delta y^2} \\
   a_S &= \frac{\alpha}{\Delta y^2} \\
-  b_P &=f_P-\frac{2}{\Delta x^2} \phi^0
+  b_P &=f_P-\frac{2}{\Delta x^2} \phi^e
 \end{align*}
 
+\begin{tikzpicture}
+  \begin{axis}
+    [width=0.9*\textwidth,
+    view={0}{90},
+  colorbar]
+    \addplot3[surf, mesh/ordering=y varies] file{data/output.txt};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}
+    [width=0.8*\textwidth]
+    \addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/output.txt};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}
+    [width=0.8*\textwidth]
+    \addplot3[contour prepared,
+        contour prepared format=matlab] file{data/contour.txt};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}
+    [width=0.8*\textwidth,
+    view={0}{90}]
+    \addplot3[contour prepared,
+        contour prepared format=matlab] file{data/contour.txt};
+  \end{axis}
+\end{tikzpicture}
 
 \chapter{2D-Konvektionsgleichung für orthogonale Gitter}
 

@@ -1,3 +1,5 @@
+*.dat
+*.script
 *.aux
 *.toc
 *.pdf
