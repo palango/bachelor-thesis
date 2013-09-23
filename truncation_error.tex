@@ -454,7 +454,7 @@ Der diskretisierte Truncation Error ergibt sich damit zu:
 
 \begin{align}
   TE_{e, CDS} &=  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
-  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E)(x_e-x_P) \nonumber \\
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E) \nonumber \\
   &+
  \frac{1}{(x_e-x_w)} \left({
   \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
@@ -467,6 +467,8 @@ Der diskretisierte Truncation Error ergibt sich damit zu:
 
 
 \subsection{UDS-Verfahren}
+
+\paragraph{Osten}
 
 Wertet man die Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_e$
 aus, so ergibt sich:
@@ -489,6 +491,43 @@ Mit den diskretisierten Ableitungen von oben ergibt sich damit:
   \frac{(x_e-x_P)^2}{2(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
   - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)
 \end{equation}
+
+Für äquidistante Gitter ergibt sich damit:
+
+\begin{equation}
+  TE_{e, UDS} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
+\end{equation}
+
+
+\paragraph{Westen}
+
+Wertet man die Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_w$
+aus, so ergibt sich:
+
+\begin{equation*}
+  \phi_w = \phi_W +(x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W+HOT
+\end{equation*}
+
+Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_w$ mit $\phi_W$
+gleichsetzt, lässt sich der Truncation Error hier direkt ablesen.
+
+\begin{equation*}
+  TE_{w, UDS} = (x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W
+\end{equation*}
+
+%Mit den diskretisierten Ableitungen von oben ergibt sich damit:
+
+%\begin{equation}
+  %TE_{w, UDS} = (x_w-x_W) \frac{\phi_E-\phi_W}{x_E-x_W}+
+  %\frac{(x_e-x_P)^2}{2(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  %- \frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+%\end{equation}
+
+%Für äquidistante Gitter ergibt sich damit:
+
+%\begin{equation}
+  %TE_{e, UDS} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
+%\end{equation}
 
 
 
