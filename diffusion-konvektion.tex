@@ -45,14 +45,14 @@ der Kontrollvolumen ausgedrückt werden.
 Eingesetzt in Gleichung~\ref{base-formula} ergibt dies:
 
 \begin{equation}
-\alpha \frac{\phi_E - \phi_P}{x_E - x_P} + \alpha \frac{\phi_W - \phi_P}{x_W - x_P}
+\alpha \frac{\phi_E - \phi_P}{x_E - x_P} - \alpha \frac{\phi_P - \phi_W}{x_P - x_W}
 = f_P (x_e - x_w)
 \end{equation}
 
 Diese Gleichung kann in folgende Beziehung umgeformt werden.
 
 \newcommand{\diffEP}{(x_E-x_P)}
-\newcommand{\diffWP}{(x_W-x_P)}
+\newcommand{\diffPW}{(x_P-x_W)}
 \newcommand{\diffew}{(x_e-x_w)}
 
 \begin{equation}
@@ -62,9 +62,9 @@ a_P \phi_P + a_E \phi_E + a_W \phi_W = b_P
 Die Koeffizienten $a_i$ und $b_P$ nehmen hierbei die folgenden Werte an.
 
 \begin{align*}
-  a_P &= -\left( \frac{\alpha}{\diffEP \diffew} + \frac{\alpha}{\diffWP \diffew} \right) \\
+  a_P &= -\frac{\alpha}{\diffEP \diffew} - \frac{\alpha}{\diffPW \diffew}\\
 a_E &= \frac{\alpha}{\diffEP \diffew}\\
-a_W &= \frac{\alpha}{\diffWP \diffew}\\
+a_W &= \frac{\alpha}{\diffPW \diffew}\\
 b_P &= f_P
 \end{align*}
 
@@ -94,9 +94,9 @@ Die Koeffizienten für ein Randkontrollvolumen ergeben sich damit zu:
 
 \begin{align*}
   a_W &= 0\\
-  a_P &=  -\left( \frac{\alpha}{\diffEP \diffew} + \frac{\alpha}{\diffWP \diffew} \right) \\
+  a_P &= -\frac{\alpha}{\diffEP \diffew} - \frac{\alpha}{\diffPW \diffew}\\
   a_E &= \frac{\alpha}{\diffEP \diffew}\\
-  b_P &= f_P - \frac{\alpha}{(x_P -x_w)\diffew}
+  b_P &= f_P - \frac{\alpha}{(x_P -x_w)\diffew}\phi^0
 \end{align*}
 
 beziehungsweise für den äquidistanten Fall:
@@ -186,7 +186,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         xlabel=$x$,
         ylabel=$\phi$,
     ]
-    \addplot[tud2d, mark=*] file {solution_20_aequi.txt};
+    \addplot[tud2d, mark=*] file {data/solution_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
 \caption{Lösung des Diffusionsproblems mit Quellterm aus Gleichung \ref{eq:quellterm}}
@@ -202,7 +202,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         ylabel=$\phi - \phi_{exakt}$,
 %scaled y ticks = false,
     ]
-    \addplot[tud2d, mark=*] file {error_20_aequi.txt};
+    \addplot[tud2d, mark=*] file {data/error_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
 \caption{Fehlerverteilung der Lösung}
@@ -218,7 +218,7 @@ Genauigkeitsgrad $p$ wie folgt berechnen.
         ylabel=$A\phi_{exakt}-b$,
 %scaled y ticks = false,
     ]
-    \addplot[tud2d, mark=*] file {residuum_20_aequi.txt};
+    \addplot[tud2d, mark=*] file {data/residuum_20_aequi.txt};
     \end{axis}
 \end{tikzpicture}
 \caption{Residuum der Lösung}
