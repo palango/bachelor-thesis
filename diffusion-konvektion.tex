@@ -1,4 +1,4 @@
-\documentclass[10pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{amsmath}
@@ -320,6 +320,25 @@ So wird beim QUICK-verfahren (Quadratic Upwind Interpolation for Convective
 Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
 zur Approximation genutzt.
 
+\section{Gesamtgleichungssystem UDS}
+
+Wird die Treppenfunktion für das UDS-Verfahren in Gleichung~\eqref{eq:surface_east_west}
+eingesetzt erbit sich folgende Gleichung:
+
+\begin{equation}
+  \rho v (\phi_P - \phi_W) = f_P(x_e-x_w)
+\end{equation}
+
+In Standardform gebracht ergeben sich damit folgende Koeffizienten für allgemeine
+und äquidistante Gitter.
+
+\begin{tabular}{cll}
+  $a_W$ & $-\frac{\rho v}{x_e-x_w}$ & $-\frac{\rho v}{\Delta x}$ \\
+  $a_P$ & $\frac{\rho v}{x_e-x_w}$ & $\frac{\rho v}{\Delta x}$ \\
+  $a_E$ & $0$ & $0$ \\
+  $a_W$ & $f_P$ & $f_P$ \\
+\end{tabular}
+
 \section{Gesamtgleichungssystem CDS}
 
 Werden nun die Gleichungen \eqref{eq:surface_east_west} und \eqref{eq:source_term}
@@ -339,7 +358,6 @@ dann ein Gleichungssystem der Form $A\phi = b$ aufgestellt werden.
 
 Die Koeffizienten nehmen bei allgemeinen, nicht äquidistanten Gittern folgende Werte
 an:
-
 \begin{align*}
   a_E &= \frac{\rho v}{x_e-x_w}\ \frac{x_e-x_P}{x_E-x_P}\\
   a_W &=-\frac{\rho v}{x_e-x_w}\ \frac{x_P-x_w}{x_P-x_W}\\
@@ -347,6 +365,7 @@ an:
 -\frac{x_w-x_W}{x_P-x_W}}\right)\\
   b_P &= f_p
 \end{align*}
+
 
 Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
 
@@ -357,6 +376,7 @@ Bei äquidistanten Gittern ergeben sich folgende Koeffizienten:
 -\frac{\Delta x}{2}}\right) = 0\\
   b_P &= f_p
 \end{align*}
+
 
 \section{Randbedingungen}
 
