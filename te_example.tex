@@ -23,10 +23,11 @@ Wir nehmen an, die Funktion $\sin(x)$ soll zur einfacheren Berechenbarkeit durch
 ein Polynom ausgedrückt werden. Anschließend soll ein Indikator für den dabei
 entstehenden Fehler gefunden werden.
 
-Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $0$ berechnet.
+Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $x_0 =0$ berechnet:
 
 \begin{equation}
-  \sin(x) = x-\frac{x^3}{3!} +\frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+  \sin(x) = \sum_{n=0}^{\infty}(-1)^n \frac{x^{2n+1}}{(2n+1)!} = 
+  x-\frac{x^3}{3!} +\frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
 \end{equation}
 
 Nun wird die Approximation für $\sin(x)$ festgelegt. Diese soll in diesem Beispiel
@@ -44,7 +45,6 @@ Approximation mit zunehmenden Abstand von $0$ verschlechtert.
 \centering
 \caption{Vergleich von Funktion und Approximation}
 \end{figure}
-
 
 Der absolute Fehler kann nun einfach über die Formel $\sin(x) - x + \frac{x^3}{6}$
 berechnet werden. Die Aufgabe besteht nun darin diesen geeignet über eine Formel abzuschätzen.
@@ -66,7 +66,8 @@ $\frac{x^5}{5!} -\frac{x^7}{7!} $.
 \caption{Vergleich des absoluten Fehlers mit der Fehlerschätzung}
 \end{figure}
 
-Man sieht die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation.
-
+Man sieht die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation,
+die durch Hinzunahme weiterer Glieder aus der Taylorreihenentwicklung beliebig
+verbessert werden könnte.
 
 \end{document}
