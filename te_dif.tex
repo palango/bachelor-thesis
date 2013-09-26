@@ -1,0 +1,381 @@
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3}
+
+\usepackage{listings}
+\begin{document}
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
+
+
+\chapter{Truncation Error}
+\label{cha:Truncation_Error}
+\section{Diffusionsterme}
+\label{sec:Diffusionsterme}
+
+
+Um den Truncation Error der Diffusionsterme zu bestimmen, leiten wir die Differenzenquotienten
+für die Ableitungen erster Ordnung aus den Taylorreihendarstellungen her. Beispielhaft
+soll das anhand des östlichen Randes des Kontrollvolumens geschehen.
+
+Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
+Kontrollvolumenmittelpunkte.
+
+\begin{align}
+  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
+  \label{eq:taylor_eE}\\
+  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
+  \label{eq:taylor_eP}
+\end{align}
+
+Wird nun Gleichung~\eqref{eq:taylor_eP} von Gleichung~\eqref{eq:taylor_eE} subtrahiert, 
+so ergibt sich:
+
+\begin{equation*}
+  \phi_E-\phi_P=\phi'_e(x_E-x_P)+
+  \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
+  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]+HOT
+\end{equation*}
+
+Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
+
+\begin{equation}
+  \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
+\left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+
+\frac{1}{6} \phi'''_e \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
+\end{equation}
+
+
+Die hier auftretenden Ableitungen $\phi''_e$ und $\phi'''_e$ sind nicht bekannt und 
+müssen diskretisiert werden. Mit der Nutzung von
+möglichst lokale Differenzenquotienten ergeben sich die folgenden Ausdrücke.
+
+\begin{align*}
+  \phi''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right)\\
+\phi'''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)
+\end{align*}
+
+
+Der Truncation Error des Diffusionsterms an der östlichen Grenze des Kontrollvolumens
+lässt sich damit über folgende Gleichung beschreiben.
+
+\begin{align*}
+  {TE}_e &= \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
+&+
+\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)\\
+&\frac{1}{6(x_E-x_P)}\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
++HOT
+\end{align*}
+
+Der Truncation Error im Westen ergibt sich äquivalent zu:
+
+\begin{align*}
+  \phi_P &= \phi_w + \phi'_w(x_P-x_w)+\frac{1}{2}\phi''_w(x_P-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT\\
+  \phi_W &= \phi_w + \phi'_w(x_W-x_w)+\frac{1}{2}\phi''_w(x_W-x_w)^2
+  +\frac{1}{6}\phi'''_w(x_W-x_w)^3+HOT
+\end{align*}
+
+\begin{equation}
+  \phi'_w = \frac{\phi_P-\phi_W}{x_P-x_W}+\frac{1}{2}\phi''_w
+\left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+
+\frac{1}{6} \phi'''_w \left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)+HOT
+\end{equation}
+
+\begin{align*}
+  \phi''_w &= \frac{1}{(x_P-x_W)}\left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)\\
+ \phi'''_w &= \frac{1}{(x_P-x_W)}\left({
+\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+-\frac{1}{(x_w-x_{ww})}
+\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
+}\right)
+\end{align*}
+
+\begin{align*}
+  TE_w &= \frac{1}{2 (x_P-x_W)} \left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
+  \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)\\
+&+
+\left({
+\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+-\frac{1}{(x_w-x_{ww})}
+\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
+}\right)\\
+&\frac{1}{6(x_P-x_W)}\left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)
+  +HOT
+\end{align*}
+
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfache sich die Terme des Truncation Error. So löschen
+sich beispielsweise die quadratischen Terme gegenseitig aus. Es ergeben sich die
+folgenden Fehler:
+
+\begin{align*}
+  {TE}_e &= \left({
+\frac{1}{6\Delta x^2}
+\left({\frac{\phi_{EE}-\phi_E}{\Delta x}-\frac{\phi_E-\phi_P}{\Delta x} }\right)
+-\frac{1}{6\Delta x^2}
+\left({\frac{\phi_E-\phi_P}{\Delta x} - \frac{\phi_P-\phi_W}{\Delta x}  }\right)
+}\right)\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+&= -\frac{1}{24\Delta x}\left({
+\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)+HOT
+\end{align*}
+
+\begin{align*}
+  TE_w &=\left({
+\frac{1}{6 \Delta x^2}
+\left({\frac{\phi_E-\phi_P}{\Delta x}-\frac{\phi_P-\phi_W}{\Delta x} }\right)
+-\frac{1}{6\Delta x^2}
+\left({\frac{\phi_P-\phi_W}{\Delta x} - \frac{\phi_W-\phi_{WW}}{\Delta x}  }\right)
+}\right)
+\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+&= -\frac{1}{24 \Delta x}\left({
+\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)+HOT
+\end{align*}
+
+
+\subsection{Kontrollvolumen am Rand}
+
+
+Wie man sieht, werden für die Differenzenquotienten die Funktionswerte benachbarter
+Kontrollvolumen benötigt. Deshalb müssen die Approximationen der Ableitung für
+Kontrollvolumen am Rand angepasst werden.
+
+\paragraph{Westlicher Rand}
+
+Es ergeben sich für gegebenes $\phi_w$:
+
+
+\begin{equation*}
+  \phi''_{w, W-Rand} = \frac{1}{(x_P-x_w)}\left({
+\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
+\end{equation*}
+
+Da bei der dritten Ableitung zwei linke Kontrollvolumen genutzt werden, müssen hier
+vom Kontrollvolumen am Rand sowohl der westliche also auch der östliche Rand
+betrachtet werden.
+
+\begin{align*}
+  \phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right) -
+  \frac{1}{x_P-x_w} \left({
+    \frac{\phi_e-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+  \\
+  \phi'''_{e, W-Rand} &= \frac{1}{(x_E-x_P)} \left({
+  \frac{1}{(x_{ee}-x_e)} \left({
+      \frac{\phi_{EE}-\phi_E}{x_{EE}-x_E} - \frac{\phi_E-\phi_P}{x_E-x_P}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+\end{align*}
+
+Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
+durch eine lineare Interploation von $\phi_E$ und $\phi_P$ bestimmt.
+
+\begin{equation}
+  \phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+\end{equation}
+
+Damit ergibt sich für $\phi''_{w,Rand}$und $\phi'''_{w, Rand}$:
+
+\begin{align}
+  \phi''_{w, W-Rand} &= \frac{1}{(x_P-x_w)}\left({
+\frac{
+  \left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+}\right)
+-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)\\
+  \phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+    \frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right) -
+  \frac{1}{x_P-x_w} \left({
+    \frac{ \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    }\right)
+  }\right)
+\end{align}
+
+
+\paragraph{Östlicher Rand}
+Äquivalent ergibt sich $\phi''_{e, E-Rand}$ bei gegebenem $\phi_e$:
+
+\begin{align*}
+  \phi''_{e, E-Rand} &= \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-\phi_w}{x_e-x_w}}\right)
+\\
+  \phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  \frac{1}{(x_e-x_P)} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e-\phi_w}{x_e-x_w}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right)
+  }\right)
+  \\
+  \phi'''_{w, E-Rand} &= \frac{1}{(x_P-x_W)} \left({
+  \frac{1}{(x_e-x_w)} \left({
+      \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right) -
+    \frac{1}{x_w-x_{ww}} \left({
+        \frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}
+    }\right)
+  }\right)
+\end{align*}
+
+$\phi_w$ wird wie folgt linear interpoliert:
+
+\begin{equation*}
+  \phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+\end{equation*}
+
+Damit ergibt sich für $\phi''_{e,Rand}$:
+
+\begin{align}
+  \phi''_{e,Rand} &= \frac{1}{(x_e-x_P)}\left({
+\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-
+  \left({
+   \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+  }\right)
+}{x_e-x_w}}\right)
+\\
+  \phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  \frac{1}{(x_e-x_P)} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e- \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+}{x_e-x_w}
+    }\right) -
+  \frac{1}{x_e-x_w} \left({
+    \frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    }\right)
+  }\right)
+\end{align}
+
+
+\subsubsection{Äquidistante Gitter}
+
+\paragraph{Westlicher Rand}
+
+\begin{align}
+  \phi''_{w, W-Rand} &= \frac{1}{\Delta x^2} (\phi_E-3\phi_P+2\phi_w)\\
+  \phi'''_{w, W-Rand} &= 0\\
+  \phi'''_{e, W-Rand} &= \frac{1}{\Delta x^3} (\phi_{EE} -3\phi_E + 4\phi_P -2\phi_w)
+\end{align}
+
+\paragraph{Östlicher Rand}
+
+\begin{align}
+  \phi''_{e, E-Rand} &= \frac{1}{\Delta x^2} (\phi_W-3\phi_P+2\phi_e)\\
+  \phi'''_{e, E-Rand} &= 0\\
+  \phi'''_{w, E-Rand} &= \frac{1}{\Delta x^3} (-\phi_{WW} +3\phi_W - 4\phi_P +2\phi_e)
+\end{align}
+
+\section{Diffusion 2D}
+
+Äquivalent zu den Herleitungen des Truncation Error im Osten und Westen ergeben sich
+sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Terme:
+
+\begin{equation}
+  \phi'_n = \frac{\phi_N-\phi_P}{y_N-y_P}+\frac{1}{2}\phi''_n
+\left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)+
+\frac{1}{6} \phi'''_n \left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)+HOT
+\end{equation}
+
+
+\begin{equation}
+  \phi'_s = \frac{\phi_P-\phi_S}{y_P-y_S}+\frac{1}{2}\phi''_s
+\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)+
+\frac{1}{6} \phi'''_s \left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)+HOT
+\end{equation}
+
+Nach Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
+Terme für den Truncation Error:
+
+\begin{align*}
+  {TE}_n &= \frac{1}{2 (y_N-y_P)}\left({
+\frac{\phi_{NN}-\phi_P}{y_{NN}-y_P}-\frac{\phi_N-\phi_S}{y_N-y_S}}\right) \left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)\\
+&+
+\left({
+\frac{1}{(y_{nn}-y_n)}
+\left({\frac{\phi_{NN}-\phi_N}{y_{NN}-y_N}-\frac{\phi_N-\phi_P}{y_N-y_P} }\right)
+-\frac{1}{(y_n-y_s)}
+\left({\frac{\phi_N-\phi_P}{y_N-y_P} - \frac{\phi_P-\phi_S}{y_P-y_S}  }\right)
+}\right)\\
+&\frac{1}{6(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
++HOT
+\end{align*}
+
+
+\begin{align*}
+  TE_s &= \frac{1}{2 (y_P-y_S)} \left({
+\frac{\phi_{N}-\phi_S}{y_{N}-y_S}-\frac{\phi_P-\phi_{SS}}{y_P-y_{SS}}}\right)
+  \left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)\\
+&+
+\left({
+\frac{1}{(y_n-y_s)}
+\left({\frac{\phi_N-\phi_P}{y_N-y_P}-\frac{\phi_P-\phi_S}{y_P-y_S} }\right)
+-\frac{1}{(y_s-y_{ss})}
+\left({\frac{\phi_P-\phi_S}{y_P-y_S} - \frac{\phi_S-\phi_{SS}}{y_S-y_{SS}}  }\right)
+}\right)\\
+&\frac{1}{6(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
+  +HOT
+\end{align*}
+
+\subsection{Äquidistante Gitter}
+
+\begin{align*}
+  {TE}_n &= \left({
+\frac{1}{6\Delta y^2}
+\left({\frac{\phi_{NN}-\phi_N}{\Delta y}-\frac{\phi_N-\phi_P}{\Delta y} }\right)
+-\frac{1}{6\Delta y^2}
+\left({\frac{\phi_N-\phi_P}{\Delta y} - \frac{\phi_P-\phi_S}{\Delta y}  }\right)
+}\right)\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+&= -\frac{1}{24\Delta y}\left({
+\phi_{NN}-3\phi_N+3\phi_P-\phi_S}\right)+HOT
+\end{align*}
+
+\begin{align*}
+  TE_s &=\left({
+\frac{1}{6 \Delta y^2}
+\left({\frac{\phi_N-\phi_P}{\Delta y}-\frac{\phi_P-\phi_S}{\Delta y} }\right)
+-\frac{1}{6\Delta y^2}
+\left({\frac{\phi_P-\phi_S}{\Delta y} - \frac{\phi_S-\phi_{SS}}{\Delta y}  }\right)
+}\right)
+\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+&= -\frac{1}{24 \Delta y}\left({
+\phi_N-3\phi_P+3\phi_S-\phi_{SS}}\right)+HOT
+\end{align*}
+
+
+\end{document}

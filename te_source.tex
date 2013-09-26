@@ -1,0 +1,160 @@
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3}
+
+\usepackage{listings}
+\begin{document}
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
+
+
+\chapter{Truncation Error}
+\label{cha:Truncation_Error}
+
+\section{Quellterm 1D}
+\label{sec:Quellterm}
+
+Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $x_0$
+liefert:
+
+\begin{equation*}
+  f(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{1}{2} f''(x_0)(x-x_0)^2 + HOT
+\end{equation*}
+
+Nach Integration im Intervall $a$ bis $b$ ergibt sich:
+
+\begin{align*}
+  \int_a^b f(x) dx &= \int_a^b f(x_0) dx + \int_a^b f'(x_0)(x-x_0) dx
++ \int_a^b \frac{1}{2} f''(x_0)(x-x_0)^2 dx + HOT\\
+&= f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}
++ \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
+\end{align*}
+
+Die Anwendung auf ein Kontrollvolumen mit den Randpunkten $x_e$ und
+$x_w$ sowie dem Mittelpunkt $x_P$ ergibt damit die folgende Formel:
+3.7118037236e-04
+\begin{equation*}
+  \int_{x_w}^{x_e} f(x)dx = f_P(x_e-x_w)
++ \frac{1}{2} f'_P \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]
++ \frac{1}{6} f''_P \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{equation*}
+
+Hier müssen nun die auftretenden Ableitungen durch einen Differenzenquotienten
+beschrieben werden.
+
+\begin{align*}
+  f'_P &=\frac{f_E-f_W}{x_E-x_W} \\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{align*}
+
+Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über die
+folgende Gleichung beschrieben.
+
+\begin{align}
+  TE_{source} &=
+ \frac{f_E-f_W}{2(x_E-x_W)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
+
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfacht sich der Term und es ergibt sich:
+
+\begin{equation*}
+  TE_{source} = \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
+\end{equation*}
+
+\subsection{Randkontrollvolumen}
+
+\paragraph{Westrand}
+
+%Mit der Interpolation:
+
+%\begin{equation}
+  %\phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+%\end{equation}
+
+\begin{align*}
+  f'_P &=\frac{f_e-f_w}{x_e-x_w}\\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_w}{x_P-x_w}\right)
+\end{align*}
+
+\begin{align}
+  TE_{source, W-Rand} &=
+ \frac{f_e-f_w}{2(x_e-x_w)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_w}{x_P-x_w}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
+
+\begin{equation*}
+  TE_{source, W-Rand, äquidistant} = \frac{\Delta x}{24} \left({f_E-3f_P+2f_w}\right)
+\end{equation*}
+
+
+\paragraph{Ostrand}
+
+\begin{align*}
+  f'_P &=\frac{f_e-f_w}{x_e-x_w}\\
+  f''_P &= \frac{1}{x_e-x_w}\left(\frac{f_e-f_P}{x_e-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{align*}
+
+\begin{align}
+  TE_{source, E-Rand} &=
+ \frac{f_e-f_w}{2(x_e-x_w)}  \left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]\nonumber\\
+&+\frac{1}{6(x_e-x_w)}\left(\frac{f_e-f_P}{x_e-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align}
+
+\begin{equation*}
+  TE_{source, E-Rand, äquidistant} = \frac{\Delta x}{24} \left({2f_e-3f_P+f_W}\right)
+\end{equation*}
+
+\section{Quellterm 2D}
+
+Bei gleichem Vorgehen wie in \ref{sec:Quellterm} beschrieben, ergibt sich für
+eine zweidimensionale Funktion $f(x, y)$ der folgende Ausdruck:
+
+\begin{align*}
+  \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &= f_P (x_e-x_w)(y_n-y_s)\\
+                                           &+ \pderf{x} \frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2} (y_n-y_s)
+  + \pderf{y} \frac{(y_n-y_P)^2-(y_s-y_P)^2}{2} (x_e-x_w) \\
+  &+ \frac{1}{2} \pderfs{x^2}\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)
+  + \frac{1}{2} \pderfs{y^2} \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
+  &+ \pderfs{x\partial y} \frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2} \cdot  \frac{(y_n-y_P)^2-(y_s-y_P)^2}{2} + HOT
+\end{align*}
+
+Der Wert von $f$ ist im Mittelpunkt des Kontrollvolumens bekannt, nicht aber die auftretenden
+Ableitungen von $f$. Diese müssen deshalb diskretisiert werden. Der Fehler beträgt damit:
+
+\begin{align*}
+  TE_{source} &= \frac{f_E-f_W}{x_E-x_W} \frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2} (y_n-y_s)\\
+              &+ \frac{f_N-f_S}{y_N-y_S}  \frac{(y_n-y_P)^2-(y_s-y_P)^2}{2} (x_e-x_w) \\
+              &+ \frac{1}{2}
+  \left[{\frac{f_E-f_P}{(x_E-x_P)(x_e-x_w)}-\frac{f_P-f_W}{(x_P-x_W)(x_e-x_w)}  }\right]
+  \frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
+  &+ \frac{1}{2}
+  \left[{\frac{f_N-f_P}{(y_N-y_P)(y_n-y_s)}-\frac{f_P-f_S}{(y_P-y_S)(y_n-y_s)}  }\right]
+  \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
+  &+ \left[{\frac{f_{NE}-f_{SE}}{(y_{NE}-y_{SE})(x_E-x_W) }- \frac{f_{NW}-f_{SW}}{(y_{NW}-y_{SW})(x_E-x_W)} }\right]\\
+  &\cdot \frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2} \cdot \frac{(y_n-y_P)^2-(y_s-y_P)^2}{2} + HOT
+\end{align*}
+
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfacht sich der Term zu:
+
+\begin{equation}
+  \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P}\right]
+\end{equation}
+
+\end{document}
