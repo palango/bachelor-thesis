@@ -4,17 +4,18 @@
 \usepackage{amsmath}
 
 \usepackage{microtype}
+\usepackage[ngerman,pdfview=FitH,pdfstartview=FitV]{hyperref}
 
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.3}
+\pgfplotsset{compat=newest}
 
-\usepackage{listings}
 \begin{document}
 
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
 \newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
 
+\tableofcontents
 
 
 \chapter{Truncation Error}
