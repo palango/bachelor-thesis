@@ -1,0 +1,291 @@
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3}
+
+\usepackage{listings}
+\begin{document}
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
+
+
+\chapter{Truncation Error}
+\label{cha:Truncation_Error}
+
+
+\section{Konvektionsterme}
+
+\subsection{CDS-Verfahren}
+
+\paragraph{Osten}
+Entwickelt man die Taylorreihe von $\phi$ um den Punkt $x_P$ und wertet sie anschließend
+an den Punkten $x_e$ und $x_E$ aus, so erhält man folgende Gleichungen.
+
+\begin{align}
+  \phi_e &= \phi_P + \phi'_P(x_e-x_P)+\frac{1}{2}\phi''_P(x_e-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_e-x_P)^3+HOT
+  \label{eq:taylor_konv_eP}\\
+  \phi_E &= \phi_P + \phi'_P(x_E-x_P)+\frac{1}{2}\phi''_P(x_E-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_E-x_P)^3+HOT
+  \label{eq:taylor_konv_eE}
+\end{align}
+
+Werden die Gleichungen~\eqref{eq:taylor_konv_eE} und \eqref{eq:taylor_konv_eP} nun
+voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich:
+
+\begin{align*}
+  \frac{\phi_e}{x_e-x_P} &= \frac{\phi_E}{x_E-x_P} + \frac{\phi_P}{x_e-x_P} -
+  \frac{\phi_P}{x_E-x_P} + \frac{1}{2} \phi''_P \left({(x_e-x_P)-(x_E-x_P)}\right)\\
+  &+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)\\
+  \phi_e &= \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \left({1-\frac{x_e-x_P}{x_E-x_P} }\right)
+  + \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
+  &+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)\\
+  \phi_e &= \phi_E \gamma_e + \phi_P (1-\gamma_e)+ \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
+         &+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{align*}
+
+Der Truncation Error lässt sich damit ablesen zu:
+
+\begin{equation*}
+  TE_{e, CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{equation*}
+
+
+Hier müssen nun wiederum die auftretenden Ableitungen diskretisiert werden.
+
+\begin{align}
+  \phi'_P &= \frac{\phi_E-\phi_W}{x_E-x_W}\\
+  \phi''_P &= \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) \label{eq:ddphip}\\
+  \phi'''_P &= \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right) \label{eq:dddphip}
+\end{align}
+
+Der diskretisierte Truncation Error ergibt sich damit zu:
+
+\begin{align}
+  TE_{e, CDS} &=  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E) (x_e-x_P) \nonumber \\
+  &+
+ \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right) \nonumber \\
+  &\frac{1}{6} \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)
+\end{align}
+
+\paragraph{Westen}
+
+Man entwickelt hier wiederum die Taylorreihendarstellungen von $\phi$ in $x_w$ und $x_W$.
+Anschließend werden beide Reihen so von einander subtrahiert, dass alle Vorkommen
+der ersten Ableitung von $\phi$ verschwinden. Damit ergeben sich folgende Terme:
+
+\begin{align*}
+  \phi_w &= \left({1-\frac{x_w-x_P}{x_W-x_P}}\right)\phi_P + \left({\frac{x_w-x_P}{x_W-x_P} }\right) \phi_W
+  + \frac{1}{2} \phi''_P \left({(x_w-x_P)-(x_W-x_P)}\right)(x_w-x_P)\\
+  &+ \frac{1}{6} \phi'''_P \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)\\
+  \phi_w &= \left({1-\frac{x_P-x_w}{x_P-x_W}}\right)\phi_P + \left({\frac{x_P-x_w}{x_P-x_W} }\right) \phi_W
+  + \frac{1}{2} \phi''_P \left({x_w-x_W}\right)(x_w-x_P)\\
+  &+ \frac{1}{6} \phi'''_P \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)
+\end{align*}
+
+Der Abbruchfehler lässt sich nach der Diskretisierung der unbekannten Ableitungen nach Gleichung~\eqref{eq:ddphip}
+und \eqref{eq:dddphip} leicht ablesen und ergibt sich zu:
+
+\begin{align}
+  TE_{w, CDS} &=  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) \left({x_w-x_W}\right)(x_w-x_P)  \nonumber\\
+  &+ \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right) \nonumber\\
+  &\frac{1}{6}  \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)
+\end{align}
+
+\subsubsection{Äquidistante Gitter}
+
+\paragraph{Osten}
+\paragraph{Westen}
+
+
+\subsection{UDS-Verfahren}
+
+\paragraph{Osten}
+
+Wertet man die Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_e$
+aus, so ergibt sich:
+
+\begin{equation*}
+  \phi_e = \phi_P +(x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
+\end{equation*}
+
+Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_e$ mit $\phi_P$
+gleichsetzt, lässt sich der Truncation Error hier direkt ablesen.
+
+\begin{equation*}
+  TE_{e, UDS} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P
+\end{equation*}
+
+Mit den diskretisierten Ableitungen von oben ergibt sich damit:
+
+\begin{equation}
+  TE_{e, UDS} = (x_e-x_P) \frac{\phi_E-\phi_W}{x_E-x_W}+
+  \frac{1}{2} \frac{(x_e-x_P)^2}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+\end{equation}
+
+Für äquidistante Gitter ergibt sich damit:
+
+\begin{equation}
+  TE_{e, UDS} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
+\end{equation}
+
+
+\paragraph{Westen}
+
+Wertet man die Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_w$
+aus, so ergibt sich:
+
+\begin{equation*}
+  \phi_w = \phi_W +(x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W+HOT
+\end{equation*}
+
+Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_w$ mit $\phi_W$
+gleichsetzt, lässt sich der Truncation Error hier direkt ablesen.
+
+\begin{equation*}
+  TE_{w, UDS} = (x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W
+\end{equation*}
+
+Hier müssen wiederum die Ableitungen $\phi'_W$ und $\phi''_W$ diskretisiert werden.
+
+\begin{equation}
+  TE_{w, UDS} = (x_w-x_W) \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}+
+  \frac{1}{2} \frac{(x_w-x_W)^2}{(x_w-x_{ww})} \left({\frac{\phi_P-\phi_W}{x_P-x_W}
+  - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}} }\right)
+\end{equation}
+
+Für äquidistante Gitter ergibt sich damit:
+
+\begin{equation}
+  TE_{w, UDS} = \frac{3}{8} \phi_P-\frac{1}{4} \phi_W - \frac{1}{8} \phi_{WW}
+\end{equation}
+
+
+\subsubsection{Randwerte}
+
+Hier ist bei positivem $v$ insbesondere der westliche Rand interessant. Die
+Randbedingung sei mit $\phi^w$ bezeichnet. Mit möglichst lokalen Differenzenquotienten
+ergeben sich folgende Approximationen der Ableitungen.
+
+\begin{align*}
+  \phi'_W &= \frac{\phi_w-\phi^w}{x_w-x_{ww}}\\
+  \phi''_W &= \frac{1}{x_W-x_{ww}} \left({\frac{\phi_w-\phi^w}{x_w-x_{ww}}
+- \frac{\phi_W-\phi^w}{x_W-x_{ww}} }\right)
+\end{align*}
+
+$\phi_w$ wird aus der linearen Interpolation von $\phi_P$ und $\phi_W$ berechnet:
+
+\begin{equation*}
+  \phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+\end{equation*}
+
+Damit ergeben sich folgende Terme:
+
+\begin{align}
+  \phi'_W &= \frac{\phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+-\phi^w}{x_w-x_{ww}}\\
+  \phi''_W &= \frac{1}{x_W-x_{ww}} \left({\frac{\phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+-\phi^w}{x_w-x_{ww}}
+- \frac{\phi_W-\phi^w}{x_W-x_{ww}} }\right)
+\end{align}
+
+
+\paragraph{Äquidistante Gitter}
+
+\begin{align*}
+  \phi'_W  &= \frac{1}{2\Delta x} \phi_P + \frac{1}{2\Delta x} \phi_W - \phi^w\\
+  \phi''_W &= \frac{1}{\Delta x^2} \phi_P -\frac{1}{\Delta x^2} \phi_W
+\end{align*}
+
+
+\subsection{``Flux-Blending''-Verfahren}
+
+Das Flux-Blending-Verfahren setzt sich aus UDS- und CDS-Verfahren zusammen. Beide
+Verfahren werden dabei über den Faktor $\beta$ gewichtet.
+
+\begin{equation*}
+\phi_e \approx (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS} 
+\end{equation*}
+
+Aufgrund dessen ist es möglich den Truncation Error des Flux-Blending-Verfahrens aus
+den vorangegenagen Betrachtungen zu UDS- und CDS-Verfahren herzuleiten.
+Dabei werden Die Abbruchfehler der einzelnen Verfahren ebenso über $\beta$ gewichtet.
+
+\begin{equation}
+  TE_{e, Flux} = (1-\beta) TE_{e, UDS} + \beta TE_{e, CDS}
+\end{equation}
+
+
+
+\section{Truncation Error eines Kontrollvolumens}
+\label{sec:Truncation Error eines Kontrollvolumens}
+
+Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von Quell-
+und Diffusionstermen zusammen:
+
+\begin{equation*}
+  TE = \frac{TE_{source} - TE_e - TE_w}{\Delta x}
+\end{equation*}
+
+Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
+Truncation Error. Wichtig ist es, hier die durch den Gauß'schen Integralsatz 
+entstehenden Vorzeichen mit zu beachten. Weiterhin muss durch $\Delta x$ geteilt werden,
+da die gleiche Transformation beim Aufstellen des Gesamtgleichungsystem angewendet wird.
+
+\begin{align}
+  TE &= \frac{\frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
+   +\frac{1}{24\Delta x}\left({
+\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)
+  -\frac{1}{24 \Delta x}\left({
+\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)}{\Delta x}
+\end{align}
+
+
+%\section{Randwerte}
+%\label{sec:Randwerte}
+
+%Für die Auswertung der Ableitungen an Randpunkten ist es nicht möglich zentrale Differenzenquotienten
+%zu finden, da man dazu Punkte außerhalb des betrachteten Gebietes einbeziehen müsste.
+
+%Stattdessen erstellt man für die Randpunkte Interpolationspolynome und leitet diese ab.
+%Sie können dann einfach an den gewünschten Punkten ausgewertet werden.
+
+%Will man eine zweite Ableitung diskretisieren, so muss das Interpolationspolynom
+%ebensfalls die Ordnung 2 haben, um genügend Ableitungen zur Verfügung zu stellen.
+%Verallgemeinert bedeutet dies, dass für eine n-te Ableitung ein Polynom vom Grad n
+%aufgestellt werden muss.
+
+%Das Aufstellen der Polynome kann zum Beispiel über die Lagrange-Formel erfolgen.
+%Für Polynomgrade größer zwei ist es sinnvoll ein CAS-System zur Berechnung zu verwenden.
+%Ein möglicher Weg soll hier für das Programmpaket Maxima aufgezeigt werden.
+
+%\begin{lstlisting}
+  %load(interpol);
+  %data: [[a, fa], [b, fb], [c, fc]];
+  %poly: lagrange(data);
+  %d_poly: diff(poly, x);
+  
+%\end{lstlisting}
+
+\end{document}
