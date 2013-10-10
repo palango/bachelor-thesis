@@ -13,7 +13,26 @@
 %\KOMAoptions{cleardoublepage=realempty}
 
 \usepackage{bibgerm}
-
+\usepackage{listings}
+\usepackage{inconsolata}
+%\usepackage[T1]{fontenc}
+\lstset{framextopmargin=50pt,frame=bottomline}
+\lstset{language=Matlab,
+   %keywords={break,case,catch,continue,else,elseif,end,for,function,
+      %global,if,otherwise,persistent,return,switch,try,while},
+   basicstyle=\ttfamily,
+   breaklines=true,
+   keywordstyle=\color{tud1c},
+   commentstyle=\color{tud9c},
+   stringstyle=\color{tud4c},
+   numbers=left,
+   numberstyle=\tiny\color{tud0c},
+   stepnumber=1,
+   numbersep=5pt,
+   backgroundcolor=\color{white},
+   tabsize=4,
+   showspaces=false,
+   showstringspaces=false}
 \newcommand{\getmydate}{%
   \ifcase\month%
     \or Januar\or Februar\or M\"arz%
@@ -22,6 +41,10 @@
     \or November\or Dezember%
   \fi\ \number\year%
 }
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
 
 \begin{document}
   %\thesistitle{Ableitung und Untersuchung des Abbruchfehlersch"atzers f"ur mittels
@@ -64,11 +87,8 @@
 
   \chapter{Ableitung des Abbruchfehlers}
   \input{text/te_source.tex}
-  \section{Diffusionsterme}
-  \section{Konvektionsterme}
-  \subsection{UDS}
-  \subsection{CDS}
-  \subsection{Flux-Blending}
+  \input{text/te_dif.tex}
+  \input{text/te_konv.tex}
 
   \chapter{Auswertung des Abbruchfehlers}
   \section{Diffusionsprobleme}
@@ -78,6 +98,13 @@
   \subsection{Flux-Blending}
 
   \chapter{Fazit}
+
+\appendix
+
+\chapter{Quellcodes}
+
+\lstinputlisting{create_plot_3d_data.m}
+\lstinputlisting{dif2d.m}
 
   \cleardoublepage
 
