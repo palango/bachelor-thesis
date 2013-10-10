@@ -1,0 +1,59 @@
+\section{Abbruchfehler}
+
+Bei der Lösung von Problemen werden bei der Diskretisierung Vereinfachungen vorgenommen.
+So können viele Approximationen durch Taylorreihenentwicklungen gewonnen werden. Dabei
+werden jedoch zwangsläufig Terme weggelassen. Der so enstehende Fehler wird
+Abbruchfehler (Truncation Error) genannt und kann zur Fehlerabschätzung bei FVM-Berechnungen
+genutzt werden. Die grundlegenden Zusammenhänge sollen hier an einem einfachen
+Beispiel gezeigt werden.
+
+Wir nehmen an, die Funktion $\sin(x)$ soll zur einfacheren Berechenbarkeit durch
+ein Polynom ausgedrückt werden. Anschließend soll ein Indikator für den dabei
+entstehenden Fehler gefunden werden.
+
+Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $x_0 =0$ berechnet:
+
+\begin{equation}
+  \sin(x) = \sum_{n=0}^{\infty}(-1)^n \frac{x^{2n+1}}{(2n+1)!} = 
+  x-\frac{x^3}{3!} +\frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+\end{equation}
+
+Nun wird die Approximation für $\sin(x)$ festgelegt. Diese soll in diesem Beispiel
+$x-\frac{x^3}{6} $ sein. In einem Diagramm sieht man, wie sich die Güte der
+Approximation mit zunehmenden Abstand von $0$ verschlechtert.
+
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[width=0.8*\textwidth, height=150pt, grid=major]
+  \addplot[domain=-2*pi:2*pi, samples=100, color=tud2b, very thick]{sin(deg(x))};
+  \addplot[domain=-3:3, samples=100, color=tud9b, very thick]{x - x*x*x/6};
+  \legend{$\sin(x)$,$x-\frac{x^3}{6} $}
+\end{axis}
+\end{tikzpicture}
+\centering
+\caption{Vergleich von Funktion und Approximation}
+\end{figure}
+
+Der absolute Fehler kann nun einfach über die Formel $\sin(x) - x + \frac{x^3}{6}$
+berechnet werden. Die Aufgabe besteht nun darin diesen geeignet über eine Formel abzuschätzen.
+
+Die Taylorreihenglieder, die in der Approximation nicht beachtet wurden, sind für diese
+Abweichung verantwortlich und können zur Abschätzund des Fehlers genutzt werden.
+Die Formel für den Fehler ergibt sich bei Beachtung von zwei Gliedern zu
+$\frac{x^5}{5!} -\frac{x^7}{7!} $.
+
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[width=0.8*\textwidth, height=150pt, grid=major, legend pos=north west]
+  \addplot[domain=-6:6, samples=100, color=tud2b, very thick]{sin(deg(x))-x+x*x*x/6};
+  \addplot[domain=-6:6, samples=100, color=tud9b, very thick]{x^5/120-x^7/(120*6*7)};
+  \legend{Absoluter Fehler, Fehlerapproximation}
+\end{axis}
+\end{tikzpicture}
+\centering
+\caption{Vergleich des absoluten Fehlers mit der Fehlerschätzung}
+\end{figure}
+
+Man sieht die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation,
+die durch Hinzunahme weiterer Glieder aus der Taylorreihenentwicklung beliebig
+verbessert werden könnte.

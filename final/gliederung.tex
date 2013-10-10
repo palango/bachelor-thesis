@@ -1,0 +1,89 @@
+\documentclass[bigchapter,twoside,report,11pt,type=bsc,colorback,accentcolor=tud2c]{tudthesis}
+\usepackage{ngerman}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+\usepackage[ngerman,pdfview=FitH,pdfstartview=FitV]{hyperref}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+%\KOMAoptions{cleardoublepage=realempty}
+
+\usepackage{bibgerm}
+
+\newcommand{\getmydate}{%
+  \ifcase\month%
+    \or Januar\or Februar\or M\"arz%
+    \or April\or Mai\or Juni\or Juli%
+    \or August\or September\or Oktober%
+    \or November\or Dezember%
+  \fi\ \number\year%
+}
+
+\begin{document}
+  %\thesistitle{Ableitung und Untersuchung des Abbruchfehlersch"atzers f"ur mittels
+  %Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}%
+    %{Derivation and examination of the truncation error for finite volume discretised Navier-Stokes equations}
+  %\author{Paul Lange}
+  %\birthplace{Darmstadt}
+  %\referee{Clemens v. Loewenich}{Ulrich Falk}
+  %\department{Fachbereich Maschinenbau}
+  %\group{Institut f"ur Numerische Berechnungsverfahren}
+  %\dateofexam{\today}{\today}
+  %\tuprints{12345}{1234}
+  %\makethesistitle
+  %\affidavit{P. Lange}
+
+  %\newpage
+  \tableofcontents
+  %\cleardoublepage
+
+  \chapter{Einleitung}
+  \input{text/einleitung.tex}
+
+\chapter{Grundlagen}
+\input{text/skalare_probleme.tex}
+  \input{text/num_methoden.tex}
+  \input{text/gitter.tex}
+  \subsection{Eigenschaften}
+  \subsection{Diskretisierungsmethoden}
+  \input{text/truncation_error.tex}
+  \section{Manufactured Solution}
+  %\cleardoublepage
+
+  \chapter{Finite Volumen Methode}
+  \section{Approximation von Volumenintegralen}
+  \section{Approximation von Flächenintegralen}
+  \section{Herleitung Diffusion}
+  \section{Herleitung Konvektion}
+  %\cleardoublepage
+
+
+  \chapter{Ableitung des Abbruchfehlers}
+  \input{text/te_source.tex}
+  \section{Diffusionsterme}
+  \section{Konvektionsterme}
+  \subsection{UDS}
+  \subsection{CDS}
+  \subsection{Flux-Blending}
+
+  \chapter{Auswertung des Abbruchfehlers}
+  \section{Diffusionsprobleme}
+  \section{Konvektionsprobleme}
+  \subsection{UDS}
+  \subsection{CDS}
+  \subsection{Flux-Blending}
+
+  \chapter{Fazit}
+
+  \cleardoublepage
+
+\bibliographystyle{gerplain}
+\bibliography{bib}
+
+\nocite{*}
+
+\end{document}

@@ -1,0 +1,45 @@
+\subsection{Numerische Gitter}
+
+Sind das mathematische Modell mit seinen Differentialgleichungen sowie den nötigen
+Rand- sowie gegebenenfalls Anfangsbedingungen festgelegt, besteht der nächste Schritt
+bei der Anwendung eines numerischen Berechnungsverfahren darin, das kontinuierliche
+Gebiet von Raum und ggf. Zeit durch eine endliche Menge von Teilgebieten zu approximieren,
+in denen dann der Wert des gesuchten Größe berechnet wird.
+
+Diese Teilgebiete werden im Allgemeinen in Form eines Gitters über den zu untersuchenden
+Bereich $V$ gelegt, weshalb dieser Arbeitsschritt auch oft Gittergenerierung genannt wird.
+
+Ein wichtiges Unterscheidungskriterium ist die Anordnung der Gitterpunkte.
+Man unterscheidet grundsätzlich zwischen strukturierten und unstrukturierten Gittern.
+
+Bei strukturierten Gittern ist die Lage der Gitterpunkte zueinander festgelegt. Diese
+Lagebeziehungen müssen deshalb nicht aufwendig gespeichert werden und die Gittergenerierung
+ist schnell und ohne großen Rechenaufwand nötig. Zwar ist es möglich bestimmte Gebiete
+aus der Gittergenerierung auszuschließen, eine Anpassung an die Problemgeometrie ist
+jedoch nur innerhalb der vorgegebenen Lagebeziehungen möglich.
+
+Bei unstrukturierten Gittern hingegen gibt es keine Vorschriften zu den Lagebeziehungen
+der einzelnen Gitterpunkte. Diese müssen deshalb aufwendig gespeichert werden, was
+Gittergeneration sowie Lösung komplizierter macht. Andererseits ist es Problemlos möglich
+das Gitter an der Problemgeometrie auszurichten oder in bestimmten Gebieten selektiv zu verfeinern.
+
+\subsubsection{Physikalisches und logisches Gebiet}
+
+Oftmals lässt die Geometrie des zu untersuchenden Problems keine Anwendung eines
+strukturierten Gitters zu. Nicht in jeden Fall ist es jedoch nötig daraufhin unstrukturierte
+Gitter zu verwenden. Vielmehr ist es möglich das physikalische Gebiet des Problems
+mittels einer geeigneten mathematischen Transformation auf ein sogenanntes
+logisches Gebiet abzubilden, auf welchem dann die Anwendung eines strukturierten Gitters
+möglich ist.
+
+Die Abbildung von physikalischem auf logisches Gebiet muss dabei umkehrbar sein, das heißt
+die Abbildungsfunktion muss EINEINDEUTIG??? sein. Die Achsen des physikalischen Gebiets
+werden im Allgemeinen mit lateinischen Buchstaben bezeichnet ($x$, $y$, $z$), während
+für das logische Gebiet griechische Buchstaben verwendet werden ($\xi$, $\eta$, $\theta$).
+Beispielhaft soll hier die formale, mathematische Beschreibung anhand eines ebenen
+Beispiels gezeigt werden:
+\begin{equation}
+  f=f(x, y)\qquad \text{mit} \qquad x=x(\xi, \eta),\quad y=y(\xi, \eta)
+\end{equation}
+
+

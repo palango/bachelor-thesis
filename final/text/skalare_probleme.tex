@@ -1,0 +1,70 @@
+\section{Skalare Probleme}
+
+Eine Vielzahl praktisch relevanter Probleme lässt sich durch skalare (partielle)
+Differentialgleichungen beschreiben. Anwendungsgebiete reichen hier von Wärmetransportproblemen
+über strukturmechanische Probleme (z.B. Auslenkung von Stäben und Membranen bei elastischem
+Werkstoffverhalten) bis hin zu strömungsmechanischen Problemen (z.B. Geschwindigkeitspotential
+wirbelfreier Strömungsfelder).
+
+\subsection{Einfache Feldprobleme}
+
+Einige kontinuumsmechanische Problemstellungen können durch eine Differentialgleichung
+der Form
+
+\begin{equation}
+  -\frac{\partial}{\partial x_i}\left({\alpha \frac{\partial \phi}{\partial x_i} }\right)=g
+  \label{eq:feldproblem_stat}
+\end{equation}
+ beschrieben werden. Diese muss auf dem gesamten betrachteten Gebiet $V$ gelten, das
+vom Rand $S$ begrenzt wird. Bei $\phi=\phi(\mathbf{x})$ handelt es sich um die gesuchte,
+skalare Feldgröße. $g=g(\mathbf{x})$ und $\alpha=\alpha(\mathbf{x})$ sind vorgegeben.
+
+
+Weiterhin müssen auf dem gesamten Rand $S$ Randbedingungen
+gegeben sein. Üblich sind hierbei folgende Typen von Randbedingungen:
+
+\begin{itemize}
+  \item Dirichletsche Randbedingung: $\quad \phi=\phi_S$
+  \item Neumannsche Randbedingung: $\quad \alpha \frac{\partial \phi}{\partial x_i} n_i = b_s $
+  \item Cauchysche Randbedingung: $\quad c_S \phi + \alpha \frac{\partial \phi}{\partial x_i} n_i = b_s$
+\end{itemize}
+
+Hierbei sind $\phi_S$, $b_S$ und $c_S$ vorgegebene Funktionen auf dem Rand $S$. Die
+Komponenten des nach außen gerichteten Normaleneinheitsvektors an $S$ werden mit $n_i$ bezeichnet.
+
+Treten mehrere Randbedingungstypen in einem Problem auf spricht man von gemischten Randwertproblemen.
+
+Die mit Gleichung~\eqref{eq:feldproblem_stat} beschriebenen Probleme beinhalten keine Zeitabhängigkeit
+und werden deshalb als stationär bezeichnet.
+Im instationären, also zeitabhängigem Fall, erhalten alle Größen neben der Ortsabhängigkeit
+eine Zeitabhängigkeit. Die entsprechende Differentialgleichung lautet damit
+\begin{equation}
+  \frac{\partial \phi}{\partial t}
+  -\frac{\partial}{\partial x_i}\left({\alpha \frac{\partial \phi}{\partial x_i} }\right)=g
+  \label{eq:feldproblem_instat}
+\end{equation}
+für die unbekannte Größe $\phi=\phi(\mathbf{x}, t)$.
+Für instationäre Probleme muss neben den Randbedingungen auch eine Anfangsbedingung
+$\phi(\mathbf{x}, t_0) = \phi_0(\mathbf{x})$ gegeben werden.
+
+Im weiteren Verlauf der Arbeit werden nur stationäre Probleme betrachtet. Alle Ergebnisse
+lassen sich aber auf instationäre Probleme übertragen.
+
+\subsection{Allgemeine Transportgleichung}
+
+Eine wichtige Problemklasse innerhalb des Maschinenbaus stellen Transportprobleme in
+Festkörpern oder Fluiden dar. Bei der transportierten Größe kann es sich dabei beispielsweise
+um joulsche Wärme (Wärmetransportprobleme) oder Stoffmengen (Stofftransportprobleme) handeln.
+
+Stationäre Transportprobleme können in Differentialform durch die Gleichung
+\begin{equation}
+  \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
+\end{equation}
+beschrieben werden. Hierbei stellt $f$ einen allgemeinen Quellterm,
+$\frac{\partial}{\partial x_i} \rho v_i \phi$ den Konvektionsterm sowie
+$\alpha \frac{\partial^2 \phi}{\partial x_i \partial x_i}$ den Diffusionsterm dar.
+Für spezielle Probleme müssen die entsprechenden Parameter angepasst werden (s. z.B. \cite{num_maschbau}).
+
+Alle Betrachtungen in der vorliegenden Arbeit bauen auf Problemen auf, die durch die
+Transportgleichung beschrieben werden können.
