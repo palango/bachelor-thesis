@@ -1,0 +1,137 @@
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
+\newcommand{\fxi}{f_{\xi}}
+\newcommand{\fxxi}{f_{\xi\xi}}
+\newcommand{\fxxxi}{f_{\xi\xi\xi}}
+\newcommand{\fxxxxi}{f_{\xi\xi\xi\xi}}
+\newcommand{\xxi}{x_{\xi}}
+\newcommand{\xxxi}{x_{\xi\xi}}
+\newcommand{\xxxxi}{x_{\xi\xi\xi}}
+\newcommand{\xxxxxi}{x_{\xi\xi\xi\xi}}
+\newcommand{\yxi}{y_{\xi}}
+\newcommand{\yxxi}{y_{\xi\xi}}
+\newcommand{\yxxxi}{y_{\xi\xi\xi}}
+\newcommand{\yxxxxi}{y_{\xi\xi\xi\xi}}
+
+\newcommand{\feta}{f_{\eta}}
+\newcommand{\feeta}{f_{\eta\eta}}
+\newcommand{\feeeta}{f_{\eta\eta\eta}}
+\newcommand{\feeeeta}{f_{\eta\eta\eta\eta}}
+\newcommand{\xeta}{x_{\eta}}
+\newcommand{\xeeta}{x_{\eta\eta}}
+\newcommand{\xeeeta}{x_{\eta\eta\eta}}
+\newcommand{\xeeeeta}{x_{\eta\eta\eta\eta}}
+\newcommand{\yeta}{y_{\eta}}
+\newcommand{\yeeta}{y_{\eta\eta}}
+\newcommand{\yeeeta}{y_{\eta\eta\eta}}
+\newcommand{\yeeeeta}{y_{\eta\eta\eta\eta}}
+
+\begin{document}
+
+\chapter{Transformation}
+
+Die Transformation vom physikalischen auf den logischen Bereich mit
+den physikalischen Koordinaten $(x, y)$ sowie den logischen
+Koordinaten $(\xi, \eta)$ kann wie folgt definiert werden:
+\begin{equation}
+  x=x(\xi,\eta),\quad y=y(\xi, \eta)
+\end{equation}
+\begin{equation}
+  \pder[x]{\xi}=\xi_x=\frac{y_{\eta}}{J}
+\end{equation}
+Damit folgt für für die bei Konvektion und Diffusion auftretende
+erste und zweite Ableitung:
+
+\begin{align*}
+  \pderf{x}&=\pder[\xi]{x}\pderf{\xi}+\pder[\eta]{x}\pderf{\eta}
+  =\frac{y_{\eta}}{J} f_{\xi} - \frac{y_{\xi}}{J}f_{\eta}\\
+  \pderfs{x^2} &= \pder{x}\left({\frac{y_{\eta}}{J} f_{\xi} - \frac{y_{\xi}}{J}f_{\eta}}\right)\\
+               &= \cdots
+\end{align*}
+
+
+Im logischen Gebiet können nun die vorhandenen Ableitungen von $f$
+($f_{\xi}$, $f_{\eta}$, $\dots$) diskretisiert werden.
+Es werden hierbei Zentraldifferenzen zweiter Ordnung gewählt.
+
+\begin{equation}
+  f_{\xi}=\frac{f_{i+1,j}-f_{i-1,j}}{2\Delta i} - \frac{f_{\xi\xi\xi}}{6}\Delta i^2 + HOT
+\end{equation}
+\begin{equation}
+  f_{\eta}=\frac{f_{i,j+1}-f_{i,j-1}}{2 \Delta i} - \frac{f_{\eta\eta\eta}}{6}\Delta i^2 + HOT
+\end{equation}
+
+Werden diese nun eingesetzt ergibt sich für $\Delta i = 1$ folgende Form:
+
+\begin{equation}
+  \pderf{x}=\frac{y_{\eta}}{J}\frac{f_{i+1,j}-f_{i-1,j}}{2}
+  - \frac{y_{\xi}}{J}\frac{f_{i,j+1}-f_{i,j-1}}{2}
+\end{equation}
+
+sowie der entstehende Abbruchfehler:
+
+\begin{equation}
+  TE_x = -\frac{y_{\eta}}{J}\frac{f_{\xi\xi\xi}}{6}
+  + \frac{y_{\xi}}{J}\frac{f_{\eta\eta\eta}}{6}+HOT
+\end{equation}
+
+Anschließend können die berechneten Werte für $f_{\xi},\dots$
+eingesetzt werden.
+
+\begin{align*}
+  \fxi &= \xxi f_x + \yxi f_y\\
+  \fxxi &= \xxxi f_x + \xxi^2f_{xx}+2\xxi \yxi f_{xy}
+  +\yxi^2 f_{yy} + \yxxi f_y\\
+  \fxxxi &= \xxxxi f_x + \yxxxi f_y + 3 \xxxi\xxi f_{xx}+
+  3 \yxxi\yxi f_{yy} + \left({3\xxxi\yxi+3\yxxi\xxi}\right)f_{xy}\\
+  &+ \xxi^3f_{xxx}+\yxi^3f_{yyy}+3\xxi^2\yxi f_{xxy}+3\xxi\yxi^2f_{xyy}\\
+ \feeeta &= \xeeeta f_x + \yeeeta f_y + 3 \xeeta\xeta f_{xx}+
+  3 \yeeta\yeta f_{yy} + \left({3\xeeta\yeta+3\yeeta\xeta}\right)f_{xy}\\
+  &+ \xeta^3f_{xxx}+\yeta^3f_{yyy}+3\xeta^2\yeta f_{xxy}+3\xeta\yeta^2f_{xyy}
+\end{align*}
+
+Es ergibt sich:
+
+\begin{align*}
+  TE_x&= -\frac{y_{\eta}}{J} \frac{1}{6}\Big[\xxxxi f_x + \yxxxi f_y + 3 \xxxi\xxi f_{xx}+
+  3 \yxxi\yxi f_{yy} + \left({3\xxxi\yxi+3\yxxi\xxi}\right)f_{xy}\\
+&+ \xxi^3f_{xxx}+\yxi^3f_{yyy}+3\xxi^2\yxi f_{xxy}+3\xxi\yxi^2f_{xyy}\Big]\\
+&+  \frac{y_{\xi}}{J}\frac{1}{6} \Big[\xeeeta f_x + \yeeeta f_y + 3 \xeeta\xeta f_{xx}+
+  3 \yeeta\yeta f_{yy} + \left({3\xeeta\yeta+3\yeeta\xeta}\right)f_{xy}\\
+  &+ \xeta^3f_{xxx}+\yeta^3f_{yyy}+3\xeta^2\yeta f_{xxy}+3\xeta\yeta^2f_{xyy}
+\Big]\\
+  &= TE_{x1} + TE_{x2} + TE_{x3}
+\end{align*}
+
+wobei $TE_{x1}$die ersten Ableitungen von $f$ enthält, usw.:
+
+\begin{align*}
+  TE_{x1} &= \frac{1}{6\ J}\left[{
+  \left({-\yeta\xxxxi + \yxi\xeeeta}\right) f_x +
+  \left({-\yeta\yxxxi + \yxi\yeeeta}\right) f_y
+  }\right]\\
+  TE_{x2} &= \frac{1}{2\ J} \Big[
+  \left({-\yeta\xxxi\xxi + \yxi\xeeta\xeta}\right) f_{xx}+
+  \left({-\yeta\yxxi\yxi + \yxi\yeeta\yeta}\right) f_{yy}\\&+
+  \left({-\yeta \left({\xxxi\yxi+\yxxi\xxi}\right) +
+  \yxi \left({\xeeta\yeta+\yeeta\xeta}\right)}\right) f_{xy}
+  \Big]\\
+  TE_{x3}&=\frac{1}{6\ J} \Big[
+  \left({-\yeta\xxi^3+\yxi\xeta^3}\right) f_{xxx}+
+  \yxi \yeta\left({-\yxi^2+\yeta^2}\right) f_{yyy}\\&+
+  3 \xxi \xeta \left({-\xxi^2+\xeta^2}\right) f_{xxy}+
+  3 \xxi \xeta \left({-\xxi\yxi+\xeta\yeta}\right) f_{xyy}
+  \Big]
+\end{align*}
+
+\end{document}
