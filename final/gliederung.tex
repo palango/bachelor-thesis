@@ -33,6 +33,10 @@
    tabsize=4,
    showspaces=false,
    showstringspaces=false}
+
+\usepackage{tikz}
+
+
 \newcommand{\getmydate}{%
   \ifcase\month%
     \or Januar\or Februar\or M\"arz%
@@ -99,9 +103,21 @@
 
   \chapter{Fazit}
 
+
 \appendix
 
 \chapter{Quellcodes}
+
+\begin{tikzpicture}[scale=1]
+\coordinate[label=left:$A$] (A) at (0,0);
+\coordinate[label=right:$B$] (B) at (4,1);
+\draw (A) -- (B);
+\fill (A) circle (2pt);
+\fill (B) circle (2pt);
+\end{tikzpicture}
+
+
+
 
 %\lstinputlisting{create_plot_3d_data.m}
 %\lstinputlisting{dif2d.m}
