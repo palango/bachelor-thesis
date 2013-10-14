@@ -1,0 +1,185 @@
+\documentclass[11pt, ngerman,colorback,accentcolor=tud2d]{tudreport}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{microtype}
+
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc,intersections,through,backgrounds}
+
+\begin{document}
+
+\begin{figure}[ht]
+\begin{tikzpicture}[scale=1.3]
+  %\draw[->] (6,0) -- (6.5,0) node[right] {$x$} coordinate(x axis);
+  %\draw[->] (0,6) -- (0,6.5) node[above] {$y$} coordinate(y axis);
+  \fill[tud0a] (2,2) rectangle +(2,2);
+  \draw[step=2cm, thick] (-2.00001, 0) grid (8, 6);
+
+  \fill (3, 3)  circle[radius=1.5pt];
+  \node (N) at (3,3) [label=above:$P$]{};
+
+  \fill (3, 5)  circle[radius=1.5pt];
+  \node (N) at (3,5) [label=above:$N$]{};
+
+  \fill (3, 1)  circle[radius=1.5pt];
+  \node (N) at (3,1) [label=below:$S$]{};
+
+  \fill (5, 3)  circle[radius=1.5pt];
+  \node (N) at (5,3) [label=right:$E$]{};
+
+  \fill (1, 3)  circle[radius=1.5pt];
+  \node (N) at (1,3) [label=left:$W$]{};
+
+  \fill (7, 3)  circle[radius=1.5pt];
+  \node (N) at (7,3) [label=right:$EE$]{};
+
+  \fill (-1, 3)  circle[radius=1.5pt];
+  \node (N) at (-1,3) [label=left:$WW$]{};
+
+  \fill (5, 5)  circle[radius=1.5pt];
+  \node (N) at (5,5) [label={above right}:$NE$]{};
+  \fill (5, 1)  circle[radius=1.5pt];
+  \node (N) at (5,1) [label={below right}:$SE$]{};
+  \fill (1, 1)  circle[radius=1.5pt];
+  \node (N) at (1,1) [label={below left}:$SW$]{};
+  \fill (1, 5)  circle[radius=1.5pt];
+  \node (N) at (1,5) [label={above left}:$NW$]{};
+
+  \fill (4, 3)  circle[radius=1.5pt];
+  \node (N) at (4,3) [label={right=0pt}:$e$]{};
+
+  \fill (3, 2)  circle[radius=1.5pt];
+  \node (N) at (3,2) [label={below=0pt}:$s$]{};
+
+  \fill (2, 3)  circle[radius=1.5pt];
+  \node (N) at (2,3) [label={left=0pt}:$w$]{};
+
+  \fill (3, 4)  circle[radius=1.5pt];
+  \node (N) at (3,4) [label={above=0pt}:$n$]{};
+
+  \fill (6, 3)  circle[radius=1.5pt];
+  \node (N) at (6,3) [label=right:$ee$]{};
+
+  \fill (0, 3)  circle[radius=1.5pt];
+  \node (N) at (0,3) [label=left:$ww$]{};
+
+
+\end{tikzpicture}
+\centering
+\caption{Allgemeines Kontrollvolumen im zweidimensionalen Fall}
+\end{figure}
+
+
+\begin{figure}[ht]
+  
+\begin{tikzpicture}[scale=1.3]
+  %\draw[->] (6,0) -- (6.5,0) node[right] {$x$} coordinate(x axis);
+  %\draw[->] (0,6) -- (0,6.5) node[above] {$y$} coordinate(y axis);
+  \fill[tud0a] (2,2) rectangle +(2,2);
+
+  \filldraw[pattern=north east lines, thick] (1,0) rectangle +(1,6);
+  \draw[step=2cm, thick] (2, 0) grid (6, 6);
+
+  \fill (3, 3)  circle[radius=1.5pt];
+  \node (N) at (3,3) [label=above:$P$]{};
+
+  \fill (3, 5)  circle[radius=1.5pt];
+  \node (N) at (3,5) [label=above:$N$]{};
+
+  \fill (3, 1)  circle[radius=1.5pt];
+  \node (N) at (3,1) [label=below:$S$]{};
+
+  \fill (5, 3)  circle[radius=1.5pt];
+  \node (N) at (5,3) [label=right:$E$]{};
+
+  \fill (5, 5)  circle[radius=1.5pt];
+  \node (N) at (5,5) [label={above right}:$NE$]{};
+  \fill (5, 1)  circle[radius=1.5pt];
+  \node (N) at (5,1) [label={below right}:$SE$]{};
+
+  \fill (4, 3)  circle[radius=1.5pt];
+  \node (N) at (4,3) [label={right=0pt}:$e$]{};
+
+  \fill (3, 2)  circle[radius=1.5pt];
+  \node (N) at (3,2) [label={below=0pt}:$s$]{};
+
+  \fill (2, 3)  circle[radius=1.5pt];
+  \node (N) at (2,3) [label={right=0pt}:$w$]{};
+
+  \fill (3, 4)  circle[radius=1.5pt];
+  \node (N) at (3,4) [label={above=0pt}:$n$]{};
+\end{tikzpicture}
+\centering
+\caption{Kontrollvolumen am Rand im zweidimensionalen Fall}
+\end{figure}
+
+
+\begin{figure}[ht]
+\begin{tikzpicture}[scale=1.5]
+  \coordinate (TA) at (0.5,1.3);
+  \coordinate (BA) at (0.5,0.3);
+  \coordinate (TE) at (7.5,3);
+  \coordinate (BE) at (7.5,1);
+  \draw[->, thick] (0,0) -- (8,0) node[right] {$x$} coordinate(x axis);
+  \draw[->, thick] (0,0) -- (0,3) node[above] {$y$} coordinate(y axis);
+
+  \draw[name path=border, thick] (BA) -- (TA)
+  (TA) .. controls (3,1.1) and (4,3) .. (TE)
+  (TE) -- (BE)
+  (BE) .. controls (4,2) and (3,0.1) .. (BA);
+
+  \draw[name path=line2, black!0] (3.5,3) -- (4.2,0.8);
+  \draw[name path=line1, black!0] (1.5,2) -- (2,0.2);
+  \draw[name path=line3, black!0] (5.5,5) -- (6,1);
+
+  \foreach \i in {2/3, 1/3}
+  \draw[thick] (0.5, \i+0.3) .. controls (3, \i+0.1) and (4, \i+2) .. (7.5, 2*\i+1);
+
+  \draw [thick,name intersections={of=border and line1}]
+    (intersection-1) -- (intersection-2);
+  \draw [thick,name intersections={of=border and line2}]
+    (intersection-1) -- (intersection-2);
+  \draw [thick,name intersections={of=border and line3}]
+    (intersection-1) -- (intersection-2);
+
+  \draw[name path=border, thick, join=miter] (BA) -- (TA)
+   .. controls (3,1.1) and (4,3) .. (TE)
+   -- (BE)
+   .. controls (4,2) and (3,0.1) .. (BA)
+   -- (TA);
+
+ \node (BE) at (BE) [label=right:{$\eta=0$}]{};
+ \node (BE) at (TE) [label=above:{$\xi=4$}, label=right:{$\eta=3$}]{};
+ \node (BE) at (7.5,7/3) [label=right:{$\eta=2$}]{};
+ \node (BE) at (7.5,5/3) [label=right:{$\eta=1$}]{};
+ \node (BE) at (TA) [label=above:{$\xi=0$}]{};
+ \node (BE) at (3.7,2.1) [label=above:{$\xi=2$}]{};
+
+
+
+
+  % xi-eta
+  \draw[->, thick] (0,-4) -- (8,-4) node[right] {$\xi$} coordinate(x axis);
+  \draw[->, thick] (0,-4) -- (0,-1) node[above] {$\eta$} coordinate(y axis);
+
+  \draw[ystep=0.8cm,xstep = 1.6cm, thick] (0, -4) grid (6.4, -1.6);
+  \node (x) at (0,-1.6) [label={left}:{$3$}] {};
+  \node (x) at (0,-4.0) [label={left}:{$0$}] {};
+  \node (x) at (6.4,-4.0) [label={below}:{$4$}] {};
+  \node (x) at (4.8,-4.0) [label={below}:{$3$}] {};
+  \node (x) at (1.6,-4.0) [label={below}:{$1$}] {};
+  \node (x) at (3.2,-4.0) [label={below}:{$2$}] {};
+  \node (x) at (0.0,-4.0) [label={below}:{$0$}] {};
+  \node (x) at (0.0,-3.2) [label={left}:{$1$}] {};
+  \node (x) at (0.0,-2.4) [label={left}:{$2$}] {};
+
+\end{tikzpicture}
+\centering
+\caption{Transformation}
+\end{figure}
+
+\end{document}
