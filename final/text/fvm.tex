@@ -1,0 +1,106 @@
+\section{Finite Volumen Methode}
+
+Die Finite-Volumen Methoden sind ein numerisches Verfahren zur Lösung von (partiellen)
+Differentialgleichungen. Sie sind heute das Standardverfahren zu Lösung von Strömungsproblemen
+wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen aber keineswegs nur darauf beschränkt.
+Die charakteristische Eigenschaft der Finite-Volumen Methoden ist ihre Konservativität, also
+die Erfüllung der den mathematischen Modellen zugrunde liegenden Erhaltungsprinzipien in den
+diskreten Gleichungen.
+
+\subsection{Ableitung der Finite Volumen diskretisierten Transportgleichung}
+
+Ausgangspukt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
+in diskrete Teilgebiete. Diese werden bei der Finite-Volumen Methode Kontrollvolumen
+genannt (im zweidimensionalen Fall steht Volumen stellvertretend für Fläche).
+Für jedes dieser Kontrollvolumen werden die Erhaltungsgleichungen in Integralform formuliert
+beziehungsweise durch Integration aus den entsprchenden Diffenrentialgleichungen gewonnen.
+
+Beispielhaft soll das Vorgehen hier anhand der in Abschnitt~\ref{sec:transportgl}
+vorgestellten stationären Transportgleichung im zweidimensionalen Fall
+($i=1$, $2$) vorgestellt werden.
+\begin{equation}
+  \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
+\label{eq:transp_fvm}
+\end{equation}
+Durch Integration von Gleichung~\eqref{eq:transp_fvm} über ein Kontrollvolumen $V$ (Gl.~\ref{eq:fvm1})
+erhält man bei anschließender Anwendung des Gaußschen Integralsatzes die in Gleichung~\eqref{eq:fvm2} beschriebene Beziehung.
+\begin{align}
+  \int_V \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) dV &= \int_V f dV \label{eq:fvm1}\\
+  \int_S  \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) n_i dS&= \int_V f dV \label{eq:fvm2}
+\end{align}
+Hierbei beschreibt $S$ die Oberfläche des Kontrollvolumens $V$, $dS$ ein Oberflächenelement
+und $n_i$ die Komponenten des Einheitsnormalenvektors auf der Oberfläche.
+
+Geht man nun von beliebig geformten Kontrollvolumen zu viereckigen Kontrollvolumen über,
+so lässt sich das Integral über die Oberfläche $S$ in Gleichung~\eqref{eq:fvm2} durch eine
+Summation über die Integrale der vier Seitenflächen umformen. Hierbei beschreibt $c$ die
+einzelnen Seitenflächen und ist bei viereckigen Kontrollvolumen als $c=(e,w,n,s)$ definiert.
+\begin{equation}
+  \sum_c \int_{S_c} \left(\rho v_i \phi - \alpha \frac{\partial \phi}{\partial x_i}
+\right) n_{ci} dS_c = \int_V f dV\label{eq:fvm3}
+\end{equation}
+Gleichung~\eqref{eq:fvm3} stellt nun die Bilanzgleichung für die konvektiven Flüsse
+$F_c^C$ sowie die diffusiven Flüsse $F_c^D$ durch die Seiten des Kontrollvolumens $V$ dar.
+\begin{align}
+  F_c^C &=  \int_{S_c} \left(\rho v_i \phi \right) n_{ci} dS_c \\
+  F_c^D &=  -\int_{S_c} \left(\alpha \frac{\partial \phi}{\partial x_i}\right) n_{ci} dS_c 
+\end{align}
+
+\subsection{Integralapproximation}
+
+In dieser Arbeit wird von einer zellenorientierten Variablenanordnung (s. \cite{num_maschbau})
+ausgegangen. Damit liegen die gesuchte diskrete Größe im Mittelpunkt jedes Kontrollvolumens.
+Die Integrale der konvektiven und diffusiven Flüsse müssen durch diese Variablen
+approximiert werden. Dabei ist es zweckmäßig zuerst die Oberflächenintegrale durch Variablen
+auf der jeweilen Seite des Kontrollvolumens zu beschrieben und anschließend diese durch die Werte
+im Zentrum des Kontrollvolumens zu beschreiben.
+
+Beispielhaft soll hier das Oberflächenintegral
+\begin{equation*}
+  \int_{S_w} p_i n_{wi}\,dS_w
+\end{equation*}
+der Westseite $S_w$ betrachtet werden. Hierbei bezeichnet $p_i$ die Komponenten einer allgemeinen
+Funktion $\mathbf{p} = (p_1(\mathbf{x}), p_2(\mathbf{x}))$. Die einfachste
+Approximationsmöglichkeit besteht darin, den Funktionswert von $\mathbf{p}$ im Mittelpunkt
+der Seite zu nutzen.
+\begin{equation}
+  \int_{S_w} p_i n_{wi}\,dS_w \approx q_w \delta S_w
+\end{equation}
+Die Normalkomponenten von $\mathbf{p}$ an der Stelle $w$ werden hierbei mit $q_w = p_{wi} n_{wi}$ bezeichnet.
+Aufgrund der Nutzung des Funktionswertes im Seitenmittelpunkt wird diese Approximation auch Mittelpunktsregel genannt.
+Sie hat eine Ordnung von zwei bezüglich der Seitenlänge $\delta S_w$.
+
+Weitere gängige Approximationen umfassen die Trapezregel oder die Simpsonregel, auf die jedoch
+in der vorliegenden Arbeit nicht näher eingegangen wird.
+
+Für die Flüsse $F_c^C$ und $F_c^D$ ergeben sich mit der Mittelpunktsregel folgende Approximationen:
+\begin{align*}
+  F_c^C &\approx \underbrace{\rho v_i n_{ci} \delta S_c}_{\dot{m_c}}  \phi_c\\
+  F_c^D &\approx  -\alpha  n_{ci} \delta S_c \left(\frac{\partial \phi}{\partial x_i}\right)_c
+\end{align*}
+wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
+
+Im nächsten Schritt müssen nun die Variablenwert $\phi_c$ durch die Variablenwerte in den
+Mittelpunkten der Kontrollvolumen ausgedrückt werden.
+Zunächst soll jedoch die rechte Seite von Gleichung~\eqref{eq:fvm3} betrachtet werden.
+Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im Allgemeinen eine Approximation
+mittels numerischer Integration. Oftmals ist hierbei die Nutzung der Mittelpunktsregel mit der Ordnung zwei
+ausreichend. Sie geht von der Annahme aus, das der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
+einen Mittelwert über die Werte von $f$ im gesamten Kontrollvolumen darstellt.
+
+Die Auswertung des Volumenintegrals ergibt sich damit im zweidimensionalen Fall zu
+\begin{equation}
+  \int_V f\,dV \approx f_p\,\delta V
+\end{equation}
+wobei $\delta V$ das Volumen des Kontrollvolumens beschreibt und im Falle eines orthogonalen Gitters
+mittels
+\begin{equation}
+  \delta V = (x_e - x_w)(y_n-y_s) = \Delta x \Delta y
+\end{equation}
+berechnet werden kann. Auf den bei dieser Appoximation entstehenden Abbruchfehler wird in
+Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
+\subsection{Ableitung diffusiver Fluss}
+\subsection{Ableitung konvektiver Fluss}
