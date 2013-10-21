@@ -20,19 +20,27 @@
 \lstset{language=Matlab,
    %keywords={break,case,catch,continue,else,elseif,end,for,function,
       %global,if,otherwise,persistent,return,switch,try,while},
-   basicstyle=\ttfamily,
+   basicstyle=\ttfamily\footnotesize,
    breaklines=true,
    keywordstyle=\color{tud1c},
    commentstyle=\color{tud9c},
    stringstyle=\color{tud4c},
-   numbers=left,
-   numberstyle=\tiny\color{tud0c},
+   %numbers=left,
+   %numberstyle=\tiny\color{tud0c},
    stepnumber=1,
    numbersep=5pt,
    backgroundcolor=\color{white},
    tabsize=4,
    showspaces=false,
-   showstringspaces=false}
+   showstringspaces=false,
+   literate=%
+{Ö}{{\"O}}1
+{Ä}{{\"A}}1
+{Ü}{{\"U}}1
+{ß}{{\ss}}2
+{ü}{{\"u}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1}
 
 \usepackage{tikz}
 
@@ -75,18 +83,12 @@
 \input{text/skalare_probleme.tex}
   \input{text/num_methoden.tex}
   \input{text/gitter.tex}
-  \subsection{Eigenschaften}
-  \subsection{Diskretisierungsmethoden}
+  \input{text/fvm.tex}
   \input{text/truncation_error.tex}
-  \section{Manufactured Solution}
+  \input{text/manufactured_solution.tex}
   %\cleardoublepage
 
-  \chapter{Finite Volumen Methode}
-  \section{Approximation von Volumenintegralen}
-  \section{Approximation von Flächenintegralen}
-  \section{Herleitung Diffusion}
-  \section{Herleitung Konvektion}
-  %\cleardoublepage
+
 
 
   \chapter{Ableitung des Abbruchfehlers}
@@ -120,7 +122,8 @@
 
 
 %\lstinputlisting{create_plot_3d_data.m}
-%\lstinputlisting{dif2d.m}
+%\twocolumn
+%\lstinputlisting{comb2d_cds_orth.m}
 
   \cleardoublepage
 
