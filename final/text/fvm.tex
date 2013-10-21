@@ -11,7 +11,8 @@ diskreten Gleichungen.
 
 Ausgangspukt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
 in diskrete Teilgebiete. Diese werden bei der Finite-Volumen Methode Kontrollvolumen
-genannt (im zweidimensionalen Fall steht Volumen stellvertretend für Fläche).
+genannt (im zweidimensionalen Fall steht Volumen stellvertretend für Fläche,
+im Eindimensionalen für Länge).
 Für jedes dieser Kontrollvolumen werden die Erhaltungsgleichungen in Integralform formuliert
 beziehungsweise durch Integration aus den entsprchenden Diffenrentialgleichungen gewonnen.
 
@@ -77,10 +78,10 @@ Weitere gängige Approximationen umfassen die Trapezregel oder die Simpsonregel,
 in der vorliegenden Arbeit nicht näher eingegangen wird.
 
 Für die Flüsse $F_c^C$ und $F_c^D$ ergeben sich mit der Mittelpunktsregel folgende Approximationen:
-\begin{align*}
-  F_c^C &\approx \underbrace{\rho v_i n_{ci} \delta S_c}_{\dot{m_c}}  \phi_c\\
+\begin{align}
+  F_c^C &\approx \underbrace{\rho v_i n_{ci} \delta S_c}_{\dot{m_c}}  \phi_c \label{eq:disk_konv}\\
   F_c^D &\approx  -\alpha  n_{ci} \delta S_c \left(\frac{\partial \phi}{\partial x_i}\right)_c
-\end{align*}
+\end{align}
 wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
 
 Im nächsten Schritt müssen nun die Variablenwert $\phi_c$ durch die Variablenwerte in den
@@ -102,5 +103,78 @@ mittels
 \end{equation}
 berechnet werden kann. Auf den bei dieser Appoximation entstehenden Abbruchfehler wird in
 Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
-\subsection{Ableitung diffusiver Fluss}
+
+
 \subsection{Ableitung konvektiver Fluss}
+
+Die durch die Anwendung der Mittelpunkteregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
+Flüsse beinhaltet noch den Variablenwert des Seitenmittelpunkts, der jedoch bei
+zellenorientierter Variablenanordnung nicht gesucht ist. Deshalb muss dieser Wert $\phi_c$ im
+nächsten Schritt durch variablenwerte in den Kontrollvolumenmittelpunkten ausgedrückt werden.
+Hierbei ist es immer ratsam möglichst lokale Approximationen zu nutzen, aslo beispielsweise
+bei der Approximation von $\phi_e$ die Variablenwerte $\phi_P$ und $\phi_E$ zu benutzen.
+
+Es werden nun einige gängige Approximationen für die Nutzung bei konvektiven Flüssen vorgestellt.
+Es handelt sich hierbei genaugenommen um Interpolationen aus den umliegenden Mittelpunkten der Kontrollvolumen.
+Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im eindimensionalen statt,
+können jedoch problemlos in höhere Dimensionen übertragen werden.
+
+\paragraph{Upwind-Verfahren}
+Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die
+von der Geschwindigkeit $v$ abhängt.
+
+\begin{equation*}
+\phi_e=\left\{\begin{array}{cl} \phi_P, & \mbox{falls }v>0\\
+\phi_E, & \mbox{falls } v<0\end{array}\right.
+\end{equation*}
+
+Das UDS-Verfahren besitzt einen Interpolationsfehler erster Ordnung, liefert jedoch bei
+Transportrichtungen, die senkrecht zu den Kontrollvolumenseiten liegen vergleichsweise gute Approximationen.
+Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was ein großer Vorteil ist.
+
+
+
+
+\paragraph{Zentraldifferenzen-Verfahren}
+Das Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
+Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonnen.
+
+\begin{equation*}
+  \phi_e \approx \phi_E\gamma_e + \phi_P (1-\gamma_e)
+\end{equation*}
+Der Interpolationsfaktor $\gamma_e$ ist hierbei gegeben als:
+\begin{equation}
+  \gamma_e = \frac{x_e-x_P}{x_E-x_P}
+  \label{eq:cds_faktor}
+\end{equation}
+Das CDS-verfahren besitzt einen Interpolationsfehler zweiter Ordnung. Es neigt jedoch zu
+numerischen Oszillationen.
+
+\paragraph{``Flux-Blending''-Verfahren}
+
+Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
+Ordnung zu verbinden. So hat das UDS-Verfahren einen Interpolationsfehler erster Ordnung,
+während das CDS-Verfahren zu numerischen Oszillationen neigt.
+
+Beim Flux-Blending werden nun beide Verfahren gewichtet zusammengeführt. Der Gewichtungsfaktor
+wird hierbei $\beta$ genannt. Gilt $\beta = 1$, so ergibt sich das CDS-Verfahren, für
+$\beta = 0$ das UDS-Verfahren.
+
+\begin{equation}
+  \phi_e \approx (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS}
+  \label{eq:flux_blending}
+\end{equation}
+
+
+
+\paragraph{Weitere Verfahren}
+Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
+die Variablen im Zentrum eines Kontrollvolumens.
+
+So wird beim QUICK-verfahren (Quadratic Upwind Interpolation for Convective
+Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
+zur Approximation genutzt.
+
+
+
+\subsection{Ableitung diffusiver Fluss}
