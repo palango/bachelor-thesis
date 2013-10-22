@@ -80,7 +80,7 @@ in der vorliegenden Arbeit nicht näher eingegangen wird.
 Für die Flüsse $F_c^C$ und $F_c^D$ ergeben sich mit der Mittelpunktsregel folgende Approximationen:
 \begin{align}
   F_c^C &\approx \underbrace{\rho v_i n_{ci} \delta S_c}_{\dot{m_c}}  \phi_c \label{eq:disk_konv}\\
-  F_c^D &\approx  -\alpha  n_{ci} \delta S_c \left(\frac{\partial \phi}{\partial x_i}\right)_c
+  F_c^D &\approx  -\alpha  n_{ci} \delta S_c \left(\frac{\partial \phi}{\partial x_i}\right)_c\label{eq:disk_dif}
 \end{align}
 wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
 
@@ -106,6 +106,7 @@ Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
 
 
 \subsection{Ableitung konvektiver Fluss}
+\label{sec:konv_fluss}
 
 Die durch die Anwendung der Mittelpunkteregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
 Flüsse beinhaltet noch den Variablenwert des Seitenmittelpunkts, der jedoch bei
@@ -120,7 +121,8 @@ Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im eindimensi
 können jedoch problemlos in höhere Dimensionen übertragen werden.
 
 \paragraph{Upwind-Verfahren}
-Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die
+Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
+beziehungsweise durch Integration aus den entsprchenden Diffenrentialgleichungen 
 von der Geschwindigkeit $v$ abhängt.
 
 \begin{equation*}
@@ -178,3 +180,23 @@ zur Approximation genutzt.
 
 
 \subsection{Ableitung diffusiver Fluss}
+\label{sec:dif_fluss}
+
+Um den konvektiven Fluss (Gl. \ref{eq:disk_dif}) weiter zu approximieren ist es nötig die Ableitung von
+$\phi$ durch die Variablenwerte in den Kontrollvolumenmittelpunkten auszudrücken.
+Beispielhaft soll hier wieder der eindimensionale, kartesische Fall betrachtet werden.
+Für die östliche Seite muss somit die Ableitung $(\partial \phi /\partial x)_e$ approximiert werden.
+Hierfür werden im Allgemeinen Differenzenformeln verwendet, wie sie auch bei der
+Finite-Differenzen-Methode eingesetzt werden. Zentraldifferenzen werden hierbei
+gegenüber Vorwärts- oder Rückwärtsdifferenzen bevorzugt eingesetzt, da sie die größte
+Genauigkeit für die gleiche Menge von in die Approximation einbezogenen Anzahl von Gitterpunkten
+besitzen.
+
+Bei Verwendung einer Zentraldifferenz für die Ostseite des Kontrollvolumens ergibt sich folgende
+Approximation:
+\begin{equation}
+  \left({\pder[\phi]{x}}\right)_e \approx \frac{\phi_E -\phi_P}{x_e-x_P}
+\end{equation}
+Zentraldifferenzen können nur genutzt werden solange auch alle benötigten Variablenwerte
+verfügbar sind. Dies ist an der Rändern des betrachteten Gebiets meist nicht der Fall.
+Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurückgegriffen werden.
