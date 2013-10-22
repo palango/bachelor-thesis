@@ -1,25 +1,31 @@
 \section{Abbruchfehler}
 
-Bei der Lösung von Problemen werden bei der Diskretisierung Vereinfachungen vorgenommen.
-So können viele Approximationen durch Taylorreihenentwicklungen gewonnen werden. Dabei
-werden jedoch zwangsläufig Terme weggelassen. Der so enstehende Fehler wird
-Abbruchfehler (Truncation Error) genannt und kann zur Fehlerabschätzung bei FVM-Berechnungen
-genutzt werden. Die grundlegenden Zusammenhänge sollen hier an einem einfachen
-Beispiel gezeigt werden.
+Der Abbruchfehler ist der Fehler der beim Abschneiden einer unendlichen Summe
+und deren Approximation durch eine endliche Summe entsteht.
 
-Wir nehmen an, die Funktion $\sin(x)$ soll zur einfacheren Berechenbarkeit durch
-ein Polynom ausgedrückt werden. Anschließend soll ein Indikator für den dabei
-entstehenden Fehler gefunden werden.
+In der Praxis werden Approximationen, wie die in Abschnitt~\ref{sec:konv_fluss} oder
+\ref{sec:dif_fluss} beschriebenen, aus Taylorreihenentwicklungen um die betrachteten
+Punkte gewonnen\footnote{Die Herleitungen sind in Kapitel XXX ausführlich ausgeführt.}. 
+Da die Approximation jedoch zwangsläufig endlich sein muss, werden
+dabei Glieder der unendlichen Taylorreihenentwicklung abgeschnitten. Der dadruch entstehende
+Fehler wird Abbruchfehler (engl. Truncation Error) genannt.
+Die restlichen, für die Approximation nicht genutzten Terme können zur Fehlerabschätzung
+bei numerischen Berechnungen genutzt werden. Die grundlegenden Zusammenhänge sollen hier an einem einfachen Beispiel gezeigt werden.
 
+Wir nehmen an, die Funktion $f=\sin(x)$ soll zur einfacheren Berechenbarkeit durch
+ein Polynom approximiert werden. Anschließend soll ein Indikator für den dabei
+entstehenden Fehler gefunden werden ohne dabei auf $f$
+selbst zurückzugreifen.
 Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $x_0 =0$ berechnet:
 
 \begin{equation}
   \sin(x) = \sum_{n=0}^{\infty}(-1)^n \frac{x^{2n+1}}{(2n+1)!} = 
   x-\frac{x^3}{3!} +\frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+ \label{eq:taylor_example}
 \end{equation}
 
 Nun wird die Approximation für $\sin(x)$ festgelegt. Diese soll in diesem Beispiel
-$x-\frac{x^3}{6} $ sein. In einem Diagramm sieht man, wie sich die Güte der
+$x-\frac{x^3}{6} $ sein. In Abbildung~\ref{fig:taylor_example} sieht man, wie sich die Güte der
 Approximation mit zunehmenden Abstand von $0$ verschlechtert.
 
 \begin{figure}[h]
@@ -32,16 +38,24 @@ Approximation mit zunehmenden Abstand von $0$ verschlechtert.
 \end{tikzpicture}
 \centering
 \caption{Vergleich von Funktion und Approximation}
+ \label{fig:taylor_example}
 \end{figure}
 
 Der absolute Fehler kann nun einfach über die Formel $\sin(x) - x + \frac{x^3}{6}$
-berechnet werden. Die Aufgabe besteht nun darin diesen geeignet über eine Formel abzuschätzen.
+berechnet werden und entspricht den übrigen Gliedern der Taylorreihe~\eqref{eq:taylor_example}.
+Der absolute Fehler entspricht also in diesem einfachen Beispiel dem Abbruchfehler.
+Dieser wird nach seinem englischen Namen \textit{Truncation Error} mit $TE$ bezeichnet.
+\begin{equation}
+  TE = \frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+ \label{eq:taylor_example_te}
+\end{equation}
+Da der Abbruchfehler selbst wieder eine unendliche Summe darstellt muss zur Auswertung
+wieder eine endliche Anzahl von Termen abgetrennt werden. Dies stellt jedoch im allgemeinen
+kein Problem dar, da der Einfluss der Terme mit steigendem Exponenten stark abnimmt.
 
-Die Taylorreihenglieder, die in der Approximation nicht beachtet wurden, sind für diese
-Abweichung verantwortlich und können zur Abschätzund des Fehlers genutzt werden.
-Die Formel für den Fehler ergibt sich bei Beachtung von zwei Gliedern zu
+Zur Abschätzund des Fehlers sollen im Beispiel zwei Glieder genutzt werden. Aus
+Gleichung~\eqref{eq:taylor_example_te} ergibt sich damit der Fehlerindikator zu
 $\frac{x^5}{5!} -\frac{x^7}{7!} $.
-
 \begin{figure}[h]
 \begin{tikzpicture}
 \begin{axis}[width=0.8*\textwidth, height=150pt, grid=major, legend pos=north west]
@@ -52,8 +66,6 @@ $\frac{x^5}{5!} -\frac{x^7}{7!} $.
 \end{tikzpicture}
 \centering
 \caption{Vergleich des absoluten Fehlers mit der Fehlerschätzung}
+ \label{fig:taylor_example_te}
 \end{figure}
-
-Man sieht die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation,
-die durch Hinzunahme weiterer Glieder aus der Taylorreihenentwicklung beliebig
-verbessert werden könnte.
+In Abbildung~\ref{fig:taylor_example_te} sieht man die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation um den Entwicklungspunkt. Die Genauigkeit kann durch Hinzunahme weiterer Terme aus der Reihenentwicklung des Abbruchfehlers beliebig verbessert werden.
