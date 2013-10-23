@@ -1,0 +1,115 @@
+\section{Verifikation von Ergebnissen}
+
+Die Verifikation von numerischen Simulationen spielt eine wichtige Rolle
+für deren weiter Verwendung zur Produktentwicklung und -verbesserung.
+Man unterscheidet zwei Arten von Verifikationen: die Code-Verifikation und die Lösungsverifikation
+\cite{veluri}.
+Bei der Code-Verifikation wird nachgewiesen, dass keine Fehler oder Inkonsistenzen im numerischen
+Algorithmus enthalten sind. In der Lösungsverifikation werden die drei Typen von numerischen Fehlern
+abgeschätzt: der Rundungsfehler, der Iterationsfehler sowie der Diskretisierungsfehler.
+
+\subsection{Konvergenzordnung}
+
+Die Konvergenzordnung beschreibt den Zusammenhang zwischen Verringerung des Diskretisierungsfehlers
+und der Verfeinerung des numerischen Gitters.
+Die Überprüfung der Konvergenzordnung ist ein wichtiger Nachweis, da sie nicht nur Aussagen über
+die Konvergenz der Lösung treffen lassen sondern auch geprüft werden kann ob der Diskretisierungsfehler
+sich mit der erwarteten Geschwindigkeit verringert.
+
+\subsubsection{Formale Konvergenzordnung}
+
+Die Formale Konvergenzordnung ist die Geschwindigkeit mit der sich die diskretisierten Gleichungen
+den ursprünglichen (partiellen) Differentialgleichungen annähern. Sie wird durch eine Analyse des Abbruchfehlers
+der diskretisierten Gleichung gewonnen.
+\begin{equation}
+  f''_i = \frac{f_{i+1}-2f_i +f_{i-1}}{\Delta x^2} -\frac{1}{12} f^{IV}_i \Delta x^2 + HOT
+\end{equation}
+Bei der hier diskretsierten zweiten Ableitung einer Funktion $f$ sieht man das der führende
+Term des Abbruchfehler quadratiusch von $\Delta x$ abhängt. Die formale Konvergenzordnung im Bezug
+auf $x$ ist somit 2.
+
+Wichtig ist anzumerken, das die Konvergenzordnungen verschiedener Dimensionen
+eines Problems unterschiedlich sein können. So kann die Konvergenzordnung im Beztug auf die Zeit eins sein,
+während sie im Raum zwei ist.
+
+
+\subsubsection{Beobachtete Konvergenzordnung}
+
+Die beobachtetet Konvergenzordnung wird direkt aus den Ergebnissen der Berechnung mit systematisch
+verfeinerten Gittern gewonnen. Sollte die berechnete Konvergenzordnung nicht mit der formalen
+Konvergenzordnung übereinstimmen ist von Fehlern im Programm oder fehlerhaften numerischen Algorithmen auszugehen.
+
+Um die Konvergenzordnung eines Programms zu berechnen ist es zwingend notwendig die exakte Lösung der
+Differentialgleichungen zu kennen. Eine Lösungsmöglichkeit für dieses Problem wird in Abschnitt~\ref{sec:man_sol}
+vorgestellt.
+
+Der Diskretisierungsfehler $DE$ ist definiert als Differenz zwischen der exakten Lösung $f_{exakt}$
+der Differentialgleichungen und der exakten Lösung $f(\Delta)$ der diskreten Gleichungen 
+Da jedoch die exakte Lösung der diskreten Gleichungen, die für verschiedene Gitter unterschiedlich ist,
+nicht bekannt ist, wird stattdessen die numerische Lösung verwendet. Hierbei beachtet man dementsprechend
+Iterationsfehler und Rundungsfehler nicht. Für eine Gitter $k$ lässt sich somit der Diskretisierungsfehler
+über folgende Gleichung beschreiben:
+\begin{equation*}
+  DE_k=f(\Delta_k) - f_{exakt} = g_p h_k^p + HOT
+\end{equation*}
+wobei $g_p$ den Koeffizienten des führenden Terms des Abbruchfehlers darstellt.
+Bei Vernachlässigung der Terme höherer Ordnung können nun die Diskretisierungsfehler bei
+zwei verschiedenen Gittern betrachtet werden.
+\begin{align*}
+  DE_1 &= f(\Delta_1) - f_{exakt} = g_p h_1^{\tilde{p}}\\
+  DE_2 &= f(\Delta_2) - f_{exakt} = g_p h_2^{\tilde{p}}
+\end{align*}
+Da die exakte Lösung des Differentalgleichung bekannt ist kann die beobachtete Konvergenzordnung
+$\tilde{p}$ aus den beiden Gleichungen berechnet werden.
+
+\begin{equation}
+  \tilde{p}=\frac{\ln \left(\frac{DE_2}{DE_1}\right)}{\ln \left(\frac{h_2}{h_1}\right)}
+\end{equation}
+
+
+\subsection{Konstruierte Lösung}
+\label{sec:man_sol}
+
+Wir wählen die folgende Lösung für $\phi$ und berechnen die Ableitungen.
+
+\begin{align*}
+  \phi(x) &= A + \sin(Bx)\\
+  \phi'(x) &= B \cos(Bx)\\
+  \phi''(x) &= -B^2\sin(Bx)
+\end{align*}
+
+Nun führen wir den zusätzlichen Quellterm $f_{ad}$ ein und setzen $\phi(x)$ ein.
+
+\begin{equation*}
+  \alpha\frac{\partial^2 \phi}{\partial x^2}-f=f_{ad}
+\end{equation*}
+
+so erhält man:
+
+\begin{equation*}
+  f_{ad} = -\alpha B^2\sin(BX)-f
+\end{equation*}
+
+Damit ergibt sich als Manufactured Solution:
+\begin{align}
+  \alpha\frac{\partial^2 \phi}{\partial x^2} &= f -\alpha B^2\sin(Bx)-f\\
+                                             &= -\alpha B^2\sin(Bx)
+\end{align}
+
+\subsection{Randbedingungen}
+\label{sec:Randbedingungen}
+
+Um die Konstanten $A$ und $B$ in der Manufactured Solution bestimmen zu können,
+müssen konkrete Randbedingungen für das Problem festgelegt werden. Beispielhaft
+soll das hier mit den Randwerten $\phi(0) = 1$ und $\phi(1) = 1$ geschehen.
+Damit ergeben sich die Konstanten zu $A = 1$ sowie $B = \pi$. Die 
+konstruierte Lösung $\phi(x)$ hat damit die folgende Form und der Quellterm $f$
+ergibt sich zu:
+\begin{equation*}
+  \phi(x) = 1 + \sin(\pi x)
+\end{equation*}
+\begin{equation}
+  f=-\pi^2 \sin(\pi x)
+  \label{eq:quellterm}
+\end{equation}
+
