@@ -2,13 +2,13 @@
 \label{sec:Diffusionsterme}
 
 
-Um den Truncation Error der Diffusionsterme zu bestimmen, leiten wir die Differenzenquotienten
-für die Ableitungen erster Ordnung aus den Taylorreihendarstellungen her. Beispielhaft
-soll das anhand des östlichen Randes des Kontrollvolumens geschehen.
+Um den Abbruchfehler von Diffusionstermen zu bestimmen leiten wir die Differenzenquotienten
+für die Ableitungen erster Ordnung aus den Taylorreihendarstellungen der bekannten
+Werte in der unmittelbaren Umgebung her. Beispielhaft soll das anhand des östlichen
+Randes des Kontrollvolumens geschehen.
 
 Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
 Kontrollvolumenmittelpunkte.
-
 \begin{align}
   \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
   +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
@@ -17,29 +17,23 @@ Kontrollvolumenmittelpunkte.
   +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
   \label{eq:taylor_eP}
 \end{align}
-
 Wird nun Gleichung~\eqref{eq:taylor_eP} von Gleichung~\eqref{eq:taylor_eE} subtrahiert, 
 so ergibt sich:
-
 \begin{equation*}
   \phi_E-\phi_P=\phi'_e(x_E-x_P)+
   \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
   \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]+HOT
 \end{equation*}
-
-Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term:
-
+Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term, aus dem bereits
+der Abbruchfehler abgelesen werden kann.
 \begin{equation}
   \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
 \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+
 \frac{1}{6} \phi'''_e \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT
 \end{equation}
-
-
-Die hier auftretenden Ableitungen $\phi''_e$ und $\phi'''_e$ sind nicht bekannt und 
-müssen diskretisiert werden. Mit der Nutzung von
+Die hier auftretenden Ableitungen $\phi''_e$ und $\phi'''_e$ sind nicht bekannt und
+müssen diskretisiert werden. Bei der Nutzung von
 möglichst lokale Differenzenquotienten ergeben sich die folgenden Ausdrücke.
-
 \begin{align*}
   \phi''_e &= \frac{1}{(x_E-x_P)}\left({
 \frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right)\\
@@ -50,12 +44,10 @@ möglichst lokale Differenzenquotienten ergeben sich die folgenden Ausdrücke.
 \left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
 }\right)
 \end{align*}
-
-
-Der Truncation Error des Diffusionsterms an der östlichen Grenze des Kontrollvolumens
+Der Abbruchfehler des Diffusionsterms an der östlichen Grenze eines Kontrollvolumens
 lässt sich damit über folgende Gleichung beschreiben.
-
-\begin{align*}
+\begin{align}
+\begin{split}
   {TE}_e &= \frac{1}{2 (x_E-x_P)}\left({
 \frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
 &+
@@ -67,35 +59,13 @@ lässt sich damit über folgende Gleichung beschreiben.
 }\right)\\
 &\frac{1}{6(x_E-x_P)}\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
 +HOT
-\end{align*}
+\end{split}
+\end{align}
 
-Der Truncation Error im Westen ergibt sich äquivalent zu:
-
-\begin{align*}
-  \phi_P &= \phi_w + \phi'_w(x_P-x_w)+\frac{1}{2}\phi''_w(x_P-x_w)^2
-  +\frac{1}{6}\phi'''_w(x_P-x_w)^3+HOT\\
-  \phi_W &= \phi_w + \phi'_w(x_W-x_w)+\frac{1}{2}\phi''_w(x_W-x_w)^2
-  +\frac{1}{6}\phi'''_w(x_W-x_w)^3+HOT
-\end{align*}
-
-\begin{equation}
-  \phi'_w = \frac{\phi_P-\phi_W}{x_P-x_W}+\frac{1}{2}\phi''_w
-\left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)+
-\frac{1}{6} \phi'''_w \left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)+HOT
-\end{equation}
-
-\begin{align*}
-  \phi''_w &= \frac{1}{(x_P-x_W)}\left({
-\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)\\
- \phi'''_w &= \frac{1}{(x_P-x_W)}\left({
-\frac{1}{(x_e-x_w)}
-\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
--\frac{1}{(x_w-x_{ww})}
-\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
-}\right)
-\end{align*}
-
-\begin{align*}
+Der Abbruchfehler für Diffusionsterme im Westen erfolgt äquivalent zur oben
+gezeigten Herleitung im Osten. Es ergibt sich:
+\begin{align}
+  \begin{split}
   TE_w &= \frac{1}{2 (x_P-x_W)} \left({
 \frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
   \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)\\
@@ -108,7 +78,8 @@ Der Truncation Error im Westen ergibt sich äquivalent zu:
 }\right)\\
 &\frac{1}{6(x_P-x_W)}\left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)
   +HOT
-\end{align*}
+\end{split}
+\end{align}
 
 \subsection{Äquidistante Gitter}
 
