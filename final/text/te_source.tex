@@ -9,7 +9,6 @@ für Quellterme bestimmt werden.
 
 \subsection{Eindimensionale Probleme}
 \label{sec:source1d}
-
 Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $x_0$
 liefert:
 \begin{equation*}
@@ -22,7 +21,7 @@ Nach Integration im Intervall $[a, b]$ ergibt sich:
 &= f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}
 + \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
 \end{align*}
-Die Anwendung auf ein eindimensionales Kontrollvolumen mit den Randpunkten $x_e$ und
+Die Anwendung auf ein eindimensionales Kontrollvolumen (siehe Abbildung~\ref{fig:kv1d}) mit den Randpunkten $x_e$ und
 $x_w$ sowie dem Mittelpunkt $x_P$ ergibt sich damit die folgende Formel:
 \begin{equation*}
   \int_{x_w}^{x_e} f(x)dx = f_P(x_e-x_w)
@@ -45,6 +44,14 @@ folgende Gleichung beschreiben.
 \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
 \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT\label{eq:te_source1}
 \end{equation}
+
+\begin{figure}[bt]
+\input{text/images/kv_1d.tex}
+\centering
+\caption{Allgemeines Kontrollvolumen im eindimensionalen Fall}
+\label{fig:kv1d}
+\end{figure}
+
 \subsubsection{Kontrollvolumen am Rand}
 
 Bei Kontrollvolumen am Rand sind nicht mehr alle in Gleichung~\eqref{eq:te_source1}
@@ -73,8 +80,10 @@ sei jedoch hier nicht weiter eingegangen.
 
 \subsection{Zweidimensionale Probleme}
 
+
 Bei gleichem Vorgehen wie in Abschnitt~\ref{sec:source1d} beschrieben, ergibt sich für
-eine zweidimensionale Funktion $f(x, y)$ der folgende Ausdruck:
+eine zweidimensionale Funktion $f(x, y)$ in einem in Abbildung~\ref{fig:kv2d} 
+dargestelltem Kontrollvolumen der folgende Ausdruck:
 \begin{align*}
   \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &= f_P (x_e-x_w)(y_n-y_s)\\
                                            &+ \pderf{x} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} (y_n-y_s)
@@ -100,6 +109,9 @@ Der Abbruchfehler ergibt sich damit zu:
   \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w)+HOT \\
   \end{split}
 \end{align}
+Die Betrachtung von Randkontrollvolumen erfolgt äquivalent zum eindimensionalen. Es müssen
+jedoch auch die Fälle für nördliche und südliche Ränder, als auch die Ecken betrachtet werden.
+\input{text/images/kv_2d.tex}
 
 \subsubsection{Äquidistante Gitter}
 
@@ -110,3 +122,5 @@ für ein- und zweidimensionale Fälle die folgenden Gleichungen.
   TE_{source,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
   TE_{source,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
 \end{align*}
+
+\newpage

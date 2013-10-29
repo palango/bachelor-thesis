@@ -1,0 +1,61 @@
+\begin{figure}[hbt]
+\begin{tikzpicture}[scale=1.1]
+  %\draw[->] (6,0) -- (6.5,0) node[right] {$x$} coordinate(x axis);
+  %\draw[->] (0,6) -- (0,6.5) node[above] {$y$} coordinate(y axis);
+  \fill[tud0a] (2,2) rectangle +(2,2);
+  \draw[step=2cm, thick] (-2.00001, 0) grid (8, 6);
+
+  \fill (3, 3)  circle[radius=1.5pt];
+  \node (N) at (3,3) [label=above:$P$]{};
+
+  \fill (3, 5)  circle[radius=1.5pt];
+  \node (N) at (3,5) [label=above:$N$]{};
+
+  \fill (3, 1)  circle[radius=1.5pt];
+  \node (N) at (3,1) [label=below:$S$]{};
+
+  \fill (5, 3)  circle[radius=1.5pt];
+  \node (N) at (5,3) [label=right:$E$]{};
+
+  \fill (1, 3)  circle[radius=1.5pt];
+  \node (N) at (1,3) [label=left:$W$]{};
+
+  \fill (7, 3)  circle[radius=1.5pt];
+  \node (N) at (7,3) [label=right:$EE$]{};
+
+  \fill (-1, 3)  circle[radius=1.5pt];
+  \node (N) at (-1,3) [label=left:$WW$]{};
+
+  \fill (5, 5)  circle[radius=1.5pt];
+  \node (N) at (5,5) [label={above right}:$NE$]{};
+  \fill (5, 1)  circle[radius=1.5pt];
+  \node (N) at (5,1) [label={below right}:$SE$]{};
+  \fill (1, 1)  circle[radius=1.5pt];
+  \node (N) at (1,1) [label={below left}:$SW$]{};
+  \fill (1, 5)  circle[radius=1.5pt];
+  \node (N) at (1,5) [label={above left}:$NW$]{};
+
+  \fill (4, 3)  circle[radius=1.5pt];
+  \node (N) at (4,3) [label={right=0pt}:$e$]{};
+
+  \fill (3, 2)  circle[radius=1.5pt];
+  \node (N) at (3,2) [label={below=0pt}:$s$]{};
+
+  \fill (2, 3)  circle[radius=1.5pt];
+  \node (N) at (2,3) [label={left=0pt}:$w$]{};
+
+  \fill (3, 4)  circle[radius=1.5pt];
+  \node (N) at (3,4) [label={above=0pt}:$n$]{};
+
+  \fill (6, 3)  circle[radius=1.5pt];
+  \node (N) at (6,3) [label=right:$ee$]{};
+
+  \fill (0, 3)  circle[radius=1.5pt];
+  \node (N) at (0,3) [label=left:$ww$]{};
+
+
+\end{tikzpicture}
+\centering
+\caption{Allgemeines Kontrollvolumen im zweidimensionalen Fall}
+\label{fig:kv2d}
+\end{figure}

@@ -25,8 +25,8 @@ der diskretisierten Gleichung gewonnen.
   f''_i = \frac{f_{i+1}-2f_i +f_{i-1}}{\Delta x^2} -\frac{1}{12} f^{IV}_i \Delta x^2 + HOT
 \end{equation}
 Bei der hier diskretsierten zweiten Ableitung einer Funktion $f$ sieht man das der führende
-Term des Abbruchfehler quadratiusch von $\Delta x$ abhängt. Die formale Konvergenzordnung im Bezug
-auf $x$ ist somit 2.
+Term des Abbruchfehlers quadratisch von $\Delta x$ abhängt. Die formale Konvergenzordnung im Bezug
+auf $x$ ist somit zwei.
 
 Wichtig ist anzumerken, das die Konvergenzordnungen verschiedener Dimensionen
 eines Problems unterschiedlich sein können. So kann die Konvergenzordnung im Beztug auf die Zeit eins sein,
@@ -59,7 +59,7 @@ zwei verschiedenen Gittern betrachtet werden.
   DE_1 &= f(\Delta_1) - f_{exakt} = g_p h_1^{\tilde{p}}\\
   DE_2 &= f(\Delta_2) - f_{exakt} = g_p h_2^{\tilde{p}}
 \end{align*}
-Da die exakte Lösung des Differentalgleichung bekannt ist kann die beobachtete Konvergenzordnung
+Da die exakte Lösung der Differentalgleichung bekannt ist kann die beobachtete Konvergenzordnung
 $\tilde{p}$ aus den beiden Gleichungen berechnet werden.
 
 \begin{equation}
@@ -67,39 +67,46 @@ $\tilde{p}$ aus den beiden Gleichungen berechnet werden.
 \end{equation}
 
 
-\subsection{Konstruierte Lösung}
+\subsection{Konstruierte Lösungen}
 \label{sec:man_sol}
 
-Wir wählen die folgende Lösung für $\phi$ und berechnen die Ableitungen.
+Zur Überprüfung der Konvergenzordnung ist es nötig die exakte Lösung der Differentialgleichung zu
+kennen. Traditionell sind solche Lösungen nur für einfache Probleme oder bestimmte Randbedingungen
+und Vereinfachungen bekannt. Für komplexe Gleichungen mit komplexen Modellen, komplizierten Geometrien
+oder Nichtlinearitäten sind jedoch selten Lösungen bekannt. Mit Hilfe der Methode der konstruierten
+Lösungen (engl. Manufactured Solution) lassen sich exakte Lösungen für Verifikationszwecke erstellen.
 
+Die Methode der konstruierten Lösungen bietet viele Vorteile. So kann sie neben der Finite-Volumen Methode auch
+für Finite-Elemente- oder Finite-Differenzen-Verfahren genutzt werden. Außerdem ist sie auch bei nichtlinearen
+oder mehreren Gleichungen (z.B. Navier-Stokes-Gleichungen) anwendbar. Weiterhin wurde nachgewiesen~\cite{roache_book} das sich
+sehr empfindliche Fehler erkennen lassen.
+
+Das Vorgehen bei der Konstruktion einer Lösung soll anhand einer stationären, eindimensionalen Transportgleichung
+mit Diffusions- und Konvektionstermem demonstriert werden.
+\begin{equation*}
+  \frac{\partial}{\partial x} \left({\rho v \phi
+- \alpha \frac{\partial \phi}{\partial x} }\right) = f
+\end{equation*}
+Zuerst wird eine Lösung für $\phi$ gewählt und deren Ableitungen berechnet.
 \begin{align*}
   \phi(x) &= A + \sin(Bx)\\
   \phi'(x) &= B \cos(Bx)\\
   \phi''(x) &= -B^2\sin(Bx)
 \end{align*}
+Nun führen wir den zusätzlichen Quellterm $f_{ad}$ ein und setzen $\phi(x)$ so wie die Ableitungen ein.
+\begin{align*}
+  \rho v \pder[\phi]{x} - \alpha\frac{\partial^2 \phi}{\partial x^2}-f&=f_{ad}\\
+  \rho v B \cos(Bx) + \alpha B^2 \sin(Bx) - f &= f_{ad}
+\end{align*}
+Wird nun $f_{ad}$ in die Differentialgleichung zurück substituiert ergibt sich die konstruierte Lösung.
+\begin{equation}
+   \frac{\partial}{\partial x} \left({\rho v \phi
+- \alpha \frac{\partial \phi}{\partial x} }\right)= \rho v B \cos(Bx) + \alpha B^2 \sin(Bx)
+\end{equation}
 
-Nun führen wir den zusätzlichen Quellterm $f_{ad}$ ein und setzen $\phi(x)$ ein.
+\paragraph{Randbedingungen}
 
-\begin{equation*}
-  \alpha\frac{\partial^2 \phi}{\partial x^2}-f=f_{ad}
-\end{equation*}
-
-so erhält man:
-
-\begin{equation*}
-  f_{ad} = -\alpha B^2\sin(BX)-f
-\end{equation*}
-
-Damit ergibt sich als Manufactured Solution:
-\begin{align}
-  \alpha\frac{\partial^2 \phi}{\partial x^2} &= f -\alpha B^2\sin(Bx)-f\\
-                                             &= -\alpha B^2\sin(Bx)
-\end{align}
-
-\subsection{Randbedingungen}
-\label{sec:Randbedingungen}
-
-Um die Konstanten $A$ und $B$ in der Manufactured Solution bestimmen zu können,
+Um die Konstanten $A$ und $B$ in der konstruierten Lösung bestimmen zu können,
 müssen konkrete Randbedingungen für das Problem festgelegt werden. Beispielhaft
 soll das hier mit den Randwerten $\phi(0) = 1$ und $\phi(1) = 1$ geschehen.
 Damit ergeben sich die Konstanten zu $A = 1$ sowie $B = \pi$. Die 
@@ -108,8 +115,26 @@ ergibt sich zu:
 \begin{equation*}
   \phi(x) = 1 + \sin(\pi x)
 \end{equation*}
-\begin{equation}
-  f=-\pi^2 \sin(\pi x)
+\begin{equation*}
+  f=\rho v \cos(\pi x) + \alpha \pi^2 \sin(\pi x)
   \label{eq:quellterm}
-\end{equation}
+\end{equation*}
 
+
+\paragraph{Eigenschaften guter konstruierter Lösungen}
+
+Bei der Wahl der Lösung sollten einige Kriterien eingehalten werden. So sollte die gewählte Lösung
+aus glatten, analytischen Funktionen mit glatten Ableitungen bestehen. Die Bedingung der glatten Ableitungen
+erlaubt es auch auf relativ groben Gittern die Konvergenzordnung nachzuweisen.
+Aufgrund der genannten Kriterien werden für konstruierte Lösungen oft trigonometrische und Exponentialfunktionen benutzt.
+Die haben den Vorteil unendlich viele glatte Ableitungen zu haben. Trigonometrische Funktionen lassen
+sich zudem leicht in ihrem Wertebereich anpassen.
+
+Weiterhin sollte, auch wenn von der konstruierten Lösung keine physikalische Realität erwartet wird, möglichst
+erreichbare physikalische Zustände dargestellt werden. Werden beispielsweise Schallgeschwindigkeiten aus
+aus Temperaturen berechnet, so setzt diese Berechnung positive Temperaturen voraus. Die konstruierte Lösung sollte dies wiederspiegeln
+und positive Temperaturen zurückgeben.
+
+Die konstruierte Lösung sollte außerdem so gewählt sein, dass alle Terme die gleiche Größenordnung haben
+und kein Term von einem anderen dominiert wird. Beispielsweise sollten diffusive als auch konvektive Terme
+möglichst gleich stark in die Lösung einfließen, sodass beide getestet werden.
