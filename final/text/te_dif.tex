@@ -116,6 +116,7 @@ gezeigten Herleitung im Osten. Es ergibt sich:
 
 
 \subsubsection{Kontrollvolumen am Rand}
+\label{sec:te_dif_rand}
 
 Kontrollvolumen, die in der Nähe des Randes des Problemgebietes liegen müssen wie schon beim
 Abbruchfehler von Quelltermen besonders behandelt werden. Hierbei muss unterschieden werden ob es sich
@@ -303,7 +304,7 @@ Beim zweidimensionalen Fall ist zudem besonders auf die Ecken zu achten.
 
 \subsection{Zweidimensionale Probleme}
 
-Äquivalent zu den Herleitungen des Truncation Error im Osten und Westen ergeben sich
+Äquivalent zu den Herleitungen des Abbruchfehlersim Osten und Westen ergeben sich
 sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Reihenentwicklungen:
 
 \begin{equation}
@@ -318,13 +319,12 @@ sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Reihenentwicklun
 \left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)+
 \frac{1}{6} \phi'''_s \left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)+HOT
 \end{equation}
-
-Nach Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
-Terme für den Truncation Error:
+Nach der Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
+Terme für den Abbruchfehler:
 
 \begin{equation}
   \begin{IEEEeqnarraybox}[][c]{rCl}
-    {TE}_n &=& \frac{1}{2 (y_N-y_P)}\left({
+    {TE}_n &=& \frac{1}{2\,(y_N-y_P)}\left({
 \frac{\phi_{NN}-\phi_P}{y_{NN}-y_P}-\frac{\phi_N-\phi_S}{y_N-y_S}}\right) \left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)\\
 &&+
 \left({
@@ -333,7 +333,7 @@ Terme für den Truncation Error:
 -\frac{1}{(y_n-y_s)}
 \left({\frac{\phi_N-\phi_P}{y_N-y_P} - \frac{\phi_P-\phi_S}{y_P-y_S}  }\right)
 }\right)\\
-&&\frac{1}{6(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
+&&\frac{1}{6\,(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
 +HOT
 \end{IEEEeqnarraybox}
 \end{equation}
@@ -341,7 +341,7 @@ Terme für den Truncation Error:
 
 \begin{equation}
 \begin{IEEEeqnarraybox}[][c]{rCl}
-  TE_s &=& \frac{1}{2 (y_P-y_S)} \left({
+  TE_s &=& \frac{1}{2\,(y_P-y_S)} \left({
 \frac{\phi_{N}-\phi_S}{y_{N}-y_S}-\frac{\phi_P-\phi_{SS}}{y_P-y_{SS}}}\right)
   \left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)\\
   &&+
@@ -351,10 +351,12 @@ Terme für den Truncation Error:
 -\frac{1}{(y_s-y_{ss})}
 \left({\frac{\phi_P-\phi_S}{y_P-y_S} - \frac{\phi_S-\phi_{SS}}{y_S-y_{SS}}  }\right)
 }\right)\\
-&&\frac{1}{6(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
+&&\frac{1}{6\,(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
   +HOT
 \end{IEEEeqnarraybox}
 \end{equation}
+Die Behandlung der Randwerte erfolgt ebenfalls wir in Abschnitt~\ref{sec:te_dif_rand} erläutert und wird hier
+nicht wiederholt.
 
 \subsection{Äquidistante Gitter}
 
