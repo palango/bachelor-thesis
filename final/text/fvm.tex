@@ -1,13 +1,13 @@
-\section{Finite Volumen Methode}
+\subsection{Finite Volumen Methode}
 
 Die Finite-Volumen Methoden sind ein numerisches Verfahren zur Lösung von (partiellen)
-Differentialgleichungen. Sie sind heute das Standardverfahren zu Lösung von Strömungsproblemen
+Differential\-gleich\-ungen. Sie sind heute das Standardverfahren zu Lösung von Strömungsproblemen
 wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen aber keineswegs nur darauf beschränkt.
 Die charakteristische Eigenschaft der Finite-Volumen Methoden ist ihre Konservativität, also
 die Erfüllung der den mathematischen Modellen zugrunde liegenden Erhaltungsprinzipien in den
 diskreten Gleichungen.
 
-\subsection{Ableitung der Finite Volumen diskretisierten Transportgleichung}
+\subsubsection{Ableitung der Finite Volumen diskretisierten Transportgleichung}
 
 Ausgangspukt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
 in diskrete Teilgebiete. Diese werden bei der Finite-Volumen Methode Kontrollvolumen
@@ -50,10 +50,10 @@ $F_c^C$ sowie die diffusiven Flüsse $F_c^D$ durch die Seiten des Kontrollvolume
   F_c^D &=  -\int_{S_c} \left(\alpha \frac{\partial \phi}{\partial x_i}\right) n_{ci} dS_c 
 \end{align}
 
-\subsection{Integralapproximation}
+\subsubsection{Integralapproximation}
 
 In dieser Arbeit wird von einer zellenorientierten Variablenanordnung (s. \cite{num_maschbau})
-ausgegangen. Damit liegen die gesuchte diskrete Größe im Mittelpunkt jedes Kontrollvolumens.
+ausgegangen. Damit liegt die gesuchte diskrete Größe im Mittelpunkt jedes Kontrollvolumens.
 Die Integrale der konvektiven und diffusiven Flüsse müssen durch diese Variablen
 approximiert werden. Dabei ist es zweckmäßig zuerst die Oberflächenintegrale durch Variablen
 auf der jeweilen Seite des Kontrollvolumens zu beschrieben und anschließend diese durch die Werte
@@ -105,24 +105,24 @@ berechnet werden kann. Auf den bei dieser Appoximation entstehenden Abbruchfehle
 Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
 
 
-\subsection{Ableitung konvektiver Fluss}
+\subsubsection{Ableitung konvektiver Flüsse}
 \label{sec:konv_fluss}
 
 Die durch die Anwendung der Mittelpunkteregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
 Flüsse beinhaltet noch den Variablenwert des Seitenmittelpunkts, der jedoch bei
 zellenorientierter Variablenanordnung nicht gesucht ist. Deshalb muss dieser Wert $\phi_c$ im
-nächsten Schritt durch variablenwerte in den Kontrollvolumenmittelpunkten ausgedrückt werden.
-Hierbei ist es immer ratsam möglichst lokale Approximationen zu nutzen, aslo beispielsweise
+nächsten Schritt durch Variablenwerte in den Kontrollvolumenmittelpunkten ausgedrückt werden.
+Hierbei ist es sinnvoll möglichst lokale Approximationen zu verwenden, also beispielsweise
 bei der Approximation von $\phi_e$ die Variablenwerte $\phi_P$ und $\phi_E$ zu benutzen.
 
 Es werden nun einige gängige Approximationen für die Nutzung bei konvektiven Flüssen vorgestellt.
-Es handelt sich hierbei genaugenommen um Interpolationen aus den umliegenden Mittelpunkten der Kontrollvolumen.
+Es handelt sich hierbei genau genommen um Interpolationen aus den umliegenden Mittelpunkten der Kontrollvolumen.
 Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im eindimensionalen statt,
-können jedoch problemlos in höhere Dimensionen übertragen werden.
+können jedoch problemlos auf höhere Dimensionen übertragen werden.
 
 \paragraph{Upwind-Verfahren}
 Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
-beziehungsweise durch Integration aus den entsprchenden Diffenrentialgleichungen 
+beziehungsweise durch Integration aus den entsprechenden Diffenrentialgleichungen 
 von der Geschwindigkeit $v$ abhängt.
 
 \begin{equation*}
@@ -130,8 +130,8 @@ von der Geschwindigkeit $v$ abhängt.
 \phi_E, & \mbox{falls } v<0\end{array}\right.
 \end{equation*}
 
-Das UDS-Verfahren besitzt einen Interpolationsfehler erster Ordnung, liefert jedoch bei
-Transportrichtungen, die senkrecht zu den Kontrollvolumenseiten liegen vergleichsweise gute Approximationen.
+Das UDS-Verfahren besitzt einen formalen Interpolationsfehler erster Ordnung, liefert jedoch bei
+Transport\-richt\-ung\-en, die senkrecht zu den Kontrollvolumenseiten liegen vergleichsweise gute Approximationen.
 Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was ein großer Vorteil ist.
 
 
@@ -149,7 +149,7 @@ Der Interpolationsfaktor $\gamma_e$ ist hierbei gegeben als:
   \gamma_e = \frac{x_e-x_P}{x_E-x_P}
   \label{eq:cds_faktor}
 \end{equation}
-Das CDS-verfahren besitzt einen Interpolationsfehler zweiter Ordnung. Es neigt jedoch zu
+Das CDS-Verfahren besitzt einen formalen Interpolationsfehler zweiter Ordnung. Es neigt jedoch zu
 numerischen Oszillationen.
 
 \paragraph{``Flux-Blending''-Verfahren}
@@ -173,16 +173,16 @@ $\beta = 0$ das UDS-Verfahren.
 Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
 die Variablen im Zentrum eines Kontrollvolumens.
 
-So wird beim QUICK-verfahren (Quadratic Upwind Interpolation for Convective
+So wird beim QUICK-Verfahren (Quadratic Upwind Interpolation for Convective
 Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
 zur Approximation genutzt.
 
 
 
-\subsection{Ableitung diffusiver Fluss}
+\subsubsection{Ableitung diffusiver Flüsse}
 \label{sec:dif_fluss}
 
-Um den konvektiven Fluss (Gl. \ref{eq:disk_dif}) weiter zu approximieren ist es nötig die Ableitung von
+Um den konvektiven Fluss (Gl. \ref{eq:disk_dif}) weiter zu approximieren, ist es nötig die Ableitung von
 $\phi$ durch die Variablenwerte in den Kontrollvolumenmittelpunkten auszudrücken.
 Beispielhaft soll hier wieder der eindimensionale, kartesische Fall betrachtet werden.
 Für die östliche Seite muss somit die Ableitung $(\partial \phi /\partial x)_e$ approximiert werden.

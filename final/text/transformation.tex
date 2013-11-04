@@ -1,0 +1,278 @@
+%\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+%\newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
+%\newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
+
+\newcommand{\fxi}{f_{\xi}}
+\newcommand{\fxxi}{f_{\xi\xi}}
+\newcommand{\fxxxi}{f_{\xi\xi\xi}}
+\newcommand{\fxxxxi}{f_{\xi\xi\xi\xi}}
+\newcommand{\xxi}{x_{\xi}}
+\newcommand{\xxxi}{x_{\xi\xi}}
+\newcommand{\xxxxi}{x_{\xi\xi\xi}}
+\newcommand{\xxxxxi}{x_{\xi\xi\xi\xi}}
+\newcommand{\yxi}{y_{\xi}}
+\newcommand{\yxxi}{y_{\xi\xi}}
+\newcommand{\yxxxi}{y_{\xi\xi\xi}}
+\newcommand{\yxxxxi}{y_{\xi\xi\xi\xi}}
+
+\newcommand{\feta}{f_{\eta}}
+\newcommand{\feeta}{f_{\eta\eta}}
+\newcommand{\feeeta}{f_{\eta\eta\eta}}
+\newcommand{\feeeeta}{f_{\eta\eta\eta\eta}}
+\newcommand{\xeta}{x_{\eta}}
+\newcommand{\xeeta}{x_{\eta\eta}}
+\newcommand{\xeeeta}{x_{\eta\eta\eta}}
+\newcommand{\xeeeeta}{x_{\eta\eta\eta\eta}}
+\newcommand{\yeta}{y_{\eta}}
+\newcommand{\yeeta}{y_{\eta\eta}}
+\newcommand{\yeeeta}{y_{\eta\eta\eta}}
+\newcommand{\yeeeeta}{y_{\eta\eta\eta\eta}}
+
+
+\newcommand{\etai}{\eta_{e1}}
+\newcommand{\etaii}{\eta_{e2}}
+\newcommand{\etilde}{\tilde{e}}
+
+
+%\chapter{Transformation}
+
+%Die Transformation vom physikalischen auf den logischen Bereich mit
+%den physikalischen Koordinaten $(x, y)$ sowie den logischen
+%Koordinaten $(\xi, \eta)$ kann wie folgt definiert werden:
+%\begin{equation}
+  %x=x(\xi,\eta),\quad y=y(\xi, \eta)
+%\end{equation}
+%\begin{equation}
+  %\pder[x]{\xi}=\xi_x=\frac{y_{\eta}}{J}
+%\end{equation}
+%Damit folgt für für die bei Konvektion und Diffusion auftretende
+%erste und zweite Ableitung:
+
+%\begin{align*}
+  %\pderf{x}&=\pder[\xi]{x}\pderf{\xi}+\pder[\eta]{x}\pderf{\eta}
+  %=\frac{y_{\eta}}{J} f_{\xi} - \frac{y_{\xi}}{J}f_{\eta}\\
+  %\pderf{y}&=\pder[\xi]{y}\pderf{\xi}+\pder[\eta]{y}\pderf{\eta}
+  %=\frac{x_{\xi}}{J}f_{\eta}-\frac{x_{\eta}}{J} f_{\xi} \\
+  %\pderfs{x^2} &= \pder{x}\left({\frac{y_{\eta}}{J} f_{\xi} - \frac{y_{\xi}}{J}f_{\eta}}\right)\\
+               %&= \frac{\yeta^2}{J^2} \fxxi + \frac{\yxi^2}{J^2} \feeta-2 \frac{\yxi \yeta}{J^2} f_{\xi\eta}\\
+               %&+ \frac{1}{J^3} \Big[\fxi
+  %\Big(-2\xxi\yxi\yeta\yeeta + 2\xxi\yeta^2y_{\xi\eta} + \xxxi \yeta^3 - 2x_{\xi \eta}\yxi\yeta^2
+  %-\xeta\yeta^2\yxxi + \xeta\yxi^2\yeeta + \yeeta\yxi^2\yeta\Big)\\
+  %&+ \feta\Big(
+  %2\xeta\yxi\yeta\yxxi - 2\xeta\yxi^2y_{\xi\eta} -\xeeta\yxi^3+2x_{\xi\eta}\yeta\yxi^2
+  %+\xxi\yxi^2\yeeta-\xxi\yeta^2\yxxi-\xxxi\yeta^2\yxi
+%\Big)\Big]
+%\end{align*}
+
+
+%Im logischen Gebiet können nun die vorhandenen Ableitungen von $f$
+%($f_{\xi}$, $f_{\eta}$, $\dots$) diskretisiert werden.
+%Es werden hierbei Zentraldifferenzen zweiter Ordnung gewählt.
+
+%\begin{equation}
+  %f_{\xi}=\frac{f_{i+1,j}-f_{i-1,j}}{2\Delta \xi} - \frac{f_{\xi\xi\xi}}{6}\Delta \xi^2 + HOT
+%\end{equation}
+%\begin{equation}
+  %f_{\eta}=\frac{f_{i,j+1}-f_{i,j-1}}{2 \Delta \eta} - \frac{f_{\eta\eta\eta}}{6}\Delta \eta^2 + HOT
+%\end{equation}
+%\begin{equation}
+  %\fxxi=\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta \xi^2} -\frac{\fxxxxi}{12} \Delta \xi^2 + HOT
+%\end{equation}
+%\begin{equation}
+  %\feeta=\frac{f_{i,j+1}-2f_{i,j}+f_{i,j-1}}{\Delta \eta^2} -\frac{\feeeeta}{12} \Delta \eta^2 + HOT
+%\end{equation}
+%\begin{equation}
+  %f_{\xi\eta}=\frac{f_{i+1,j+1}-2f_{i,j}+f_{i-1,j-1}}{\Delta \xi\Delta \eta} -\frac{\fxxi+\feeta}{4} \Delta \eta \Delta \xi + HOT
+%\end{equation}
+
+%Werden diese nun eingesetzt ergibt sich für $\Delta \xi = 1$ folgende Form:
+
+%\begin{equation}
+  %\pderf{x}=\frac{y_{\eta}}{J}\frac{f_{i+1,j}-f_{i-1,j}}{2}
+  %- \frac{y_{\xi}}{J}\frac{f_{i,j+1}-f_{i,j-1}}{2}
+%\end{equation}
+
+%sowie der entstehende Abbruchfehler:
+
+%\begin{equation}
+  %TE_x = -\frac{y_{\eta}}{J}\frac{f_{\xi\xi\xi}}{6}
+  %+ \frac{y_{\xi}}{J}\frac{f_{\eta\eta\eta}}{6}+HOT
+%\end{equation}
+
+%Anschließend können die berechneten Werte für $f_{\xi},\dots$
+%eingesetzt werden.
+
+%\begin{align*}
+  %\fxi &= \xxi f_x + \yxi f_y\\
+  %\fxxi &= \xxxi f_x + \xxi^2f_{xx}+2\xxi \yxi f_{xy}
+  %+\yxi^2 f_{yy} + \yxxi f_y\\
+  %\fxxxi &= \xxxxi f_x + \yxxxi f_y + 3 \xxxi\xxi f_{xx}+
+  %3 \yxxi\yxi f_{yy} + \left({3\xxxi\yxi+3\yxxi\xxi}\right)f_{xy}\\
+  %&+ \xxi^3f_{xxx}+\yxi^3f_{yyy}+3\xxi^2\yxi f_{xxy}+3\xxi\yxi^2f_{xyy}\\
+ %\feeeta &= \xeeeta f_x + \yeeeta f_y + 3 \xeeta\xeta f_{xx}+
+  %3 \yeeta\yeta f_{yy} + \left({3\xeeta\yeta+3\yeeta\xeta}\right)f_{xy}\\
+  %&+ \xeta^3f_{xxx}+\yeta^3f_{yyy}+3\xeta^2\yeta f_{xxy}+3\xeta\yeta^2f_{xyy}
+%\end{align*}
+
+%Es ergibt sich:
+
+%\begin{align*}
+  %TE_x&= -\frac{y_{\eta}}{J} \frac{1}{6}\Big[\xxxxi f_x + \yxxxi f_y + 3 \xxxi\xxi f_{xx}+
+  %3 \yxxi\yxi f_{yy} + \left({3\xxxi\yxi+3\yxxi\xxi}\right)f_{xy}\\
+%&+ \xxi^3f_{xxx}+\yxi^3f_{yyy}+3\xxi^2\yxi f_{xxy}+3\xxi\yxi^2f_{xyy}\Big]\\
+%&+  \frac{y_{\xi}}{J}\frac{1}{6} \Big[\xeeeta f_x + \yeeeta f_y + 3 \xeeta\xeta f_{xx}+
+  %3 \yeeta\yeta f_{yy} + \left({3\xeeta\yeta+3\yeeta\xeta}\right)f_{xy}\\
+  %&+ \xeta^3f_{xxx}+\yeta^3f_{yyy}+3\xeta^2\yeta f_{xxy}+3\xeta\yeta^2f_{xyy}
+%\Big]\\
+  %&= TE_{x1} + TE_{x2} + TE_{x3}
+%\end{align*}
+
+%wobei $TE_{x1}$die ersten Ableitungen von $f$ enthält, usw.:
+
+%\begin{align*}
+  %TE_{x1} &= \frac{1}{6\ J}\left[{
+  %\left({-\yeta\xxxxi + \yxi\xeeeta}\right) f_x +
+  %\left({-\yeta\yxxxi + \yxi\yeeeta}\right) f_y
+  %}\right]\\
+  %TE_{x2} &= \frac{1}{2\ J} \Big[
+  %\left({-\yeta\xxxi\xxi + \yxi\xeeta\xeta}\right) f_{xx}+
+  %\left({-\yeta\yxxi\yxi + \yxi\yeeta\yeta}\right) f_{yy}\\&+
+  %\left({-\yeta \left({\xxxi\yxi+\yxxi\xxi}\right) +
+  %\yxi \left({\xeeta\yeta+\yeeta\xeta}\right)}\right) f_{xy}
+  %\Big]\\
+  %TE_{x3}&=\frac{1}{6\ J} \Big[
+  %\left({-\yeta\xxi^3+\yxi\xeta^3}\right) f_{xxx}+
+  %\yxi \yeta\left({-\yxi^2+\yeta^2}\right) f_{yyy}\\&+
+  %3 \yxi \yeta \left({-\xxi^2+\xeta^2}\right) f_{xxy}+
+  %3 \yxi \yeta \left({-\xxi\yxi+\xeta\yeta}\right) f_{xyy}
+  %\Big]
+%\end{align*}
+
+
+
+
+\section{Abbruchfehler für nicht-orthogonale Gitter}
+
+Mit der Anwendung des Gaußschen Integralsatzes müssen nun die Integrale über
+die Seitenflächen bestimmt werden. Dies soll hier beispielhaft an der Ostseite geschehen.
+
+\begin{equation}
+  \int_{x_{e1}}^{x_{e2}}\left({\rho v_i\phi+\alpha \pder[\phi]{x_i}}\right)n_{ei}ds
+  \label{eq:int_trans}
+\end{equation}
+
+Anstatt das Integral im physikalischen Bereich auszuwerten wird es zuerst in den
+logischen Bereich transformiert. Auf dem dortigen kartesischen Gitter können dort einfacherer
+Differenzenquotienten genutzt werden. Nachteil ist die höhere Komplexität durch
+die Transformation.
+\begin{equation}
+  \int_{\gamma}f\ ds=\int_a^bf(\gamma (t)) \lVert \dot{\gamma}(t)\rVert_2 dt
+\end{equation}
+
+Damit folgt für das Integral aus Gleichung~\eqref{eq:int_trans}:
+
+\begin{align*}
+  \underbrace{
+  \int_{\eta_{e1}}^{\eta_{e2}} (\rho v_1 \phi n_{e1})
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
+  }_I
+  &+ \underbrace{
+  \int_{\eta_{e1}}^{\eta_{e2}} (\alpha \pder[\phi]{x} n_{e1})
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
+}_{II}\\
+  + \underbrace{
+  \int_{\eta_{e1}}^{\eta_{e2}} (\rho v_2 \phi n_{e2})
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
+  }_{III}
+  &+ \underbrace{
+  \int_{\eta_{e1}}^{\eta_{e2}} (\alpha \pder[\phi]{x} n_{e2})
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
+  }_{IV}
+\end{align*}
+
+Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
+\begin{equation*}
+  C=(\rho v_1 \phi n_{e1})
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2
+\end{equation*}
+
+\begin{align*}
+  I&= C\big\vert_{\tilde{e}} \underbrace{(\etaii-\etai)}_{=1} + \frac{1}{2} \pder[C]{\eta}\bigg\vert_{\tilde{e}}
+  \underbrace{\left({(\etaii-\etilde)^2-(\etai-\etilde)^2}\right)}_{=0}
+  +\frac{1}{6} \frac{\partial^2 C}{\partial \eta^2}\bigg\vert_{\tilde{e}}
+  \underbrace{\left({(\etaii-\etilde)^3-(\etai-\etilde)^3}\right)}_{=\frac{1}{4}} + HOT\\
+  &= C \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^2 C}{\partial \eta^2}\bigg\vert_{\tilde{e}}+HOT}_{TE_{int}}
+\end{align*}
+
+Im nächsten Schritt muss nun die $C$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
+\begin{align*}
+   C\big\vert_{\tilde{e}}
+   &= C\big\vert_{\tilde{E}}
+   \left({\frac{\xi_{\tilde{e}}-\xi_{\tilde{P}}}{\xi_{\tilde{E}}-\xi_{\tilde{P}}}}\right)
+   + C\big\vert_{\tilde{P}} \left({1-\frac{\xi_{\tilde{e}}-\xi_{\tilde{P}}}{\xi_{\tilde{E}}-\xi_{\tilde{P}}} }\right)
+   + \frac{1}{2} \frac{\partial^2 C}{\partial \xi^2}\bigg\vert_{\tilde{P}}
+   (\xi_{\tilde{e}}-\xi_{\tilde{E}})(\xi_{\tilde{e}}-\xi_{\tilde{P}})\\
+  &+ \frac{1}{6}  \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}}
+   \left({(\xi_{\tilde{e}}-\xi_{\tilde{P}})^2-(\xi_{\tilde{E}}-\xi_{\tilde{P}})^2}\right)
+   (\xi_{\tilde{e}}-\xi_{\tilde{P}}) + HOT\\
+   &=\frac{1}{2} C \big\vert_{\tilde{E}} + \frac{1}{2} C \big\vert_{\tilde{P}}
+   \underbrace{- \frac{1}{8} \frac{\partial^2 C}{\partial \xi^2}\bigg\vert_{\tilde{P}}
+   - \frac{1}{16} \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}} + HOT}_{TE_{konv}}
+\end{align*}
+
+
+Bei dem Diffusionsterm $II$ muss die Ableitung nach $x$ durch Ableitungen ins logische
+Gebiet ersetzt werden:
+
+\begin{equation}
+  \pder[\phi]{x}=\pder[\xi]{x}\pder[\phi]{\xi}+\pder[\eta]{x}\pder[\phi]{\eta}
+  = \frac{\yeta}{det\ J} \phi_{\xi} - \frac{\yxi}{det\ J} \phi_{\eta}
+\end{equation}
+
+\begin{equation}
+  D =\left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 
+\left({\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})}\right)
+\end{equation}
+
+\begin{equation*}
+  D\big\vert_{\etilde} =
+  \left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 
+  \Bigg(\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})
+      \underbrace{ -\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
+      +\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
++ HOT}_{TE_{konv}}\Bigg)
+\end{equation*}
+
+Auch $\phi_{\tilde{ne}}$ und $\phi_{\tilde{se}}$ müssen durch die umliegenden Zellenwerte ausgedrückt werden.
+Dies kann beispielsweise durch Interpolation erfolgen.
+
+In der oben stehenden Gleichung treten auch $\yxi$ und $\yeta$ auf. Diese werden Metriken der Transformation genannt und
+sind nur vom Gitter, nicht aber von der Lösungsfunktion abhängig.
+
+
+Ab hier können wieder die bereits gezeigten Herleitungen genutzt werden.
+\begin{equation}
+  \begin{IEEEeqnarraybox}[][c]{rCl}
+    \int\int_{P} \underbrace{\Pi_{\phi}(\xi, \eta) J }_{h} d\xi d\eta
+    &=& h\big\vert_{\tilde{P}} (\xi_e-\xi_w)(\eta_n-\eta_s)\\
+  & &+ h_{\xi}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} (\eta_n-\eta_s)\\
+  && + h_{\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} (\xi_e-\xi_w) \\
+  & &+ \frac{1}{2} h_{\xi\xi}\big\vert_{\tilde{P}}\frac{(\xi_e-\xi_P)^3 - (\xi_w-\xi_P)^3}{3} (\eta_n-\eta_s)\\
+  &&+ \frac{1}{2} h_{\eta\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^3-(\eta_s-\eta_P)^3}{3} (\xi_e-\xi_w) \\
+  & &+ h_{\xi\eta}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} \cdot
+  \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} + HOT\\
+  &=&h\big\vert_{\tilde{P}} + \underbrace{\frac{1}{24} \left({h_{\xi\xi}\big\vert_{\tilde{P}}+h_{\eta\eta}\big\vert_{\tilde{P}}}\right)
++ HOT}_{TE_{source}}
+\end{IEEEeqnarraybox}
+\end{equation}
+
+
+
+
+
+
+\subsection{Diskretisierung der Metriken}
+
+

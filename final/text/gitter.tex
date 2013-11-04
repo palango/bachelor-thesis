@@ -21,8 +21,9 @@ jedoch nur innerhalb der vorgegebenen Lagebeziehungen möglich.
 
 Bei unstrukturierten Gittern hingegen gibt es keine Vorschriften zu den Lagebeziehungen
 der einzelnen Gitterpunkte. Diese müssen deshalb aufwendig gespeichert werden, was
-Gittergeneration sowie Lösung komplizierter macht. Andererseits ist es Problemlos möglich
-das Gitter an der Problemgeometrie auszurichten oder in bestimmten Gebieten selektiv zu verfeinern.
+den Speicherverbrauch sowie die Lösung komplizierter macht. Andererseits ist es problemlos möglich
+das Gitter an der Problemgeometrie auszurichten oder in bestimmten Gebieten selektiv zu verfeinern,
+sowie die Gittergeneration einfacher zu bewerkstelligen
 
 \subsubsection{Physikalisches und logisches Gebiet}
 
@@ -31,16 +32,30 @@ strukturierten Gitters zu. Nicht in jeden Fall ist es jedoch nötig daraufhin un
 Gitter zu verwenden. Vielmehr ist es möglich das physikalische Gebiet des Problems
 mittels einer geeigneten mathematischen Transformation auf ein sogenanntes
 logisches Gebiet abzubilden, auf welchem dann die Anwendung eines strukturierten Gitters
-möglich ist.
-
-Die Abbildung von physikalischem auf logisches Gebiet muss dabei umkehrbar sein, das heißt
-die Abbildungsfunktion muss bijektiv sein. Die Achsen des physikalischen Gebiets
-werden im Allgemeinen mit lateinischen Buchstaben bezeichnet ($x$, $y$, $z$), während
-für das logische Gebiet griechische Buchstaben verwendet werden ($\xi$, $\eta$, $\theta$).
-Beispielhaft soll hier die formale, mathematische Beschreibung anhand eines ebenen
-Beispiels gezeigt werden:
+möglich ist. Exemplarisch ist diese Transformation in Abbildung~\ref{fig:transf} zu sehen.
+\begin{figure}[ht]
+\input{text/images/transformation.tex}
+\centering
+\caption{Transformation vom physikalischen ins logische Gebiet}
+\label{fig:transf}
+\end{figure}
+Die Abbildung von physikalischem ($\Omega_p$)auf logisches Gebiet ($\Omega_c$) muss dabei umkehrbar sein, das heißt
+die Abbildungsfunktion muss bijektiv sein. Formaler lässt sich die Transformation
+$\Omega_c \rightarrow \Omega_p$ wie folgt ausdrücken:
 \begin{equation}
-  f=f(x, y)\qquad \text{mit} \qquad x=x(\xi, \eta),\quad y=y(\xi, \eta)
+  (x,y) = (x(\xi, \eta), y(\xi, \eta)) \quad bzw. \quad (\xi,\eta) = (\xi(x, y), \eta(x,y))
 \end{equation}
+Hierbei sind $\xi$ und $\eta$ Variablen im logischen Bereich. Sie nehmen diskrete, im allgemeinen äquidistante,
+Werte an. Bei $x$ und $y$ handelt es sich um die üblicherweise unregelmäßigen Variablen des physikalischen Bereichs.
 
-
+Die Jakobimatrix der Transformation stellt einen wichtigen Indikator der Gittereigenschaften dar.
+Da die Transformation bijektiv sein muss, darf die Determinante der Jakobimatrix nicht Null werden.
+\begin{equation}
+  J = 
+  \begin{pmatrix}
+    \frac{\partial x}{\partial \xi} & \frac{\partial x}{\partial \eta} \\
+    \frac{\partial y}{\partial \xi} & \frac{\partial y}{\partial \eta}
+  \end{pmatrix}
+  \quad und \quad
+  det (J) = x_{\xi}y_{\eta} - x_{\eta} y_{\xi} \neq 0
+\end{equation}

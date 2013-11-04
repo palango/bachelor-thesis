@@ -70,3 +70,42 @@ Für spezielle Probleme müssen die entsprechenden Parameter angepasst werden (s
 
 Alle Betrachtungen in der vorliegenden Arbeit bauen auf Problemen auf, die durch die
 Transportgleichung beschrieben werden können.
+
+\section{Navier-Stokes Gleichungen}
+
+Für viele reale Probleme ist es nötig das Verhalten von Fluiden vorherzusagen.
+Teilweise sind auch gleichzeitige Stoff- und Wärmetransportvorgänge interessant.
+Die in praktisch relevanten Problemen auftretenden Fluide werden Newtonsche Fluide genannt.
+Das bedeuted, dass sie linear-viskos und isotrop sind und damit durch den Cauchyschen
+Spannungstensor $T$ beschrieben werden können, wobei $p$ für den Druck und $\mu$ für die dynamische Viskosität stehen.
+\begin{equation}
+  T_{ij} = \mu\left({\frac{\partial v_i}{\partial x_j}
+  + \frac{\partial v_j}{\partial x_i}
+-\frac{2}{3} \frac{\partial v_k}{\partial x_k} \delta_{ij}}\right)
+-p\delta_{ij}
+\end{equation}
+Die
+Erhaltungssätze für Masse und Impuls lauten mit diesem Materialgesetz dann:
+\begin{align}
+  \frac{\partial p}{\partial t} + \frac{\partial (\rho v_i)}{\partial x_i} &= 0\\
+  \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
+  \frac{\partial}{\partial x_j} \left[{\mu
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}
+  - \frac{2}{3} \frac{\partial v_k}{\partial x_k}\delta_{ij}}\right)}\right]
+  -\frac{\partial p}{\partial x_i} + \rho f_i
+\end{align}
+Bei
+vielen realen Problemen hat wird das Fluid nicht entscheidend komprimiert
+und kann deshalb als inkompressibel angesehen werden. Als Kriterium gilt weithin,
+das die Machzahl ($Ma = v/a$) kleiner~als~0,3 ist.
+Für diese Bedingung vereinfachen sich die obigen Gleichungen für kompressible Fluide und lauten:
+\begin{align}
+  \frac{\partial v_i}{\partial x_i} &= 0\\
+  \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
+  \frac{\partial}{\partial x_j} \left[{\mu
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)}\right]
+  -\frac{\partial p}{\partial x_i} + \rho f_i
+\end{align}
+\clearpage

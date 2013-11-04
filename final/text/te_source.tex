@@ -84,15 +84,17 @@ sei jedoch hier nicht weiter eingegangen.
 Bei gleichem Vorgehen wie in Abschnitt~\ref{sec:source1d} beschrieben, ergibt sich für
 eine zweidimensionale Funktion $f(x, y)$ in einem in Abbildung~\ref{fig:kv2d} 
 dargestelltem Kontrollvolumen der folgende Ausdruck:
-\begin{align*}
-  \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &= f_P (x_e-x_w)(y_n-y_s)\\
-                                           &+ \pderf{x} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} (y_n-y_s)
-  + \pderf{y} \underbrace{\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}}_{=0} (x_e-x_w) \\
-  &+ \frac{1}{2} \pderfs{x^2}\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)
-  + \frac{1}{2} \pderfs{y^2} \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
-  &+ \pderfs{x\partial y} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} \cdot
+\begin{equation}
+  \begin{IEEEeqnarraybox}[][c]{rCl}
+  \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &=& f_P (x_e-x_w)(y_n-y_s)\\
+  & &+ \pderf{x} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} (y_n-y_s)\\
+  && + \pderf{y} \underbrace{\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}}_{=0} (x_e-x_w) \\
+  & &+ \frac{1}{2} \pderfs{x^2}\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
+  &&+ \frac{1}{2} \pderfs{y^2} \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
+  & &+ \pderfs{x\partial y} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} \cdot
   \underbrace{\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}}_{=0} + HOT
-\end{align*}
+\end{IEEEeqnarraybox}
+\end{equation}
 Die sich den ersten Ableitungen anschließenden Terme ergeben bei Auswertung wiederum Null
 und müssen deshalb nicht weiter beachtet werden.
 Der Wert von $f$ ist im Mittelpunkt des Kontrollvolumens bekannt, nicht aber die auftretenden
@@ -109,7 +111,7 @@ Der Abbruchfehler ergibt sich damit zu:
   \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w)+HOT \\
   \end{split}
 \end{align}
-Die Betrachtung von Randkontrollvolumen erfolgt äquivalent zum eindimensionalen. Es müssen
+Die Betrachtung von Randkontrollvolumen erfolgt äquivalent zum Eindimensionalen. Es müssen
 jedoch auch die Fälle für nördliche und südliche Ränder, als auch die Ecken betrachtet werden.
 \input{text/images/kv_2d.tex}
 

@@ -14,12 +14,13 @@ Die Konvergenzordnung beschreibt den Zusammenhang zwischen Verringerung des Disk
 und der Verfeinerung des numerischen Gitters.
 Die Überprüfung der Konvergenzordnung ist ein wichtiger Nachweis, da sie nicht nur Aussagen über
 die Konvergenz der Lösung treffen lassen sondern auch geprüft werden kann ob der Diskretisierungsfehler
-sich mit der erwarteten Geschwindigkeit verringert.
+sich mit der erwarteten Rate verringert.
 
 \subsubsection{Formale Konvergenzordnung}
 
-Die Formale Konvergenzordnung ist die Geschwindigkeit mit der sich die diskretisierten Gleichungen
-den ursprünglichen (partiellen) Differentialgleichungen annähern. Sie wird durch eine Analyse des Abbruchfehlers
+Die Formale Konvergenzordnung ist die Rate mit der sich die diskretisierten Gleichungen
+den ursprünglichen (partiellen) Differentialgleichungen annähern.
+Sie wird durch eine Analyse des Abbruchfehlers
 der diskretisierten Gleichung gewonnen.
 \begin{equation}
   f''_i = \frac{f_{i+1}-2f_i +f_{i-1}}{\Delta x^2} -\frac{1}{12} f^{IV}_i \Delta x^2 + HOT
@@ -44,7 +45,7 @@ Differentialgleichungen zu kennen. Eine Lösungsmöglichkeit für dieses Problem
 vorgestellt.
 
 Der Diskretisierungsfehler $DE$ ist definiert als Differenz zwischen der exakten Lösung $f_{exakt}$
-der Differentialgleichungen und der exakten Lösung $f(\Delta)$ der diskreten Gleichungen 
+der Differentialgleichungen und der exakten Lösung $f(\Delta)$ der diskreten Gleichungen.
 Da jedoch die exakte Lösung der diskreten Gleichungen, die für verschiedene Gitter unterschiedlich ist,
 nicht bekannt ist, wird stattdessen die numerische Lösung verwendet. Hierbei beachtet man dementsprechend
 Iterationsfehler und Rundungsfehler nicht. Für eine Gitter $k$ lässt sich somit der Diskretisierungsfehler

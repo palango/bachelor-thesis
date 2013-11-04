@@ -10,11 +10,17 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 
+\usepackage{IEEEtrantools}
+
 %\KOMAoptions{cleardoublepage=realempty}
 
-\usepackage{bibgerm}
+%\usepackage{bibgerm}
+%\usepackage{babelbib}
 \usepackage{listings}
-\usepackage{inconsolata}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+%\usepackage{inconsolata}
 %\usepackage[T1]{fontenc}
 \lstset{framextopmargin=50pt,frame=bottomline}
 \lstset{language=Matlab,
@@ -43,6 +49,8 @@
 {ö}{{\"o}}1}
 
 \usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc,intersections,through,backgrounds}
 
 
 \newcommand{\getmydate}{%
@@ -59,64 +67,60 @@
 
 
 \begin{document}
-  %\thesistitle{Ableitung und Untersuchung des Abbruchfehlersch"atzers f"ur mittels
-  %Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}%
-    %{Derivation and examination of the truncation error for finite volume discretised Navier-Stokes equations}
-  %\author{Paul Lange}
-  %\birthplace{Darmstadt}
-  %\referee{Clemens v. Loewenich}{Ulrich Falk}
-  %\department{Fachbereich Maschinenbau}
-  %\group{Institut f"ur Numerische Berechnungsverfahren}
-  %\dateofexam{\today}{\today}
-  %\tuprints{12345}{1234}
-  %\makethesistitle
-  %\affidavit{P. Lange}
+\thesistitle{Ableitung und Untersuchung des Abbruchfehlerschätzers für mittels
+Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}%
+{Derivation and examination of the truncation error for finite volume discretised Navier-Stokes equations}
+\author{Paul Lange}
+\birthplace{Darmstadt}
+\referee{Clemens v. Loewenich}{Ulrich Falk}
+\department{Fachbereich Maschinenbau}
+\group{Institut für Numerische Berech\-nungs\-verfahren}
+\dateofexam{\today}{\today}
+%\tuprints{12345}{1234}
+\makethesistitle
+\affidavit{P. Lange}
 
-  %\newpage
-  \tableofcontents
-  %\cleardoublepage
+%\newpage
+\tableofcontents
+\listoffigures
+%\cleardoublepage
 
-  \chapter{Einleitung}
-  \input{text/einleitung.tex}
+\chapter{Einleitung}
+\input{text/einleitung.tex}
+\cleardoublepage
 
 \chapter{Grundlagen}
 \input{text/skalare_probleme.tex}
-  \input{text/num_methoden.tex}
-  \input{text/gitter.tex}
-  \input{text/fvm.tex}
-  \input{text/truncation_error.tex}
-  \input{text/manufactured_solution.tex}
-  %\cleardoublepage
+\input{text/num_methoden.tex}
+\input{text/gitter.tex}
+\input{text/fvm.tex}
+\input{text/truncation_error.tex}
+\input{text/verification.tex}
+\cleardoublepage
 
 
 
 
-  \chapter{Ableitung des Abbruchfehlers}
-  \input{text/te_source.tex}
-  \input{text/te_dif.tex}
-  \input{text/te_konv.tex}
+\chapter{Ableitung des Abbruchfehlers}
+\label{chap:herleitung}
+\input{text/te_source.tex}
+\input{text/te_dif.tex}
+\input{text/te_konv.tex}
+\input{text/transformation.tex}
 
-  \chapter{Auswertung des Abbruchfehlers}
-  \section{Diffusionsprobleme}
-  \section{Konvektionsprobleme}
-  \subsection{UDS}
-  \subsection{CDS}
-  \subsection{Flux-Blending}
+\chapter{Auswertung des Abbruchfehlers}
+\section{Diffusionsprobleme}
+\section{Konvektionsprobleme}
+\subsection{UDS}
+\subsection{CDS}
+\subsection{Flux-Blending}
 
-  \chapter{Fazit}
+\chapter{Fazit}
 
 
 \appendix
 
-\chapter{Quellcodes}
-
-\begin{tikzpicture}[scale=1]
-\coordinate[label=left:$A$] (A) at (0,0);
-\coordinate[label=right:$B$] (B) at (4,1);
-\draw (A) -- (B);
-\fill (A) circle (2pt);
-\fill (B) circle (2pt);
-\end{tikzpicture}
+%\chapter{Quellcodes}
 
 
 
@@ -127,7 +131,7 @@
 
   \cleardoublepage
 
-\bibliographystyle{gerplain}
+\bibliographystyle{plain}
 \bibliography{bib}
 
 \nocite{*}
