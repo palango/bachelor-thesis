@@ -275,4 +275,20 @@ Ab hier können wieder die bereits gezeigten Herleitungen genutzt werden.
 
 \subsection{Diskretisierung der Metriken}
 
+Größen, die nur vom numerischen Gitter, nicht aber der Lösungsfunktion abhängen, werden Metriken genannt.
+Meistens handelt es sich hierbei um physikalische Variablen, die nach logischen Koordinaten abgeleitet werden.
+Beispiele sind $x_{\xi}$ oder $y_{\eta}$.
 
+Die Metriken müssen für jeden Kontrollvolumen berechnet werden. Hierfür werden Approximation über
+Differenzenquotienten genutzt. Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
+Gitter mit $\Delta\xi = \Delta \eta = 1$:
+\begin{equation}
+  x_{\xi} = \frac{x_{i+1, j} - x_{i-1,j}}{\Delta \xi} = x_{i+1, j} - x_{i-1,j} = a \cos \gamma
+\end{equation}
+Für die anderen Metriken erster Ordnung ergibt sich:
+\begin{align*}
+  x_{\eta} &= b\sin \beta\\
+  y_{\xi} &= a \sin \gamma\\
+  y_{\eta} &= b \cos \beta\\
+  J &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi} = a b \sin \theta
+\end{align*}
