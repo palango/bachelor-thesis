@@ -289,6 +289,31 @@ Für die anderen Metriken erster Ordnung ergibt sich:
 \begin{align*}
   x_{\eta} &= b\sin \beta\\
   y_{\xi} &= a \sin \gamma\\
-  y_{\eta} &= b \cos \beta\\
-  J &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi} = a b \sin \theta
+  y_{\eta} &= b \cos \beta
 \end{align*}
+Eine weitere benötige Größe stellt die Determinante der Jakobimatrix
+dar. Sie ist für jedes Kontrollvolumen unterschiedlich. Werden
+die Metriken eingestzt ergibt sich folgende Gleichung:
+\begin{align}
+  J &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi}\nonumber\\
+    &= a \cos \gamma \, b \cos \beta - 
+       a \sin \beta \, b \sin \gamma\nonumber\\
+       &= ab(\cos\gamma\cos\beta-\sin\beta\sin\gamma) \label{eq:detj}
+\end{align}
+Hier kann nun das folgende Additionstheorem
+angewendet werden.
+\begin{equation*}
+\cos(\beta+\gamma)=\cos\gamma\cos\beta-\sin\beta\sin\gamma
+\end{equation*}
+Da weiterhin bekannt ist, dass $\beta+\gamma
++\theta = 90^{\circ}$ ist, ergibt sich mit der Beziehung
+$\sin(x)=\cos(\frac{\pi}{2} -x)$ letztendlich aus
+Gleichung~\ref{eq:detj} der folgende Term für $J$, der dem Betrag des
+Kreuzprodukts der beiden
+Vektoren darstellt,
+die das Kontrollvolumen aufspannen.
+Er stellt damit eine Approximation des Flächeninhalts
+des Kontrollvolumens dar.
+\begin{equation}
+  J = a b \sin \theta
+\end{equation}
