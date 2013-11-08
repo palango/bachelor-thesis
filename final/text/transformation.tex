@@ -284,7 +284,7 @@ Meistens handelt es sich hierbei um physikalische Variablen, die nach logischen 
 Beispiele sind $x_{\xi}$ oder $y_{\eta}$.
 
 Die Metriken müssen für jeden Kontrollvolumen berechnet werden. Hierfür werden Approximation über
-Differenzenquotienten genutzt. Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
+Differenzenquotienten genutzt\cite{Lee}. Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
 Gitter mit $\Delta\xi = \Delta \eta = 1$:
 \begin{equation}
   x_{\xi} = \frac{x_{i+1, j} - x_{i-1,j}}{\Delta \xi} = x_{i+1, j} - x_{i-1,j} = a \cos \gamma
@@ -316,8 +316,8 @@ Gleichung~\ref{eq:detj} der folgende Term für $J$. Er stellt den Betrag des
 Kreuzprodukts der beiden
 Vektoren dar,
 die das Kontrollvolumen aufspannen.
-Er stellt damit eine Approximation des Flächeninhalts
-des Kontrollvolumens dar.
+Es handelt sich somit um eine Approximation des Flächeninhalts
+des Kontrollvolumens.
 \begin{equation}
   J = a b \sin \theta
 \end{equation}
