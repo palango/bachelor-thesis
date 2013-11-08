@@ -4,6 +4,9 @@ Wie in Abschnitt~\ref{sec:konv_fluss} beschrieben, existieren verschiedene Verfa
 um konvektive Flüsse abzuschätzen. Der Abbruchfehler ist vom genutzten Verfahren
 abhängig und müss für jedes Verfahren hergeleitet werden.
 
+Zu diesem Fehler kommt ab der zweiten Dimension wiederum der Abbruchfehler aus
+der Integralapproximation, der bereits in Abschnitt~\ref{sec:source1d} hergeleitet wurde.
+
 \subsection{CDS-Verfahren}
 \label{sec:te_cds}
 
@@ -250,7 +253,6 @@ Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
 %\begin{equation*}
   %TE = \frac{TE_{source} - TE_e - TE_w}{\Delta x}
 %\end{equation*}
-
 %Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
 %Truncation Error. Wichtig ist es, hier die durch den Gauß'schen Integralsatz 
 %entstehenden Vorzeichen mit zu beachten. Weiterhin muss durch $\Delta x$ geteilt werden,
@@ -263,4 +265,14 @@ Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
   %-\frac{1}{24 \Delta x}\left({
 %\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)}{\Delta x}
 %\end{align}
+
+\subsection{Zweidimensionale Probleme}
+Die gezeigten Herleitungen lassen sich problemlos ins Zweidimensionale übertragen. Es muss
+jedoch darauf geachtet werdenn den Fehler aus der Integralapproximation nciht zu vergessen.
+Dieser lautet für die Ostseite:
+\begin{equation}
+  TE_{e,int} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
+\end{equation}
+Er lässt sich leicht auf die anderen Seiten des Kontrollvolumens übertragen.
 \clearpage

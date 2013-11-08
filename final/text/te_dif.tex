@@ -1,7 +1,16 @@
 \section{Abbruchfehler von Diffusionstermen}
 \label{sec:Diffusionsterme}
 
+Bei Diffusionstermen treten durch Approximationen zwei grundsätzliche Fehler auf.
+Zum einen entsteht durch die Anwendung der Mittelpunktsregel zur Integralapproximation
+(siehe Abschnitt~\ref{sec:fvm_intappr}) ein Diskretisierungsfehler.
+Dieser beruht auf der Ausdehnung der Seitenfläche und wird daher im eindimensionalen Fall
+Null.
+
+Der zweite grundsätzliche Fehler entsteht durch die Approximation der Ableitung im
+Seitenmittelpunkt. Beide werden im folgenden abgeleitet.
 \subsection{Eindimensionale Probleme}
+\label{sec:te_dif_1d}
 
 Um den Abbruchfehler von Diffusionstermen zu bestimmen werden die Differenzenquotienten
 für die Ableitungen erster Ordnung hergeleitet. Dazu werden die Taylorreihendarstellungen der bekannten
@@ -256,6 +265,7 @@ Beim zweidimensionalen Fall ist zudem besonders auf die Ecken zu achten.
   %}\right)
 %\end{align*}
 
+
 %$\phi_w$ wird wie folgt linear interpoliert:
 
 %\begin{equation*}
@@ -303,82 +313,124 @@ Beim zweidimensionalen Fall ist zudem besonders auf die Ecken zu achten.
 %\end{align}
 
 \subsection{Zweidimensionale Probleme}
-
-Äquivalent zu den Herleitungen des Abbruchfehlersim Osten und Westen ergeben sich
-sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Reihenentwicklungen:
-
+\paragraph{Abbruchfehler der Integralapproximation}
+Der Abbruchfehler der Integralapproximation für die Mittelpunktsregel entspricht
+der Herleitung des Abbruchfehlers für Quellterme bei eindimensionalen
+Problemen in Abschnitt~\ref{sec:source1d}. Die Funktion $f$ stellt hierbei die Ableitung
+$\frac{\partial \phi}{\partial x_i}$ dar. Es ergibt sich beispielsweise für
+die Ostseite folgende Reihendarstellung.
 \begin{equation}
-  \phi'_n = \frac{\phi_N-\phi_P}{y_N-y_P}+\frac{1}{2}\phi''_n
-\left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)+
-\frac{1}{6} \phi'''_n \left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)+HOT
+  \int_{y_s}^{y_n} \pder[\phi]{x} dy = \pder[\phi]{x}\bigg\vert_e(y_n-y_s)
+    + \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
 \end{equation}
-
-
+Der Abbruchfehler lässt sich damit ablesen zu:
 \begin{equation}
-  \phi'_s = \frac{\phi_P-\phi_S}{y_P-y_S}+\frac{1}{2}\phi''_s
-\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)+
-\frac{1}{6} \phi'''_s \left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)+HOT
+  TE_{e,int} = \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
 \end{equation}
-Nach der Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
-Terme für den Abbruchfehler:
-
-\begin{equation}
-  \begin{IEEEeqnarraybox}[][c]{rCl}
-    {TE}_n &=& \frac{1}{2\,(y_N-y_P)}\left({
-\frac{\phi_{NN}-\phi_P}{y_{NN}-y_P}-\frac{\phi_N-\phi_S}{y_N-y_S}}\right) \left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)\\
+\paragraph{Abbruchfehler der Ableitungsapproximation}
+Die Abbruchfehler aus der Approximation der Ableitung erfolgen für Nord- und Südseite äquivalent
+zur Ost- und Westseite wie in Abschnitt~\ref{sec:te_dif_1d} beschrieben. Zu diesem Fehler muss
+nun der Fehler aus der Integralapproximation addiert werden.
+Für die Ostseite ergibt sich somit:
+\begin{align}
+\begin{split}
+    \begin{IEEEeqnarraybox}[][c]{rCl}
+      {TE}_e &=& \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
 &&+
 \left({
-\frac{1}{(y_{nn}-y_n)}
-\left({\frac{\phi_{NN}-\phi_N}{y_{NN}-y_N}-\frac{\phi_N-\phi_P}{y_N-y_P} }\right)
--\frac{1}{(y_n-y_s)}
-\left({\frac{\phi_N-\phi_P}{y_N-y_P} - \frac{\phi_P-\phi_S}{y_P-y_S}  }\right)
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
 }\right)\\
-&&\frac{1}{6\,(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
-+HOT
-\end{IEEEeqnarraybox}
-\end{equation}
+&&\frac{1}{6(x_E-x_P)}\left[{\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
+    +\left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right]
+}\right]+HOT
+    \end{IEEEeqnarraybox}
+\end{split}
+\end{align}
+Die anderen Seiten können auf gleiche Weise betrachtet werden. Die Behandlung für
+Randkontrollvolumen muss ebenso vom eindimensionalen auf den zweidimensionalen Fall
+übertragen werden.
+%Äquivalent zu den Herleitungen des Abbruchfehlers im Osten und Westen ergeben sich
+%sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Reihenentwicklungen:
+
+%\begin{equation}
+  %\phi'_n = \frac{\phi_N-\phi_P}{y_N-y_P}+\frac{1}{2}\phi''_n
+%\left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)+
+%\frac{1}{6} \phi'''_n \left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)+HOT
+%\end{equation}
 
 
-\begin{equation}
-\begin{IEEEeqnarraybox}[][c]{rCl}
-  TE_s &=& \frac{1}{2\,(y_P-y_S)} \left({
-\frac{\phi_{N}-\phi_S}{y_{N}-y_S}-\frac{\phi_P-\phi_{SS}}{y_P-y_{SS}}}\right)
-  \left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)\\
-  &&+
-\left({
-\frac{1}{(y_n-y_s)}
-\left({\frac{\phi_N-\phi_P}{y_N-y_P}-\frac{\phi_P-\phi_S}{y_P-y_S} }\right)
--\frac{1}{(y_s-y_{ss})}
-\left({\frac{\phi_P-\phi_S}{y_P-y_S} - \frac{\phi_S-\phi_{SS}}{y_S-y_{SS}}  }\right)
-}\right)\\
-&&\frac{1}{6\,(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
-  +HOT
-\end{IEEEeqnarraybox}
-\end{equation}
-Die Behandlung der Randwerte erfolgt ebenfalls wir in Abschnitt~\ref{sec:te_dif_rand} erläutert und wird hier
-nicht wiederholt.
+%\begin{equation}
+  %\phi'_s = \frac{\phi_P-\phi_S}{y_P-y_S}+\frac{1}{2}\phi''_s
+%\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)+
+%\frac{1}{6} \phi'''_s \left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)+HOT
+%\end{equation}
+%Nach der Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
+%Terme für den Abbruchfehler:
 
-\subsection{Äquidistante Gitter}
+%\begin{equation}
+  %\begin{IEEEeqnarraybox}[][c]{rCl}
+    %{TE}_n &=& \frac{1}{2\,(y_N-y_P)}\left({
+%\frac{\phi_{NN}-\phi_P}{y_{NN}-y_P}-\frac{\phi_N-\phi_S}{y_N-y_S}}\right) \left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)\\
+%&&+
+%\left({
+%\frac{1}{(y_{nn}-y_n)}
+%\left({\frac{\phi_{NN}-\phi_N}{y_{NN}-y_N}-\frac{\phi_N-\phi_P}{y_N-y_P} }\right)
+%-\frac{1}{(y_n-y_s)}
+%\left({\frac{\phi_N-\phi_P}{y_N-y_P} - \frac{\phi_P-\phi_S}{y_P-y_S}  }\right)
+%}\right)\\
+%&&\frac{1}{6\,(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
+%+HOT
+%\end{IEEEeqnarraybox}
+%\end{equation}
 
-\begin{align*}
-  {TE}_n &= \left({
-\frac{1}{6\Delta y^2}
-\left({\frac{\phi_{NN}-\phi_N}{\Delta y}-\frac{\phi_N-\phi_P}{\Delta y} }\right)
--\frac{1}{6\Delta y^2}
-\left({\frac{\phi_N-\phi_P}{\Delta y} - \frac{\phi_P-\phi_S}{\Delta y}  }\right)
-}\right)\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
-&= -\frac{1}{24\Delta y}\left({
-\phi_{NN}-3\phi_N+3\phi_P-\phi_S}\right)+HOT
-\end{align*}
 
-\begin{align*}
-  TE_s &=\left({
-\frac{1}{6 \Delta y^2}
-\left({\frac{\phi_N-\phi_P}{\Delta y}-\frac{\phi_P-\phi_S}{\Delta y} }\right)
--\frac{1}{6\Delta y^2}
-\left({\frac{\phi_P-\phi_S}{\Delta y} - \frac{\phi_S-\phi_{SS}}{\Delta y}  }\right)
-}\right)
-\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
-&= -\frac{1}{24 \Delta y}\left({
-\phi_N-3\phi_P+3\phi_S-\phi_{SS}}\right)+HOT
-\end{align*}
+%\begin{equation}
+%\begin{IEEEeqnarraybox}[][c]{rCl}
+  %TE_s &=& \frac{1}{2\,(y_P-y_S)} \left({
+%\frac{\phi_{N}-\phi_S}{y_{N}-y_S}-\frac{\phi_P-\phi_{SS}}{y_P-y_{SS}}}\right)
+  %\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)\\
+  %&&+
+%\left({
+%\frac{1}{(y_n-y_s)}
+%\left({\frac{\phi_N-\phi_P}{y_N-y_P}-\frac{\phi_P-\phi_S}{y_P-y_S} }\right)
+%-\frac{1}{(y_s-y_{ss})}
+%\left({\frac{\phi_P-\phi_S}{y_P-y_S} - \frac{\phi_S-\phi_{SS}}{y_S-y_{SS}}  }\right)
+%}\right)\\
+%&&\frac{1}{6\,(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
+  %+HOT
+%\end{IEEEeqnarraybox}
+%\end{equation}
+%Die Behandlung der Randwerte erfolgt ebenfalls wir in Abschnitt~\ref{sec:te_dif_rand} erläutert und wird hier
+%nicht wiederholt.
+
+%\subsection{Äquidistante Gitter}
+
+%\begin{align*}
+  %{TE}_n &= \left({
+%\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_{NN}-\phi_N}{\Delta y}-\frac{\phi_N-\phi_P}{\Delta y} }\right)
+%-\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_N-\phi_P}{\Delta y} - \frac{\phi_P-\phi_S}{\Delta y}  }\right)
+%}\right)\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24\Delta y}\left({
+%\phi_{NN}-3\phi_N+3\phi_P-\phi_S}\right)+HOT
+%\end{align*}
+
+%\begin{align*}
+  %TE_s &=\left({
+%\frac{1}{6 \Delta y^2}
+%\left({\frac{\phi_N-\phi_P}{\Delta y}-\frac{\phi_P-\phi_S}{\Delta y} }\right)
+%-\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_P-\phi_S}{\Delta y} - \frac{\phi_S-\phi_{SS}}{\Delta y}  }\right)
+%}\right)
+%\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24 \Delta y}\left({
+%\phi_N-3\phi_P+3\phi_S-\phi_{SS}}\right)+HOT
+%\end{align*}
+\clearpage
