@@ -201,3 +201,27 @@ Approximation:
 Zentraldifferenzen können nur genutzt werden solange auch alle benötigten Variablenwerte
 verfügbar sind. Dies ist an der Rändern des betrachteten Gebiets meist nicht der Fall.
 Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurückgegriffen werden.
+
+
+\subsubsection{Gesamtgleichungssystem}
+
+Die oben gezeigten Approximationstechniken können nun auf die allgemeine Transportgleichung
+\eqref{eq:transportgl} angewendet werden. Biespielhaft soll das hier mit dem CDS-Verfahren für
+die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beide Koordinatenrichtungen seien positiv
+und das Gitter orthogonal. Damit ergibt sich folgende Approximation:
+\begin{align*}
+  &\left({\rho v_1 \frac{\phi_P+\phi_E}{2} - \alpha \frac{\phi_E-\phi_P}{x_E-x_P}}\right) (y_n-y_s)\\
+  -&\left({\rho v_1 \frac{\phi_W+\phi_P}{2} - \alpha \frac{\phi_P-\phi_W}{x_P-x_W}}\right) (y_n-y_s)\\
+  +&\left({\rho v_2 \frac{\phi_P+\phi_N}{2} - \alpha \frac{\phi_N-\phi_P}{x_N-x_P}}\right) (x_e-x_w)\\
+  -&\left({\rho v_2 \frac{\phi_S+\phi_P}{2} - \alpha \frac{\phi_P-\phi_S}{x_P-x_S}}\right) (x_e-x_w)=
+  f_P (y_n-y_s)(x_e-x_w)
+\end{align*}
+Durch einfaches Umformen kann diese Gleichung in die Form
+\begin{equation}
+  a_P\phi_P = + a_E\phi_E + a_W\phi_W + a_N\phi_N + a_S\phi_S + b_P
+\end{equation}
+gebracht werden.
+Die Koeffizienten ergeben sich hierbei zu:
+\begin{align*}
+  a_E &=
+\end{align*}

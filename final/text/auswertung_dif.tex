@@ -1,0 +1,150 @@
+\section{Diffusionsprobleme}
+
+\paragraph{Testfall 1}
+Der erste Testfall ist ein reines Diffusionsproblem auf kartesischem
+Gitter. Die Testfunktion ist Nummer~2 (siehe Abbildung~\ref{fig:testfn2}).
+Die Anzahl der Kontrollvolumen beträgt $N=20$ und der Diffusionskoeffizient
+ist $D = 1$.
+\begin{figure}[ht]
+\centering
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth, scaled y ticks=false]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_err.txt};
+    \end{axis}
+  \end{tikzpicture}
+     \caption{Absoluter Fehler}\label{fig:figA}
+   \end{subfigure}
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth, scaled y ticks=true]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud9c, mark=*, very thick] file {data/1/1_cos_aqui_te.txt};
+      \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_res.txt};
+      \legend{Abbruchfehler, Residuum}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Residuum der Lösung und Abbruchfehler}\label{fig:figB}
+   \end{subfigure}
+\caption{Lösungseigenschaften} \label{fig:twofigs}
+\end{figure}
+Man sieht gut das der absolute Lösungsfehler schon bei zwanzig Kontrollvolumen klein ist.
+Außerdem hat das Residuum am Rand Sprünge. Diese werden auch vom Abbruchfehlerindikator abgebildet,
+durch die Verwendung einseitiger Differenzenquotienten jedoch mit verringerter Genauigkeit.
+Die Sprünge werden in den folgenden Diagrammen teilweise ausgeblendet um
+Residuum und Abbruchfehler besser vergleichen zu können.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=0.7\textwidth, scaled y ticks=false]
+  %xlabel=$x$,
+  %ylabel=$y$]
+    \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_te2.txt};
+    %\addplot[tud2d, mark=+, thick] file {data/1/1_cos_aqui_res2.txt};
+  \end{axis}
+\end{tikzpicture}
+\caption{Abbruchfehler ohne Randsprünge} \label{fig:twofigs}
+\end{figure}
+\begin{figure}[ht]
+\centering
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_teres.txt};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Mit Randsprüngen}\label{fig:figA}
+   \end{subfigure}
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_teres2.txt};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Ohne Randsprünge}\label{fig:figB}
+   \end{subfigure}
+\caption{Differenz Residuum und Abbruchfehler} \label{fig:twofigs}
+\end{figure}
+Die beobachtete Konvergenzordnung nähert sich der erwarteten formalen Konvergenzordnung von zwei an.
+Für die Gitter von $N=20$ und $N=40$ beträgt sie exakt $\tilde{p}=2,0013$.
+\newpage
+
+
+\paragraph{Testfall 2}
+Der zweite Testfall verwendet Testfunktion 1 auf einem orthogonalen Gitter mit
+Expansionsfaktor $\alpha=0,9$. Es gibt wieder zwanzig Kontrollvolumen.
+
+\begin{figure}[ht]
+\centering
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_err.txt};
+    \end{axis}
+  \end{tikzpicture}
+     \caption{Absoluter Fehler}\label{fig:figA}
+   \end{subfigure}
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud9c, mark=*, very thick] file {data/2/2_sin_var_te.txt};
+      \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_res.txt};
+      \legend{Abbruchfehler, Residuum}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Residuum der Lösung und Abbruchfehler}\label{fig:figB}
+   \end{subfigure}
+\caption{Lösungseigenschaften} \label{fig:twofigs}
+\end{figure}
+Man sieht gut das der absolute Lösungsfehler schon bei zwanzig Kontrollvolumen klein ist.
+Außerdem hat das Residuum am Rand Sprünge. Diese werden auch vom Abbruchfehlerindikator abgebildet,
+durch die Verwendung einseitiger Differenzenquotienten jedoch mit verringerter Genauigkeit.
+Die Sprünge werden in den folgenden Diagrammen teilweise ausgeblendet um
+Residuum und Abbruchfehler besser vergleichen zu können.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=0.7\textwidth]
+  %xlabel=$x$,
+  %ylabel=$y$]
+    \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_te2.txt};
+    %\addplot[tud2d, mark=+, thick] file {data/2/2_sin_var_res2.txt};
+  \end{axis}
+\end{tikzpicture}
+\caption{Abbruchfehler ohne Randsprünge} \label{fig:twofigs}
+\end{figure}
+\begin{figure}[ht]
+\centering
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_teres.txt};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Mit Randsprüngen}\label{fig:figA}
+   \end{subfigure}
+   \begin{subfigure}{0.49\linewidth} \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=\textwidth]
+    %xlabel=$x$,
+    %ylabel=$y$]
+      \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_teres2.txt};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Ohne Randsprünge}\label{fig:figB}
+   \end{subfigure}
+\caption{Differenz Residuum und Abbruchfehler} \label{fig:twofigs}
+\end{figure}

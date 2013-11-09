@@ -8,8 +8,7 @@
 \usepackage[ngerman,pdfview=FitH,pdfstartview=FitV]{hyperref}
 
 \usepackage{pgfplots}
-\pgfplotsset{width=0.9*\textwidth,
-             compat=newest,
+\pgfplotsset{compat=newest,
              height=6cm,
              grid=major}
 
@@ -68,7 +67,7 @@
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
 \newcommand{\pderfs}[1]{\frac{\partial^2 f}{\partial#1}}
-
+%\pdfminorversion=4
 
 \begin{document}
 \thesistitle{Ableitung und Untersuchung des Abbruchfehlerschätzers für mittels
@@ -102,9 +101,6 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}%
 \input{text/verification.tex}
 \cleardoublepage
 
-
-
-
 \chapter{Ableitung des Abbruchfehlers}
 \label{chap:herleitung}
 \input{text/te_source.tex}
@@ -114,7 +110,7 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}%
 
 \chapter{Verifizierung des Abbruchfehlerindikators}
 %\input{text/testfaelle}
-\section{Diffusionsprobleme}
+\input{text/auswertung_dif}
 \section{Konvektionsprobleme}
 \subsection{UDS}
 \subsection{CDS}
