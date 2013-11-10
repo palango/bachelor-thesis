@@ -75,7 +75,7 @@ Transportgleichung beschrieben werden können.
 
 Für viele reale Probleme ist es nötig das Verhalten von Fluiden vorherzusagen.
 Teilweise sind auch gleichzeitige Stoff- und Wärmetransportvorgänge interessant.
-Die in praktisch relevanten Problemen auftretenden Fluide werden Newtonsche Fluide genannt.
+Die in praktisch relevanten Problemen am häufigsten auftretenden Fluide werden Newtonsche Fluide genannt.
 Das bedeuted, dass sie linear-viskos und isotrop sind und damit durch den Cauchyschen
 Spannungstensor $T$ beschrieben werden können, wobei $p$ für den Druck und $\mu$ für die dynamische Viskosität stehen.
 \begin{equation}
@@ -85,7 +85,7 @@ Spannungstensor $T$ beschrieben werden können, wobei $p$ für den Druck und $\m
 -p\delta_{ij}
 \end{equation}
 Die
-Erhaltungssätze für Masse und Impuls lauten mit diesem Materialgesetz dann:
+Erhaltungssätze für Masse, Impuls und innere Energie lauten mit diesem Materialgesetz dann:
 \begin{align}
   \frac{\partial p}{\partial t} + \frac{\partial (\rho v_i)}{\partial x_i} &= 0\\
   \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
@@ -93,19 +93,44 @@ Erhaltungssätze für Masse und Impuls lauten mit diesem Materialgesetz dann:
   \left({\frac{\partial v_i}{\partial x_j}
   +\frac{\partial v_j}{\partial x_i}
   - \frac{2}{3} \frac{\partial v_k}{\partial x_k}\delta_{ij}}\right)}\right]
-  -\frac{\partial p}{\partial x_i} + \rho f_i
+  -\frac{\partial p}{\partial x_i} + \rho f_i\\
+  \frac{\partial (\rho e)}{\partial t} + \frac{\partial (\rho v_i e)}{\partial x_i} &=
+  \mu \left[{\frac{\partial v_i}{\partial x_j}
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)
+  - \frac{2}{3} \left({\frac{\partial v_i}{\partial x_i}}\right)^2}\right]
+  -p\frac{\partial v_i}{\partial x_i} +\frac{\partial}{\partial x_i}
+  \left({\kappa \frac{\partial T}{\partial x_i}}\right)
+  + \rho q
 \end{align}
+Neben diesen Erhaltungsgleichungen benötigt man weiterhin thermische und kalorische Zustands\-gleich\-ungen.
+Diese definieren die thermodynamischen Eigenschaften des Fluids.
+
 Bei
-vielen realen Problemen hat wird das Fluid nicht entscheidend komprimiert
+vielen realen Problemen müssen die obigen Gleichungen nicht in der allgemeinen Form gelöst werden, sondern
+können durch zusätzliche Annahmen vereinfacht werden.
+So wird beispielsweise bei vielen Praktischen Anwendungen das Fluid nicht entscheidend komprimiert
 und kann deshalb als inkompressibel angesehen werden. Als Kriterium gilt weithin,
-das die Machzahl ($Ma = v/a$) kleiner~als~0,3 ist.
-Für diese Bedingung vereinfachen sich die obigen Gleichungen für kompressible Fluide und lauten:
+das die Machzahl ($Ma = v/a$) kleiner~als~0,3 ist. Beispiele für inkompressible Probleme
+sind Strömungen von Flüssigkeiten wie Rohrströmungen oder die Umströmung von Bootsrümpfen.
+Auch die Strömung an langsam fliegenden Flugzeugen, zum Beispiel Segelflugzeugen, kann als
+inkompressibel modeliert werden.
+
+Ist die Bedingung für Inkompressibilität erfüllt,
+vereinfachen sich die obigen Gleichungen für kompressible Fluide und es ergeben sich folgende Gleichungen:
 \begin{align}
   \frac{\partial v_i}{\partial x_i} &= 0\\
   \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
   \frac{\partial}{\partial x_j} \left[{\mu
   \left({\frac{\partial v_i}{\partial x_j}
   +\frac{\partial v_j}{\partial x_i}}\right)}\right]
-  -\frac{\partial p}{\partial x_i} + \rho f_i
+  -\frac{\partial p}{\partial x_i} + \rho f_i\\
+  \frac{\partial (\rho e)}{\partial t} + \frac{\partial (\rho v_i e)}{\partial x_i} &=
+  \mu \frac{\partial v_i}{\partial x_j}
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)
+  +\frac{\partial}{\partial x_i}
+  \left({\kappa \frac{\partial T}{\partial x_i}}\right)
+  + \rho q
 \end{align}
 \clearpage

@@ -206,9 +206,9 @@ Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurüc
 \subsubsection{Gesamtgleichungssystem}
 
 Die oben gezeigten Approximationstechniken können nun auf die allgemeine Transportgleichung
-\eqref{eq:transportgl} angewendet werden. Biespielhaft soll das hier mit dem CDS-Verfahren für
+\eqref{eq:transportgl} angewendet werden. Beispielhaft soll das hier mit dem CDS-Verfahren für
 die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beide Koordinatenrichtungen seien positiv
-und das Gitter orthogonal. Damit ergibt sich folgende Approximation:
+und das Gitter orthogonal. Damit ergibt sich die folgende Approximation:
 \begin{align*}
   &\left({\rho v_1 \frac{\phi_P+\phi_E}{2} - \alpha \frac{\phi_E-\phi_P}{x_E-x_P}}\right) (y_n-y_s)\\
   -&\left({\rho v_1 \frac{\phi_W+\phi_P}{2} - \alpha \frac{\phi_P-\phi_W}{x_P-x_W}}\right) (y_n-y_s)\\
@@ -219,9 +219,25 @@ und das Gitter orthogonal. Damit ergibt sich folgende Approximation:
 Durch einfaches Umformen kann diese Gleichung in die Form
 \begin{equation}
   a_P\phi_P = + a_E\phi_E + a_W\phi_W + a_N\phi_N + a_S\phi_S + b_P
+  \label{eq:fvm_kv}
 \end{equation}
 gebracht werden.
 Die Koeffizienten ergeben sich hierbei zu:
 \begin{align*}
-  a_E &=
+  a_E &= \frac{\alpha}{(x_E-x_P)(x_e-x_w)} - \frac{\rho v_1}{2\,(x_e-x_w)}\\
+  a_W &= \frac{\alpha}{(x_P-x_W)(x_e-x_w)} + \frac{\rho v_1}{2\,(x_e-x_w)}\\
+  a_N &= \frac{\alpha}{(y_N-y_P)(y_n-y_s)} - \frac{\rho v_2}{2\,(y_n-y_s)}\\
+  a_S &= \frac{\alpha}{(y_P-y_S)(y_n-y_s)} + \frac{\rho v_2}{2\,(y_n-y_s)}\\
+  a_P &= \frac{\alpha\, (x_E-x_W)}{(x_E-x_P)(x_e-x_w)} + \frac{\alpha\, (y_N-y_S)}{(y_N-y_P)(y_n-y_s)}\\
+  b_P &= f_P
 \end{align*}
+Diese Koeffizienten können für jedes Kontrollvolumen berechnet werden. Da die Nachbarn jedes
+Kontrollvolumens für die Approximationen genutzt werden, kann Gleichung~\eqref{eq:fvm_kv} auch
+wie folgt ausgedrückt werden.
+\begin{equation}
+  a^i_P\phi^i_P - \sum_c a^i_c\phi^i_c = b^i_p
+\end{equation}
+Hierbei bezeichnet $c$ die Nachbarkontrollvolumen und $i=1,\dots,N$ das
+betrachtete Kontrollvolumen. Somit entsteht ein lineares Gleichungssystem mit $N$ Gleichungen,
+das gelöst werden kann.
+\clearpage
