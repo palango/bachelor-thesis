@@ -1,0 +1,38 @@
+\section{Verifikation der Lösungsprogramme}
+
+Zur Berechnung des Abbruchfehlers wird die Lösung des mit finiten Volumen
+diskretisierten Problems benötigt. Dafür wurden Lösungsprogramme
+für ein- und zweidimensionale Probleme in Matlab implementiert.
+Diese arbeiten mit orthogonalen Gittern und können reine Diffusionsprobleme
+oder kombinierte Diffusions- und Konvektionsprobleme lösen.
+
+Vor der Verifizierung des abgeleiteten Indikators für den Abbruchfehler muss daher die
+korrekte Funktion der Programme nachgewiesen werden. Dies geschieht wie in Abschnitt
+\ref{sec:verifik_allg} beschrieben über den Vergleich der formalen mit der beobachteten
+Konvergenzordnung.
+
+Bei der Berechnung der beobachteten Konvergenzordnung muss beachtet werden, dass mit dem
+feinsten Gitter begonnen wird und dieses schrittweise ausgedünnt wird. Andernfalls
+wird die Konvergenzordnung falsch bestimmt.
+
+Ddie beobachtete Konvergenzordnung lässt sich neben den berechneten Zahlenwerten auch gut
+an der Steigung in einem doppelt-logarithmischen Diagramm ablesen. Entsteht dort eine
+Gerade, so bedeutet das, dass die Lösung mit einen festen Koeffizienten konvergiert.
+
+\paragraph{1D Diffussion und CDS, nicht äquidistant}
+
+
+\begin{figure}[ht]
+\begin{tikzpicture}
+\begin{loglogaxis}[xlabel=Anzahl der Kontrollvolumen $N$,ylabel=Gemittelter Fehler,width=0.7\textwidth]
+\addplot[color=tud2d,mark=*, very thick] coordinates {
+  (5, 1.2662511400e-01)
+  (10,1.9068695077e-02)
+  (20,4.0741696509e-03)
+  (40,9.9564249986e-04)
+};
+\end{loglogaxis}
+\end{tikzpicture}
+\centering
+\caption{Blub}
+\end{figure}

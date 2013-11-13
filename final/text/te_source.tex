@@ -22,7 +22,7 @@ Nach Integration im Intervall $[a, b]$ ergibt sich:
 + \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
 \end{align*}
 Die Anwendung auf ein eindimensionales Kontrollvolumen (siehe Abbildung~\ref{fig:kv1d}) mit den Randpunkten $x_e$ und
-$x_w$ sowie dem Mittelpunkt $x_P$ ergibt sich damit die folgende Formel:
+$x_w$ sowie dem Mittelpunkt $x_P$ ergibt damit die folgende Formel:
 \begin{equation*}
   \int_{x_w}^{x_e} f(x)dx = f_P(x_e-x_w)
   + \frac{1}{2} f'_P \underbrace{\left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]}_{=0}
@@ -120,8 +120,8 @@ Für äquidistante Gitter vereinfacht sich der Terme des Abbruchfehlers und es e
 für ein- und zweidimensionale Fälle die folgenden Gleichungen.
 
 \begin{align*}
-  TE_{source,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
-  TE_{source,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
+  TE_{source,\ Q,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
+  TE_{source,\ Q,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
 \end{align*}
 
 \newpage

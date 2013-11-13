@@ -8,7 +8,7 @@ Dieser beruht auf der Ausdehnung der Seitenfläche und wird daher im eindimensio
 Null.
 
 Der zweite grundsätzliche Fehler entsteht durch die Approximation der Ableitung im
-Seitenmittelpunkt. Beide werden im folgenden abgeleitet.
+Seitenmittelpunkt. Beide werden im Folgenden abgeleitet.
 \subsection{Eindimensionale Probleme}
 \label{sec:te_dif_1d}
 
@@ -27,7 +27,7 @@ Kontrollvolumenmittelpunkte $\phi_E$ und $\phi_P$.
   +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
   \label{eq:taylor_eP}
 \end{align}
-Wird nun Gleichung~\eqref{eq:taylor_eP} von Gleichung~\eqref{eq:taylor_eE} subtrahiert. Es ergibt sich:
+Wird nun Gleichung~\eqref{eq:taylor_eP} von Gleichung~\eqref{eq:taylor_eE} subtrahiert, ergibt sich:
 \begin{equation*}
   \phi_E-\phi_P=\phi'_e(x_E-x_P)+
   \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
@@ -155,7 +155,7 @@ Nach Umstellen ergibt sich für $\phi'_w$ der folgende Wert:
 Hier lässt sich ebenfalls der Abbruchfehler ablesen. Mit der Approximation der Ableitung
 ergibt sich:
 \begin{equation}
-  TE_{diff, konv, Rand} = -\frac{1}{2} \left({\frac{\phi_e-\phi^w}{x_e-x_w}-
+  TE_{diff, Rand} = -\frac{1}{2} \left({\frac{\phi_e-\phi^w}{x_e-x_w}-
   \frac{\phi_P-\phi^w}{x_p-x_w} }\right)
 \end{equation}
 Wird die Ableitung nicht direkt auf dem Rand betrachtet, kann der Zentraldifferenzenquotient

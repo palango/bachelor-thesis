@@ -2,7 +2,7 @@
 
 Wie in Abschnitt~\ref{sec:konv_fluss} beschrieben, existieren verschiedene Verfahren
 um konvektive Flüsse abzuschätzen. Der Abbruchfehler ist vom genutzten Verfahren
-abhängig und müss für jedes Verfahren hergeleitet werden.
+abhängig und muss für jedes Verfahren hergeleitet werden.
 
 Zu diesem Fehler kommt ab der zweiten Dimension wiederum der Abbruchfehler aus
 der Integralapproximation, der bereits in Abschnitt~\ref{sec:source1d} hergeleitet wurde.
@@ -11,7 +11,7 @@ der Integralapproximation, der bereits in Abschnitt~\ref{sec:source1d} hergeleit
 \label{sec:te_cds}
 
 Für die Herleitung des Abbruchfehlers für das Zentraldifferenzen-Verfahren sei hier am Beispiel des östlichen Randes dargestellt.
-Man entwickelt zuerst die Taylorreihe von $\phi$ um den Entwicklunspunktunkt $x_P$ und wertet sie anschließend
+Man entwickelt zuerst die Taylorreihe von $\phi$ um den Entwicklungspunkt $x_P$ und wertet sie anschließend
 an den Punkten $x_e$ und $x_E$ aus. Es ergeben sich die folgenden Reihendarstellungen.
 \begin{align}
   \phi_e &= \phi_P + \phi'_P(x_e-x_P)+\frac{1}{2}\phi''_P(x_e-x_P)^2
@@ -22,16 +22,17 @@ an den Punkten $x_e$ und $x_E$ aus. Es ergeben sich die folgenden Reihendarstell
   \label{eq:taylor_konv_eE}
 \end{align}
 Werden die Gleichungen~\eqref{eq:taylor_konv_eE} und \eqref{eq:taylor_konv_eP} nun
-voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich:
+voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich mit dem
+Interpolationsfaktor $\gamma_e$:
 
 \begin{equation*}
   \begin{IEEEeqnarraybox}[][c]{rCl}
     \frac{\phi_e}{x_e-x_P} &=& \frac{\phi_E}{x_E-x_P} + \frac{\phi_P}{x_e-x_P} -
   \frac{\phi_P}{x_E-x_P} + \frac{1}{2} \phi''_P \left({(x_e-x_P)-(x_E-x_P)}\right)\\
-  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)\\
-  \phi_e &=& \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \left({1-\frac{x_e-x_P}{x_E-x_P} }\right)+HOT
-  + \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+HOT\\
-  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)\\
+  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)+HOT\\
+  \phi_e &=& \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \left({1-\frac{x_e-x_P}{x_E-x_P} }\right)
+  + \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
+  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT\\
    &=& \phi_E \gamma_e + \phi_P (1-\gamma_e)+ \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
          &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
   \end{IEEEeqnarraybox}
@@ -41,7 +42,7 @@ Der Abbruchfehler lässt sich hier leicht ablesen. Er lautet:
   TE_{e, CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6}
   \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
 \end{equation*}
-Die hier genutzten analytischen Ableitungen werden im nächsten Schritt durch Approximationen ersetzt.
+Die hier vorliegenden analytischen Ableitungen werden im nächsten Schritt durch Approximationen ersetzt.
 \begin{align*}
   %\phi'_P &= \frac{\phi_E-\phi_W}{x_E-x_W}\\
   \phi''_P &= \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
@@ -187,7 +188,7 @@ Abbruchfehler lautet damit:
 \subsubsection{Randwerte}
 
 Auch beim UDS-Verfahren müssen am Rand die Approximationen der verwendeten Ableitungen
-so angepasst werden, das nur vorhandene Werte benutzt werden.
+so angepasst werden, dass nur vorhandene Werte benutzt werden.
 Für den östlichen Rand der Kontrollvolumens können dabei die in Abschnitt~\ref{sec:te_cds_rand}
 gezeigten Differenzenquotienten genutzt werden.
 
@@ -268,11 +269,12 @@ Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
 
 \subsection{Zweidimensionale Probleme}
 Die gezeigten Herleitungen lassen sich problemlos ins Zweidimensionale übertragen. Es muss
-jedoch darauf geachtet werdenn den Fehler aus der Integralapproximation nciht zu vergessen.
+jedoch darauf geachtet werdenn den Fehler aus der Integralapproximation nicht zu vergessen.
 Dieser lautet für die Ostseite:
 \begin{equation}
   TE_{e,int} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
     \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
 \end{equation}
-Er lässt sich leicht auf die anderen Seiten des Kontrollvolumens übertragen.
+Er lässt sich leicht auf die anderen Seiten des Kontrollvolumens übertragen. Die Diskretisierung
+der analytischen Ableitung wurde ebenfalls bereits gezeigt.
 \clearpage
