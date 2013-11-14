@@ -177,11 +177,11 @@ Damit folgt für das Integral aus Gleichung~\eqref{eq:int_trans}:
 
 \begin{align*}
   \underbrace{
-  \int_{\eta_{e1}}^{\eta_{e2}} (\rho v_1 \phi n_{e1})
+    \int_{\eta_{e1}}^{\eta_{e2}} \left({\rho v_1 \phi n_{e1}}\right)
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
   }_I
   &+ \underbrace{
-  \int_{\eta_{e1}}^{\eta_{e2}} (\alpha \pder[\phi]{x} n_{e1})
+  \int_{\eta_{e1}}^{\eta_{e2}} \left({\alpha \pder[\phi]{x} n_{e1}}\right)
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
 }_{II}\\
   + \underbrace{
@@ -189,11 +189,10 @@ Damit folgt für das Integral aus Gleichung~\eqref{eq:int_trans}:
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
   }_{III}
   &+ \underbrace{
-  \int_{\eta_{e1}}^{\eta_{e2}} (\alpha \pder[\phi]{x} n_{e2})
+  \int_{\eta_{e1}}^{\eta_{e2}} \left({\alpha \pder[\phi]{x} n_{e2}}\right)
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
   }_{IV}
 \end{align*}
-
 Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
 \begin{equation*}
   C=(\rho v_1 \phi n_{e1})
@@ -205,27 +204,41 @@ Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
   \underbrace{\left({(\etaii-\etilde)^2-(\etai-\etilde)^2}\right)}_{=0}
   +\frac{1}{6} \frac{\partial^2 C}{\partial \eta^2}\bigg\vert_{\tilde{e}}
   \underbrace{\left({(\etaii-\etilde)^3-(\etai-\etilde)^3}\right)}_{=\frac{1}{4}} + HOT\\
-  &= C \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^2 C}{\partial \eta^2}\bigg\vert_{\tilde{e}}+HOT}_{TE_{int}}
+  &= C \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^2 C}{\partial \eta^2}
+\bigg\vert_{\tilde{e}}+HOT}_{TE_{int,konv}}
 \end{align*}
+Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Hier ergibt sich:
+\begin{equation*}
+  D=  \left({\alpha \pder[\phi]{x} n_{e1}}\right)
+  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
+\end{equation*}
 
+\begin{align*}
+  II&= D\big\vert_{\tilde{e}} \underbrace{(\etaii-\etai)}_{=1} + \frac{1}{2}
+  \frac{\partial^2 D}{\partial \eta^2} \bigg\vert_{\tilde{e}}
+  \underbrace{\left({(\etaii-\etilde)^2-(\etai-\etilde)^2}\right)}_{=0}
+  +\frac{1}{6} \frac{\partial^3 D}{\partial \eta^3}\bigg\vert_{\tilde{e}}
+  \underbrace{\left({(\etaii-\etilde)^3-(\etai-\etilde)^3}\right)}_{=\frac{1}{4}} + HOT\\
+  &= D \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^3 D}{\partial \eta^3}
+\bigg\vert_{\tilde{e}}+HOT}_{TE_{int, dif}}
+\end{align*}
 Im nächsten Schritt muss nun die $C$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
 \begin{align*}
    C\big\vert_{\tilde{e}}
-   &= C\big\vert_{\tilde{E}}
+   =& C\big\vert_{\tilde{E}}
    \left({\frac{\xi_{\tilde{e}}-\xi_{\tilde{P}}}{\xi_{\tilde{E}}-\xi_{\tilde{P}}}}\right)
    + C\big\vert_{\tilde{P}} \left({1-\frac{\xi_{\tilde{e}}-\xi_{\tilde{P}}}{\xi_{\tilde{E}}-\xi_{\tilde{P}}} }\right)
    + \frac{1}{2} \frac{\partial^2 C}{\partial \xi^2}\bigg\vert_{\tilde{P}}
    (\xi_{\tilde{e}}-\xi_{\tilde{E}})(\xi_{\tilde{e}}-\xi_{\tilde{P}})\\
-  &+ \frac{1}{6}  \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}}
+   &+ \frac{1}{6}  \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}}
    \left({(\xi_{\tilde{e}}-\xi_{\tilde{P}})^2-(\xi_{\tilde{E}}-\xi_{\tilde{P}})^2}\right)
    (\xi_{\tilde{e}}-\xi_{\tilde{P}}) + HOT\\
-   &=\frac{1}{2} C \big\vert_{\tilde{E}} + \frac{1}{2} C \big\vert_{\tilde{P}}
+   =&\frac{1}{2} C \big\vert_{\tilde{E}} + \frac{1}{2} C \big\vert_{\tilde{P}}
    \underbrace{- \frac{1}{8} \frac{\partial^2 C}{\partial \xi^2}\bigg\vert_{\tilde{P}}
    - \frac{1}{16} \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}} + HOT}_{TE_{konv}}
 \end{align*}
-
-
-Bei dem Diffusionsterm $II$ muss die Ableitung nach $x$ durch Ableitungen ins logische
+Bei dem Diffusionsterm $II$ muss die Ableitung $\frac{\partial \phi}{\partial x}$
+durch Ableitungen ins logische
 Gebiet ersetzt werden:
 
 \begin{equation}
@@ -233,21 +246,21 @@ Gebiet ersetzt werden:
   = \frac{\yeta}{det\ J} \phi_{\xi} - \frac{\yxi}{det\ J} \phi_{\eta}
 \end{equation}
 
-\begin{equation}
-  D =\left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
-  \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 
-\left({\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})}\right)
-\end{equation}
+%\begin{equation}
+  %D =\left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
+  %\left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 
+%\left({\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})}\right)
+%\end{equation}
 
-\begin{equation*}
-  D\big\vert_{\etilde} =
+\begin{align*}
+  D\big\vert_{\etilde} &=
   \left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 
   \Bigg(\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})
       \underbrace{ -\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
       +\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
 + HOT}_{TE_{konv}}\Bigg)
-\end{equation*}
+\end{align*}
 
 Auch $\phi_{\tilde{ne}}$ und $\phi_{\tilde{se}}$ müssen durch die umliegenden Zellenwerte ausgedrückt werden.
 Dies kann beispielsweise durch Interpolation erfolgen.
