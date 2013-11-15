@@ -35,7 +35,11 @@
 \usetikzlibrary{calc,intersections,through,backgrounds}
 \usepackage{IEEEtrantools}
 
-\usepackage{ctable}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{floatrow}
+% Table float box with bottom caption, box width adjusted to content
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
@@ -54,14 +58,14 @@
 \title{Ableitung und Untersuchung des Abbruchfehlerschätzers für mittels
 Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 \subtitle{Derivation and examination of the truncation error for finite volume discretised Navier-Stokes equations\linebreak Bachelor-Thesis | Paul Lange}
-\subsubtitle{Betreuer: U. Falk | Prof. Dr. rer. nat. M. Schäfer}
+\subsubtitle{Betreuer: Dipl.-Ing. U. Falk | Prof. Dr. rer. nat. M. Schäfer}
 
 %Settitlepicture auskommentieren wenn keines gewünscht wird
 %\settitlepicture{titlepic}
 %\printpicturesize
 %Hier wird entweder ein Text für das Institut angewählt oder ein Logo
-\institution{Fachgebiet für \\Numerische Berechnungsverfahren \\im Maschinenbau}
-%\setinstitutionlogo[height]{fnb_logo_schriftzug}
+%\institution{Fachgebiet für \\Numerische Berechnungsverfahren \\im Maschinenbau}
+\setinstitutionlogo[height]{bilder/fnb_logo_schriftzug}
 
 
 % %%%%%%%%%%%%%%%%%%% Hier beginnt das Dokument
@@ -100,6 +104,7 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 \input{text/te_dif.tex}
 \input{text/te_konv.tex}
 \input{text/transformation.tex}
+\cleardoublepage
 
 \chapter{Verifizierung des Abbruchfehlerindikators}
 %\input{text/testfaelle}
@@ -109,8 +114,13 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 \subsection{UDS}
 \subsection{CDS}
 \subsection{Flux-Blending}
+\cleardoublepage
+
+\input{text/anwendung}
+\cleardoublepage
 
 \chapter{Fazit}
+\cleardoublepage
 
 %% Bibliographie
 %\bibliographystyle{abbrv}

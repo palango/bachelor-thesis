@@ -245,4 +245,48 @@
 \end{figure}
 
 
+
+\begin{figure}[ht]
+\begin{tikzpicture}[scale=1.5]
+  \draw[->, thick] (-1.5,0) -- (-1,0) node[right] {$x$} coordinate(x axis);
+  \draw[->, thick] (-1.5,0) -- (-1.5,0.5) node[above] {$y$} coordinate(y axis);
+
+  \fill[tud0a] (0,0) -- (3,0.5) -- (3.5,3.5) -- (0.5, 3) --cycle;
+
+  \draw[thick] (-0.5,-0.08333) -- (4,0.66666);
+  \draw[thick] (-0.08333,-0.5) -- (0.66666,4);
+  \draw[thick] (-0.5,-0.16666+3) -- (4.5,3.66666);
+  \draw[thick] (-.08333+3,0) -- (0.5833+3,4);
+
+  \draw[thick,<->] (15mm,0mm) arc (0:9.5:15mm);
+  \draw[thick,<->] (0mm,15mm) arc (90:80.5:15mm);
+  \draw[thick,<->] (9mm,1.5mm) arc (9.5:81:9mm);
+
+  \node (x) at (1.5,0.05) [label=below:$\alpha$]{};
+  \node (x) at (0.05,1.5) [label=left:$\beta$]{};
+  \node (x) at (0.5,0.5) [label=above right:$\theta$]{};
+
+  \node (x) at (2.5,0.3) [label=above left:$a$]{};
+  \node (x) at (0.3,2.5) [label=below right:$b$]{};
+
+  \node (x) at (4,0.66666) [label=right:{$\eta=j$}]{};
+  \node (x) at (4.5,3.66666) [label=right:{$\eta=j+1$}]{};
+  \node (x) at (0.66666,4) [label=left:{$\xi=i+1$}]{};
+  \node (x) at (0.66666+3,4) [label=left:{$\xi=i+1$}]{};
+
+  %\fill (0,0) circle[radius=1.5pt];
+
+  \draw[thick] (0,0) -- (2,0);
+  \draw[thick] (0,0) -- (0,2);
+
+  %\fill (1,0) circle[radius=1pt];
+  %\node (x) at (1,0) [label=below:$s$] {};
+
+
+
+\end{tikzpicture}
+\centering
+\caption{Transformation}
+\end{figure}
+
 \end{document}

@@ -1,0 +1,54 @@
+\chapter{Anwendung und Vergleich des Abbruchfehlerschätzers}
+
+\section{Algorithmus zur Gitteradaption}
+
+Zur Adaption des numerischen Gitters stehen verschiedene Verfahren zu Verfügung~\cite{abc}.
+Zum Einen können die vorhandenen Gitterpunkte verschoben werden. Dieses Verfahren wird r-Adaption
+genannt. Fügt man weitere Gitterpunkte zum Gitter hinzu, so handelt es sich um eine h-Adaption.
+Zuletzt kann lokal die Ordnung der Approximationen erhört werden, was p-Adaption genannt wird.
+Weiterhin existieren zudem Mischformen der oben genannten Verfahren.
+
+Während bei unstrukturierten Gittern heute hauptsächlich h-Adaption verwendet wird, ist bei
+strukturierten Gittern die r-Adaption am gebräuchlichsten. Diese soll auch in der vorliegenden
+Arbeit angewandt werden.
+
+Der Algorithmus zur Gitteranpassung basiert hierbei auf der Analogie zu einem System
+linearer Federn.
+Zuerst wird eine Lösungsanpassungsfunktion $\theta_i$ erstellt, die auf den gewünschten
+Lösungseigenschaften wie zum Beispiel Ableitung, Krümmung oder Abbruchfehler basiert. Hierbei
+bezeichnet $i$ den betrachteten Gitterpunkt. Ist die gewählte Lösungseigenschaft nur in den
+Mittelpunkten der Kontrollvolumen bekannt, kann sie beispielsweise durch lineare Interpolation
+auf die Gitterpunkte überführt werden.
+
+Anschließend wird aus der Anpassungsfunktion $\theta_i$ eine Gewichtungsfunktion
+erstellt $W_i$ erzeugt.
+Der frei wählbare Exponent $q$ wird in dieser Arbeit auf eins gesetzt.
+\begin{equation}
+  W_i = \vert\theta_i \vert^q
+\end{equation}
+Die Gewichtungsfunktion wird zur Steuerung des Adaptionsprozesses genutzt, wobei größere
+Werte eine Gitterverfeinerung und kleinere Werte eine Weitung des Gitters bewirken. Um
+weiche Änderungen der Größen von Nachbarzellen zu erreichen, wird die Gewichtungsfunktion
+anschließend geglättet. Dies geschieht iterativ über folgende Formel:
+\begin{equation}
+  W_i = \frac{W_{i-1} + 4W_i + W_{i+1}}{6}
+\end{equation}
+Das den geglätteten Gewichten $W_i$ können nun die Federkonstanten berechnet werden, wobei
+die Federkonstante $k_{i+1/2}$ die Feder beschreibt, die die Punkte $x_{i}$ und $x_{i+1}$ verbindet.
+\begin{equation}
+  k_{i+1/2} = \frac{W_i + W_{i+1}}{2}
+\end{equation}
+Hohe Werte der Gewichtungsfunktion führen demnach zu einer hohen Federkonstante, was die
+Gitterverfeinerung bewirkt. Die neuen Gitterkoordinaten $x_i^{m+1}$ können nun über folgende
+Gleichung berechnet werden, wobei $x_i^m$ für die Gitterpunkte des alten, nicht adaptierten
+Gitters steht.
+\begin{equation}
+  x_i^{m+1} = \frac{k_{i-1/2} x_{i-1}^m + k_{i+1/2} x_{i+1}^m}{k_{i-1/2} + k_{i+1/2}}
+\end{equation}
+Im Folgenden sollen nun verschiedene Lösungseigenschaften zur Gitteradaption untersucht werden.
+Diese sind:
+\begin{enumerate}
+  \item Lösungsgradient: $\displaystyle\theta_i = \frac{\partial \phi}{\partial x}\bigg \vert_i$
+  \item Abbruchfehler: $\theta_i = TE_i$
+  \item Diskretisierungsfehler
+\end{enumerate}

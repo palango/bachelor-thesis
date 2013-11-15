@@ -15,24 +15,75 @@ Bei der Berechnung der beobachteten Konvergenzordnung muss beachtet werden, dass
 feinsten Gitter begonnen wird und dieses schrittweise ausgedünnt wird. Andernfalls
 wird die Konvergenzordnung falsch bestimmt.
 
-Ddie beobachtete Konvergenzordnung lässt sich neben den berechneten Zahlenwerten auch gut
+Die beobachtete Konvergenzordnung lässt sich neben den berechneten Zahlenwerten auch gut
 an der Steigung in einem doppelt-logarithmischen Diagramm ablesen. Entsteht dort eine
 Gerade, so bedeutet das, dass die Lösung mit einen festen Koeffizienten konvergiert.
 
 \paragraph{1D Diffussion und CDS, nicht äquidistant}
 
+\begin{table}[h]
+  \begin{tabular}{r r l}
+  \toprule
+  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  \midrule
+  5  & $1,27\cdot10^{-1}$ & \multirow{2}{*}{2,73}\\
+  10 & $1.91\cdot10^{-2}$ & \multirow{2}{*}{2,22}\\
+  20 & $4.07\cdot10^{-3}$ & \multirow{2}{*}{2,02}\\
+  40 & $9.96\cdot10^{-4}$ & \\
+  \bottomrule
+\end{tabular}
+\caption{Daten}
+\end{table}
 
-\begin{figure}[ht]
-\begin{tikzpicture}
-\begin{loglogaxis}[xlabel=Anzahl der Kontrollvolumen $N$,ylabel=Gemittelter Fehler,width=0.7\textwidth]
-\addplot[color=tud2d,mark=*, very thick] coordinates {
-  (5, 1.2662511400e-01)
-  (10,1.9068695077e-02)
-  (20,4.0741696509e-03)
-  (40,9.9564249986e-04)
-};
-\end{loglogaxis}
+\begin{figure}[h]
+  \begin{tikzpicture}
+  \begin{loglogaxis}[%xlabel=Anzahl der Kontrollvolumen
+    %$N$,ylabel=Gemittelter Fehler,
+  width=0.55\textwidth]
+  \addplot[color=tud2d,mark=*, very thick] coordinates {
+    (5, 1.2662511400e-01)
+    (10,1.9068695077e-02)
+    (20,4.0741696509e-03)
+    (40,9.9564249986e-04)
+  };
+  \end{loglogaxis}
 \end{tikzpicture}
-\centering
-\caption{Blub}
+\caption{Fehler}
 \end{figure}
+
+%\begin{figure}[ht]
+%\begin{floatrow}
+
+%\capbtabbox{%
+%\begin{tabular}{r r r}
+  %\toprule
+  %N & Summierter Fehler & Konvergenzordnung \\
+  %\midrule
+  %5  & $1,27*10^{-1}$ & \multirow{2}{*}{333}\\
+  %10 & $1.91*10^{-1}$ & \multirow{2}{*}{333}\\
+  %20 & $4.07*10^{-1}$ & \multirow{2}{*}{333}\\
+  %40 & $9.96*10^{-1}$ & \\
+  %\bottomrule
+%\end{tabular}
+%}{%
+  %\caption{A table}%
+%}
+%\ffigbox{%
+%\begin{tikzpicture}
+%\begin{loglogaxis}[%xlabel=Anzahl der Kontrollvolumen
+  %%$N$,ylabel=Gemittelter Fehler,
+%width=0.55\textwidth]
+%\addplot[color=tud2d,mark=*, very thick] coordinates {
+  %(5, 1.2662511400e-01)
+  %(10,1.9068695077e-02)
+  %(20,4.0741696509e-03)
+  %(40,9.9564249986e-04)
+%};
+%\end{loglogaxis}
+%\end{tikzpicture}
+%}{%
+  %\caption{A figure}%
+%}
+%\end{floatrow}
+%\end{figure}
+
