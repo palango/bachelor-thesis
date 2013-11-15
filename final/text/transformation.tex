@@ -220,7 +220,17 @@ Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Hier ergibt sich:
   &= D \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^3 D}{\partial \eta^3}
 \bigg\vert_{\tilde{e}}+HOT}_{TE_{int, dif}}
 \end{align*}
-Im nächsten Schritt muss nun die $C$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
+Hier muss nun beachtet werden, dass $D$ selbst noch die Ableitung $\pder[\phi]{x}$ im physikalischen Gebiet enthält.
+Diese muss wie das Kontrollvolumen ins logische Gebiet transformiert werden. Die Transformation ergibt
+mit der Jakobimatrix aus Gleichung~\eqref{eq:detj} für
+die beiden Ableitungen $\pder[\phi]{x}$ und $\pder[\phi]{y}$:
+\begin{align}
+  \pder[\phi]{x}&=\pder[\xi]{x}\pder[\phi]{\xi}+\pder[\eta]{x}\pder[\phi]{\eta}
+  = \frac{\yeta}{det(J)} \phi_{\xi} - \frac{\yxi}{det(J)} \phi_{\eta}\\
+  \pder[\phi]{y}&=\pder[\xi]{y}\pderf{\xi}+\pder[\eta]{y}\pderf{\eta}
+  =\frac{x_{\xi}}{det(J)}\phi_{\eta}-\frac{x_{\eta}}{det(J)} \phi_{\xi}
+\end{align}
+Im nächsten Schritt muss nun $C$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
 \begin{align*}
    C\big\vert_{\tilde{e}}
    =& C\big\vert_{\tilde{E}}
@@ -239,10 +249,7 @@ Bei dem Diffusionsterm $II$ muss die Ableitung $\frac{\partial \phi}{\partial x}
 durch Ableitungen ins logische
 Gebiet ersetzt werden:
 
-\begin{equation}
-  \pder[\phi]{x}=\pder[\xi]{x}\pder[\phi]{\xi}+\pder[\eta]{x}\pder[\phi]{\eta}
-  = \frac{\yeta}{det\ J} \phi_{\xi} - \frac{\yxi}{det\ J} \phi_{\eta}
-\end{equation}
+
 
 %\begin{equation}
   %D =\left({\frac{\alpha\ n_{e1}}{det\ J}}\right)
@@ -270,7 +277,7 @@ sind nur vom Gitter, nicht aber von der Lösungsfunktion abhängig.
 Ab hier können wieder die bereits gezeigten Herleitungen genutzt werden.
 \begin{equation}
   \begin{IEEEeqnarraybox}[][c]{rCl}
-    \int\int_{P} \underbrace{\Pi_{\phi}(\xi, \eta) J }_{h} d\xi d\eta
+    \int\int_{P} \underbrace{\Pi_{\phi}(\xi, \eta) det(J) }_{h} d\xi d\eta
     &=& h\big\vert_{\tilde{P}} (\xi_e-\xi_w)(\eta_n-\eta_s)\\
   & &+ h_{\xi}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} (\eta_n-\eta_s)\\
   && + h_{\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} (\xi_e-\xi_w) \\
@@ -293,7 +300,7 @@ Ab hier können wieder die bereits gezeigten Herleitungen genutzt werden.
 \begin{figure}[ht]
   \input{text/images/metriken}
 \centering
-\caption{Transformation}
+\caption{Größen für die Berechnung der Metriken}
 \end{figure}
 
 Größen, die nur vom numerischen Gitter, nicht aber der Lösungsfunktion abhängen, werden Metriken genannt.
@@ -307,17 +314,17 @@ Gitter mit $\Delta\xi = \Delta \eta = 1$:
 \begin{equation}
   x_{\xi} = \frac{x_{i+1, j} - x_{i-1,j}}{\Delta \xi} = x_{i+1, j} - x_{i-1,j} = a \cos \gamma
 \end{equation}
-Für die anderen Metriken erster Ordnung ergibt sich:
+Für die anderen Metriken erster Ordnung ergeben sich:
 \begin{align*}
   x_{\eta} &= b\sin \beta\\
   y_{\xi} &= a \sin \gamma\\
   y_{\eta} &= b \cos \beta
 \end{align*}
 Eine weitere benötige Größe stellt die Determinante der Jakobimatrix
-dar. Sie ist für jedes Kontrollvolumen unterschiedlich. Werden
+dar. Sie ist für jedes Kon\-troll\-volumen unterschiedlich. Werden
 die Metriken eingesetzt ergibt sich folgende Gleichung:
 \begin{align}
-  J &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi}\nonumber\\
+  det(J) &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi}\nonumber\\
     &= a \cos \gamma \, b \cos \beta - 
        a \sin \beta \, b \sin \gamma\nonumber\\
        &= ab(\cos\gamma\cos\beta-\sin\beta\sin\gamma) \label{eq:detj}
@@ -337,5 +344,12 @@ die das Kontrollvolumen aufspannen.
 Es handelt sich somit um eine Approximation des Flächeninhalts
 des Kontrollvolumens.
 \begin{equation}
-  J = a b \sin \theta
+  det(J) = a b \sin \theta
 \end{equation}
+
+
+\begin{figure}[ht]
+  \input{text/images/transformation_ableitung}
+\centering
+\caption{Größen für die Berechnung der Metriken}
+\end{figure}

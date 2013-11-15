@@ -1,0 +1,25 @@
+\begin{tikzpicture}[scale=1.5]
+  \draw[->, thick] (-1.5,0) -- (-1,0) node[right] {$x$} coordinate(x axis);
+  \draw[->, thick] (-1.5,0) -- (-1.5,0.5) node[above] {$y$} coordinate(y axis);
+
+  \fill[tud0a] (0,1) -- (2,0.5) -- (2.5,2) -- (0.5, 3) --cycle;
+  \draw[thick] (0,1) -- (2,0.5) -- (2.5,2) -- (0.5, 3) --cycle;
+  \draw[thick] (4,-0.5) -- (2,0.5) -- (2.5,2) -- (5, 2.5) --cycle;
+
+  \fill (2,0.5,0) circle[radius=1.5pt];
+  \node (x) at (2,0.5) [label=right:$se$] {};
+  \fill (2.5,2) circle[radius=1.5pt];
+  \node (x) at (2.5,2) [label=below left:$ne$] {};
+  \fill (1.25,1.625) circle[radius=1.5pt];
+  \node (x) at (1.25,1.625) [label=above:$P$] {};
+  \node (x) at (1.25,1.625) [label=below:{$(\xi_{i,j},\ \eta_{i,j})$}] {};
+  \fill (3.25,1.125) circle[radius=1.5pt];
+  \node (x) at (3.25,1.125) [label=above:$E$] {};
+  \node (x) at (3.25,1.125) [label=below:{$(\xi_{i+1,j},\ \eta_{i+1,j})$}] {};
+
+  \draw[thick,->] (-0.75,2.125) -- (5.25,0.625);
+  \node (x) at (5.25,0.625) [label=right:$\xi$] {};
+
+  \draw[thick,->] (1.75,-0.25) -- (2.75,2.75);
+  \node (x) at (2.75,2.75) [label=right:$\eta$] {};
+\end{tikzpicture}

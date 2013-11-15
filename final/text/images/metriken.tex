@@ -1,6 +1,6 @@
 \begin{tikzpicture}[scale=1.2]
-  \draw[->, thick] (-1.5,0) -- (-1,0) node[right] {$x$} coordinate(x axis);
-  \draw[->, thick] (-1.5,0) -- (-1.5,0.5) node[above] {$y$} coordinate(y axis);
+  \draw[->, thick] (-2,0) -- (-1.5,0) node[right] {$x$} coordinate(x axis);
+  \draw[->, thick] (-2,0) -- (-2,0.5) node[above] {$y$} coordinate(y axis);
 
   \fill[tud0a] (0,0) -- (3,0.5) -- (3.5,3.5) -- (0.5, 3) --cycle;
 
@@ -20,10 +20,10 @@
   \node (x) at (2.5,0.3) [label=above left:$a$]{};
   \node (x) at (0.3,2.5) [label=below right:$b$]{};
 
-  \node (x) at (4,0.66666) [label=right:{$\eta=j$}]{};
-  \node (x) at (4.5,3.66666) [label=right:{$\eta=j+1$}]{};
-  \node (x) at (0.66666,4) [label=left:{$\xi=i+1$}]{};
-  \node (x) at (0.66666+3,4) [label=left:{$\xi=i+1$}]{};
+  \node (x) at (4,0.66666) [label=right:{$\eta=j-\frac{1}{2}$}]{};
+  \node (x) at (4.5,3.66666) [label=right:{$\eta=j+\frac{1}{2}$}]{};
+  \node (x) at (0.66666,4) [label=left:{$\xi=i-\frac{1}{2}$}]{};
+  \node (x) at (0.66666+3,4) [label=left:{$\xi=i+\frac{1}{2}$}]{};
 
   \draw[thick] (0,0) -- (2,0);
   \draw[thick] (0,0) -- (0,2);
