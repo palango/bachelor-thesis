@@ -158,7 +158,7 @@ heben sich mit der Gegenseite auf. Diese müssen aber im Falle eines nicht-ortho
 numerischen Gitters beachtet werden, soll die Berechnung realistische Werte liefern.
 
 Da viele der zusätzlichen Terme auf der Verzerrtheit des Gitters beruhen und eine
-Betrachtung im physikalischen Bereich verkomplizieren wird eine Transformation auf
+Betrachtung im physikalischen Bereich verkomplizieren, wird eine Transformation auf
 den logischen Bereich durchgeführt. Der Vorteil besteht darin, dass auf dem dortigen kartesischen
 Gitter die Anwendung von Differenzenschemata einfach ist und man die zusätzlichen Fehler des
 verzerrten Gitters vermeiden kann. Der Nachteil ist die zusätzliche Komplexität durch
@@ -226,7 +226,10 @@ Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
   &= C \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^2 C}{\partial \eta^2}
 \bigg\vert_{\tilde{e}}+HOT}_{TE_{int,konv}}
 \end{align*}
-Im nächsten Schritt muss nun $C$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
+Hierbei wird die Abkürzung $C$ zur Übersichtlichkeit eingeführt und $\tilde{e}$ bezeichnet den Mittelpunkt
+der transformierten Ostseite (siehe Abbildung~\ref{fig:no-trans}).  Nach dem allgemeinen Vorgehen bei der
+Methode der finiten Volumen muss nun $C\vert_{\tilde{e}}$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
+Dies soll hier mit dem Zentraldifferenzenschema gezeigt werden.
 \begin{align*}
    C\big\vert_{\tilde{e}}
    =& C\big\vert_{\tilde{E}}
@@ -245,7 +248,8 @@ Im nächsten Schritt muss nun $C$ durch die umgebenden Zellenmittelpunkte ausged
 
 
 \paragraph{Diffusive Terme}
-Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Hier ergibt sich:
+Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Mit der Abkürzung $D$
+ergibt sich hier:
 \begin{equation*}
   D=  \left({\alpha \pder[\phi]{x} n_{e1}}\right)
   \left\lVert \frac{\partial x(\xi=e, \eta)}{\partial \eta} \right\rVert_2 d\eta
@@ -263,17 +267,17 @@ Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Hier ergibt sich:
 Hier muss nun beachtet werden, dass $D$ selbst noch die Ableitung $\pder[\phi]{x}$ im physikalischen Gebiet enthält.
 Diese muss wie das Kontrollvolumen ins logische Gebiet transformiert werden. Die Transformation ergibt
 mit der Jakobimatrix aus Gleichung~\eqref{eq:detj} für
-die beiden Ableitungen $\pder[\phi]{x}$ und $\pder[\phi]{y}$:
+die Ableitung $\pder[\phi]{x}$:% und $\pder[\phi]{y}$:
 \begin{align}
   \pder[\phi]{x}&=\pder[\xi]{x}\pder[\phi]{\xi}+\pder[\eta]{x}\pder[\phi]{\eta}
-  = \frac{\yeta}{det(J)} \phi_{\xi} - \frac{\yxi}{det(J)} \phi_{\eta}\\
-  \pder[\phi]{y}&=\pder[\xi]{y}\pderf{\xi}+\pder[\eta]{y}\pderf{\eta}
-  =\frac{x_{\xi}}{det(J)}\phi_{\eta}-\frac{x_{\eta}}{det(J)} \phi_{\xi}
+  = \frac{\yeta}{det(J)} \phi_{\xi} - \frac{\yxi}{det(J)} \phi_{\eta}
 \end{align}
+  %\pder[\phi]{y}&=\pder[\xi]{y}\pderf{\xi}+\pder[\eta]{y}\pderf{\eta}
+  %=\frac{x_{\xi}}{det(J)}\phi_{\eta}-\frac{x_{\eta}}{det(J)} \phi_{\xi}
+%\end{align}
 
-Bei dem Diffusionsterm $II$ muss die Ableitung $\frac{\partial \phi}{\partial x}$
-durch Ableitungen ins logische
-Gebiet ersetzt werden:
+Bei der anschließenden Approximation von $D_{\tilde{e}}$ durch die Mittelpunkte der Nachbarkontrollvolumen
+muss ebenfalls die $\frac{\partial \phi}{\partial x}$ transformiert werden. Damit ergibt sich folgende Gleichung:
 
 
 
@@ -292,12 +296,15 @@ Gebiet ersetzt werden:
       +\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
 + HOT}_{TE_{konv}}\Bigg)
 \end{align*}
-
 Auch $\phi_{\tilde{ne}}$ und $\phi_{\tilde{se}}$ müssen durch die umliegenden Zellenwerte ausgedrückt werden.
-Dies kann beispielsweise durch Interpolation erfolgen.
+Dies kann beispielsweise durch lineare Interpolation erfolgen.
+\begin{equation}
+\phi_{\tilde{ne}} = \frac{\phi_{\tilde{P}} +\phi_{\tilde{E}} + \phi_{\tilde{NE}}+ \phi_{\tilde{N}}}{4} 
+\end{equation}
 
 In der oben stehenden Gleichung treten auch $\yxi$ und $\yeta$ auf. Diese werden Metriken der Transformation genannt und
-sind nur vom Gitter, nicht aber von der Lösungsfunktion abhängig.
+sind nur vom Gitter, nicht aber von der Lösungsfunktion abhängig. Ihre Approximation
+wird in Abschnitt~\ref{sec:verz-metrik} gezeigt.
 
 
 
@@ -305,40 +312,54 @@ sind nur vom Gitter, nicht aber von der Lösungsfunktion abhängig.
 
 \paragraph{Quellterm}
 
-Ab hier können wieder die bereits gezeigten Herleitungen genutzt werden.
+Zur Berechnung des Abbruchfehlers des Quellterm von nicht-orthogonalen Gittern wird der Transformationssatz benötigt.
+Dieser lautet im zweidimensionalen Fall:
+\begin{equation}
+  \int \int_A f(x,y)\ dx\,dy = \int \int_P f\left({x(\xi,\,\eta),\ y(\xi,\,\eta)}\right)\ det(J)\ d\xi\,d\eta
+\end{equation}
+Angewandt auf den Quellterm und der Abkürzung $Q$ ergibt sich für den Quellterm:
 \begin{equation}
   \begin{IEEEeqnarraybox}[][c]{rCl}
-    \int\int_{P} \underbrace{\Pi_{\phi}(\xi, \eta) det(J) }_{h} d\xi d\eta
-    &=& h\big\vert_{\tilde{P}} (\xi_e-\xi_w)(\eta_n-\eta_s)\\
-  & &+ h_{\xi}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} (\eta_n-\eta_s)\\
-  && + h_{\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} (\xi_e-\xi_w) \\
-  & &+ \frac{1}{2} h_{\xi\xi}\big\vert_{\tilde{P}}\frac{(\xi_e-\xi_P)^3 - (\xi_w-\xi_P)^3}{3} (\eta_n-\eta_s)\\
-  &&+ \frac{1}{2} h_{\eta\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^3-(\eta_s-\eta_P)^3}{3} (\xi_e-\xi_w) \\
-  & &+ h_{\xi\eta}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} \cdot
+    \int\int_{P} \underbrace{\Pi_{\phi}(\xi, \eta) det(J) }_{Q} d\xi d\eta
+    &=& Q\big\vert_{\tilde{P}} (\xi_e-\xi_w)(\eta_n-\eta_s)\\
+  & &+ Q_{\xi}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} (\eta_n-\eta_s)\\
+  && + Q_{\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} (\xi_e-\xi_w) \\
+  & &+ \frac{1}{2} Q_{\xi\xi}\big\vert_{\tilde{P}}\frac{(\xi_e-\xi_P)^3 - (\xi_w-\xi_P)^3}{3} (\eta_n-\eta_s)\\
+  &&+ \frac{1}{2} Q_{\eta\eta}\big\vert_{\tilde{P}} \frac{(\eta_n-\eta_P)^3-(\eta_s-\eta_P)^3}{3} (\xi_e-\xi_w) \\
+  & &+ Q_{\xi\eta}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} \cdot
   \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} + HOT\\
-  &=&h\big\vert_{\tilde{P}} + \underbrace{\frac{1}{24} \left({h_{\xi\xi}\big\vert_{\tilde{P}}+h_{\eta\eta}\big\vert_{\tilde{P}}}\right)
+  &=&Q\big\vert_{\tilde{P}} + \underbrace{\frac{1}{24} \left({Q_{\xi\xi}\big\vert_{\tilde{P}}+Q_{\eta\eta}\big\vert_{\tilde{P}}}\right)
 + HOT}_{TE_{source}}
 \end{IEEEeqnarraybox}
 \end{equation}
-
+Die gezeigten Ableitungen müssen nun für die anderen Seiten des Kontrollvolumens wiederholt werden.
+Anschließend werden sie summiert und ergeben dann den Abbruchfehler eines Kontrollvolumens auf
+einem nicht-orthogonalem Gitter.
 
 
 
 
 
 \subsection{Diskretisierung der Metriken}
+\label{sec:verz-metrik}
 
+In den oben gezeigten Ableitungen treten mehrfach Größen auf, die nur vom numerischen Gitter, nicht aber
+von der Lösungsfunktion abhängen. Diese werden Metriken genannt.
+Meistens handelt es sich hierbei um physikalische Variablen, die nach logischen Koordinaten abgeleitet werden.
+Beispiele sind $x_{\xi}$ oder $y_{\eta\eta}$.
+
+Auch die Metriken sind analytische Größen und müssen im Rahmen der Berechnung diskretisiert werden.
+Treten die Metriken hierbei bei einer Approximation über die Grenzen des Kontrollvolumens hinweg auf,
+ist die Diskretisierung verschieden zur Approximation innerhalb der Grenzen eines Kontrollvolumens.
+
+\paragraph{Diskretisierung innerhalb eines Kontrollvolumens}
 \begin{figure}[ht]
   \input{text/images/metriken}
 \centering
-\caption{Größen für die Berechnung der Metriken}
+\caption{Größen für die Berechnung der Metriken innerhalb des Kontrollvolumens}
 \end{figure}
-
-Größen, die nur vom numerischen Gitter, nicht aber der Lösungsfunktion abhängen, werden Metriken genannt.
-Meistens handelt es sich hierbei um physikalische Variablen, die nach logischen Koordinaten abgeleitet werden.
-Beispiele sind $x_{\xi}$ oder $y_{\eta}$.
-
-Die Metriken müssen für jeden Kontrollvolumen berechnet werden. Hierfür werden
+Die Metriken innerhalb eines Kontrollvolumens sind beispielsweise für die Transformation
+des Quellterms nötig. Zur Diskretisierung der Metriken werden
 Differenzenquotienten als Approximationen genutzt\cite{Lee}.
 Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
 Gitter mit $\Delta\xi = \Delta \eta = 1$:
@@ -353,7 +374,7 @@ Für die anderen Metriken erster Ordnung ergeben sich:
 \end{align*}
 Eine weitere benötige Größe stellt die Determinante der Jakobimatrix
 dar. Sie ist für jedes Kon\-troll\-volumen unterschiedlich. Werden
-die Metriken eingesetzt ergibt sich folgende Gleichung:
+die diskretisierten Metriken eingesetzt ergibt sich folgende Gleichung:
 \begin{align}
   det(J) &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi}\nonumber\\
     &= a \cos \gamma \, b \cos \beta - 
@@ -378,9 +399,27 @@ des Kontrollvolumens.
   det(J) = a b \sin \theta
 \end{equation}
 
+\paragraph{Diskretisierung über Kontrollvolumengrenzen}
 
+Bei der Approximation der diffusiven und konvektiven Flüsse werden meist
+auch die Grenzen eines Kontrollvolumens überschritten. Damit kommt auch
+die Geometrie des Nachbarkontrollvolumens zum tragen und die Diskretisierung der
+Metriken muss angepasst werden.
 \begin{figure}[ht]
   \input{text/images/transformation_ableitung}
 \centering
-\caption{Größen für die Berechnung der Metriken}
+\caption{Berechnung der Metriken über Grenzen von Kontrollvolumen}
 \end{figure}
+
+Die Ableitungen nach $\xi$ werden nach folgendem Schema approximiert, wobei
+$\vert \mathbf{x}_E -\mathbf{x}_P \vert$ den Abstand der Punkte $E$ und $P$ beschreibt.
+\begin{equation}
+  \pder[x]{\xi} \approx \frac{x_E-x_P}{\vert \mathbf{x}_E -\mathbf{x}_P \vert} \qquad
+  \text{und} \qquad \pder[y]{\xi} \approx \frac{y_E-y_P}{\vert \mathbf{x}_E -\mathbf{x}_P \vert}
+\end{equation}
+Die Ableitungen nach $\eta$ ergeben sich mit der Seitenlänge $\delta S_e$ der Ostseite
+zu:
+\begin{equation}
+  \pder[x]{\eta} \approx \frac{x_{ne}-x_{se}}{\delta S_e} \qquad
+  \text{und} \qquad \pder[y]{\eta} \approx \frac{y_{ne}-y_{se}}{\delta S_e}
+\end{equation}
