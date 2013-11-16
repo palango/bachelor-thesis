@@ -1,36 +1,53 @@
 \section{Motivation}
+Durch steigende Computerleistung sowie Verbesserungen in den numerischen Methoden konnten
+sich die simulationsbasierte Produktentwicklungsprozesse einen festen Platz neben
+Experimenten erarbeiten. Neben Kostenvorteilen ist es vor allem die Möglichkeit
+schnell Aussagen über Anpassungen und Modifikationen an Produkten treffen zu können, die
+simulationsbasierten Methoden zum Wachstum verhelfen.
+
 Für die ingenieurmäßige Berechnung von Strömungsproblemen hat sich die Methode der
 finiten Volumen auf breitem Gebiet durchgesetzt. Ihr Fokus liegt hier auf der Simulation
 der Navier-Stokes Gleichungen, oft auch unter Vernachlässigung kompressibler Strömungseffekte und
 anderen zulässigen Vereinfachungen.
 
-Durch steigende Computerleistung sowie Verbesserungen in den numerischen Methoden konnten
-sich Simulation
-
 Um die Genauigkeit der Ergebnisse zu verbessern werden immer feinere Gebiete aufgelöst,
 bei denen auch heutige Computersystem an ihre Grenzen stoßen. Es ist deshalb notwendig
 auf adaptive Methoden zurückzugreifen, die die Auflösung an interessanten Stellen wie
-zum Beispiel Grenzschichten, besonders belasteten Bauteilen oder Stellen mit hohem Fehler
-erhöhen können. Dazu ist es aber nötig diesen Fehler zu kennen.
+zum Beispiel Grenzschichten oder besonders interessanten Strömungsgebieten selektiv erhöhen können.
+Weiterhin sollen Fehler, die durch die numerische Behandlung der kontinuierlichen Strömungsgebiete
+entstehen, minimiert werden. Dafür ist es notwendig, Indikatoren für den Fehler zu definieren.
 
 Heutige Methoden schätzen diesen Fehler ab, negieren aber seine Ursachen bei der Diskretisierung
 und damit dem Übergang von der kontinuierlichen Differentialgleichung zur diskreten Gleichung.
 Hier liegt der Ansatzpunkt der Fehlerbetrachtung über den Abbruchfehler. Dieser wird in der
-vorliegenden Arbeit für Feldprobleme hergeleitet und seine Tauglichkeit anhand
-von Beispielen nachgewiesen.
+vorliegenden Arbeit für Feldprobleme hergeleitet und seine Genauigkeit an Beispielen
+verifiziert. Weiterhin wird er zur Gitteradaption eingesetzt.
+
 
 \section{Stand der Forschung}
 
-ZUr Adaptiven Gitterverfeinerung sind das h-Verfahren, das r-Verfahrung sowie das p-Verfahren bekannt.
-Während das p-Verfahren keine größere Anwendung in der STrömungssimulatio ngefunden hat
-
-
-IN ROY wird gezeiugt das für lineare Probleme der Abbruchfehler
-als Quelle des Diskretisierungsfehlers interpretiert werden kann
-Eine Giztterverfeinerund basierend auf dem Abbruchfehler
-vergrößert somit die Auflösung an der Quelle des Diskretisierungsfehler
-und verkleinert somit den gesamten Diskretisierungsfehler.
-Der Ansatz von Roy wird auf skalare Transportgleichen übertragen..
+Der Abbruchfehler als Indikator for die Gitteradaption ist in der Literatur bereits bekannt.
+Roy~\cite{roy2} stellt leitet in für die eindimensionale Burger-Gleichung mittels
+Finiten-Differenzen her und vergleicht anschließend den abbruchfehlerbasierten Fehlerindikator
+mit Lösungsbasierten Indikatoren wie Gradient oder Krümmung. Weiterhin wird gezeigt,
+dass für lineare Probleme der Abbruchfehler
+als Quelle des Diskretisierungsfehlers interpretiert werden kann und
+eine Gitterverfeinerung basierend auf dem Abbruchfehler
+somit die Auflösung an der Quelle des Diskretisierungsfehler vergrößert.
+Damit verkleinert sich dann der gesamte Diskretisierungsfehler.
 
 \section{Zielsetzung}
+
+Im ersten Teil der Arbeit werden grundlegende Konzepte und Begriffe der Arbeit erläutert.
+Anschließend wird der Abbruchfehler für alle Terme von skalaren Transportgleichungen
+abgeleitet. Dabei werden ein- und zweidimensionale Probleme sowie kartesische, orthogonale
+und nicht-orhogonale Gitter betrachtet.
+
+Anschließend wird der abgeleitete Abbruchfehlerindikator an konkreten Testfällen verifiziert.
+Die Funktionsweise und Genauigkeit der dazu nötigen Lösungsprogramme wird ebenfalls
+untersucht. Abschließend wird dann der Abbruchfehler zur lokalen Gitteradaption genutzt
+und hierbei mit anderen bekannten Verfahren verglichen.
+
+
+
 \cleardoublepage

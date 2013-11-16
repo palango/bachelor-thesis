@@ -3,6 +3,8 @@
 \usepackage{etex}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 
 %Seitenränder einstellen
 \usepackage{geometry}
@@ -76,6 +78,19 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 \cleardoublepage
 \setcounter{page}{1}
 \pagenumbering{roman}
+
+\chapter*{Erklärung zur Abschlussarbeit gemäß § 22 Abs. 7 ABP der TU Darmstadt}
+Hiermit versichere ich, Paul Lange, die vorliegende Bachelor-Thesis ohne
+Hilfe Dritter und nur mit den angegebenen Quellen und Hilfsmitteln angefertigt
+zu haben. Alle Stellen, die Quellen entnommen wurden, sind als solche kenntlich gemacht worden.
+Diese Arbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegen.
+In der abgegebenen Thesis stimmen die schriftliche und elektronische Fassung überein.
+\vspace{3cm}
+
+Darmstadt, \today
+
+
+
 \tableofcontents
 \listoffigures
 %\listoftables
@@ -107,7 +122,7 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 \cleardoublepage
 
 \chapter{Verifizierung des Abbruchfehlerindikators}
-%\input{text/testfaelle}
+\input{text/testfaelle}
 \input{text/auswertung_codes}
 \input{text/auswertung_dif}
 \section{Konvektionsprobleme}
