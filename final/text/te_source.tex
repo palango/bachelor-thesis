@@ -3,6 +3,17 @@ Abbruchfehler aller zu betrachtenden Terme addiert. Nach Gleichung~\eqref{eq:fvm
 müssen demnach die Abbruchfehler für diffusive und konvektive Flüsse sowie
 für Quellterme bestimmt werden.
 
+Das Vorgehen zur Ableitung des Abbruchfehlers ist bei allen Terme das Gleiche.
+Für alle in den Diskretisierungen vorkommenden Terme werden Taylorreihendarstellungen
+um den zu betrachtenden Punkt entwickelt. Diese werden dann so umgeformt, dass die
+verwendete Approximation entsteht. Die zusätzlichen Terme, die in der Approximation nicht
+vorkommen, bilden den Abbruchfehler. Dieser enthält, bedingt durch die Taylorreihenentwicklungen,
+noch analytische Ableitungen. Diese werden im letzten Schritt diskretisiert, was zum Beispiel
+mittels finiter Differenzen erfolgen kann.
+
+Die unendlichen Tayloreihenentwicklungen werden in den folgenden Herleitungen nach den benötigten
+Termen abgebrochen. Die weitere Entwicklung wird durch die Abkürzung $HOT$ dargestellt.
+Diese steht für \emph{Higher Order Terms}, zu deutsch: Terme höherer Ordnung.
 
 \section{Abbruchfehler für Quellterme}
 \label{sec:Quellterm}
