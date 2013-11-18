@@ -360,7 +360,7 @@ ist die Diskretisierung verschieden zur Approximation innerhalb der Grenzen eine
 \end{figure}
 Die Metriken innerhalb eines Kontrollvolumens sind beispielsweise für die Transformation
 des Quellterms nötig. Zur Diskretisierung der Metriken werden
-Differenzenquotienten als Approximationen genutzt\cite{Lee}.
+Differenzenquotienten als Approximationen genutzt\cite{lee}.
 Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
 Gitter mit $\Delta\xi = \Delta \eta = 1$:
 \begin{equation}
@@ -379,7 +379,7 @@ die diskretisierten Metriken eingesetzt ergibt sich folgende Gleichung:
   det(J) &= x_{\xi}y_{\eta}-x_{\eta}y_{\xi}\nonumber\\
     &= a \cos \gamma \, b \cos \beta - 
        a \sin \beta \, b \sin \gamma\nonumber\\
-       &= ab(\cos\gamma\cos\beta-\sin\beta\sin\gamma) \label{eq:detj}
+       &= ab(\cos\gamma\cos\beta-\sin\beta\sin\gamma)
 \end{align}
 Hier kann nun das folgende Additionstheorem
 angewendet werden.
@@ -389,7 +389,7 @@ angewendet werden.
 Da weiterhin bekannt ist, dass $\beta+\gamma
 +\theta = 90^{\circ}$ ist, ergibt sich mit der Beziehung
 $\sin(x)=\cos(\frac{\pi}{2} -x)$ letztendlich aus
-Gleichung~\ref{eq:detj} der folgende Term für $J$. Er stellt den Betrag des
+Gleichung~\eqref{eq:detj} der folgende Term für $J$. Er stellt den Betrag des
 Kreuzprodukts der beiden
 Vektoren dar,
 die das Kontrollvolumen aufspannen.

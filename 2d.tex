@@ -141,7 +141,7 @@ Für äquidistante Gitter ergibt sich:
 
 \begin{tikzpicture}
   \begin{axis}
-    [width=0.8*\textwidth]
+    [width=0.8*\textwidth,domain=0:1]
     \addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/output.txt};
   \end{axis}
 \end{tikzpicture}

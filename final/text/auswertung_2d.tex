@@ -1,0 +1,155 @@
+\section{Zweidimensionale Testfälle}
+
+\paragraph{Testfall 3}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+%zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \cos(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/ERR_data.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Oberflächen}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={0}{90},
+xlabel=$x$,
+ylabel=$y$,
+zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \sin(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm
+]
+\addplot3 +[contour prepared,very thick,mark=none, contour prepared format=matlab]
+file {data/3/ERR_contour.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Another subfigure}\label{fig:1b}
+\end{subfigure}
+\caption{Absoluter Fehler (Testfall 3)}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RES_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/TE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}\label{fig:1b}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler mit Randsprüngen (Testfall 3)}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RES2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/TE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}\label{fig:1b}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler ohne Randsprünge (Testfall 3)}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={170}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RESTE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Mit Randsprüngen}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={180+20}{35},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RESTE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Ohne Randsprünge}\label{fig:1b}
+\end{subfigure}
+\caption{Differenz Residuum und Abbruchfehler (Testfall 3)}
+\end{figure}
