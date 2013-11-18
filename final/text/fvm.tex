@@ -1,24 +1,24 @@
 \subsection{Finite Volumen Methode}
 
 Die Finite-Volumen Methoden sind ein numerisches Verfahren zur Lösung von (partiellen)
-Differential\-gleich\-ungen. Sie sind heute das Standardverfahren zu Lösung von Strömungsproblemen
-wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen aber keineswegs nur darauf beschränkt.
+Differential\-gleich\-ungen. Sie sind heute das Standardverfahren zur Lösung von Strömungsproblemen
+wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen, aber keineswegs nur darauf beschränkt.
 Die charakteristische Eigenschaft der Finite-Volumen Methoden ist ihre Konservativität, also
 die Erfüllung der den mathematischen Modellen zugrunde liegenden Erhaltungsprinzipien in den
 diskreten Gleichungen.
 
 \subsubsection{Ableitung der Finite Volumen diskretisierten Transportgleichung}
 
-Ausgangspukt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
+Ausgangspunkt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
 in diskrete Teilgebiete. Diese werden bei der Finite-Volumen Methode Kontrollvolumen
 genannt (im zweidimensionalen Fall steht Volumen stellvertretend für Fläche,
 im Eindimensionalen für Länge).
 Für jedes dieser Kontrollvolumen werden die Erhaltungsgleichungen in Integralform formuliert
-beziehungsweise durch Integration aus den entsprchenden Diffenrentialgleichungen gewonnen.
+beziehungsweise durch Integration aus den entsprechenden Differentialgleichungen gewonnen.
 
 Beispielhaft soll das Vorgehen hier anhand der in Abschnitt~\ref{sec:transportgl}
 vorgestellten stationären Transportgleichung im zweidimensionalen Fall
-($i=1$, $2$) vorgestellt werden.
+($i=1$, $2$) veranschaulicht werden.
 \begin{equation}
   \frac{\partial}{\partial x_i} \left({\rho v_i \phi
 - \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
@@ -53,11 +53,11 @@ $F_c^C$ sowie die diffusiven Flüsse $F_c^D$ durch die Seiten des Kontrollvolume
 \subsubsection{Integralapproximation}
 \label{sec:fvm_intappr}
 
-In dieser Arbeit wird von einer zellenorientierten Variablenanordnung (s. \cite{num_maschbau})
+In dieser Arbeit wird von einer zellenorientierten Variablenanordnung (siehe \cite{num_maschbau})
 ausgegangen. Damit liegt die gesuchte diskrete Größe im Mittelpunkt jedes Kontrollvolumens.
 Die Integrale der konvektiven und diffusiven Flüsse müssen durch diese Variablen
 approximiert werden. Dabei ist es zweckmäßig zuerst die Oberflächenintegrale durch Variablen
-auf der jeweilen Seite des Kontrollvolumens zu beschrieben und anschließend diese durch die Werte
+auf der jeweiligen Seite des Kontrollvolumens zu beschreiben und anschließend diese durch die Werte
 im Zentrum des Kontrollvolumens zu beschreiben.
 
 Beispielhaft soll hier das Oberflächenintegral
@@ -85,12 +85,12 @@ Für die Flüsse $F_c^C$ und $F_c^D$ ergeben sich mit der Mittelpunktsregel folg
 \end{align}
 wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
 
-Im nächsten Schritt müssen nun die Variablenwert $\phi_c$ durch die Variablenwerte in den
+Im nächsten Schritt muss nun der Variablenwert $\phi_c$ durch die Variablenwerte in den
 Mittelpunkten der Kontrollvolumen ausgedrückt werden.
 Zunächst soll jedoch die rechte Seite von Gleichung~\eqref{eq:fvm3} betrachtet werden.
-Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im Allgemeinen eine Approximation
+Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im allgemeinen eine Approximation
 mittels numerischer Integration. Oftmals ist hierbei die Nutzung der Mittelpunktsregel mit der Ordnung zwei
-ausreichend. Sie geht von der Annahme aus, das der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
+ausreichend. Sie geht von der Annahme aus, dass der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
 einen Mittelwert über die Werte von $f$ im gesamten Kontrollvolumen darstellt.
 
 Die Auswertung des Volumenintegrals ergibt sich damit im zweidimensionalen Fall zu
@@ -102,14 +102,14 @@ mittels
 \begin{equation}
   \delta V = (x_e - x_w)(y_n-y_s) = \Delta x \Delta y
 \end{equation}
-berechnet werden kann. Auf den bei dieser Appoximation entstehenden Abbruchfehler wird in
+berechnet werden kann. Auf den Abbruchfehler, der bei dieser Appoximation entsteht, wird in
 Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
 
 
 \subsubsection{Ableitung konvektiver Flüsse}
 \label{sec:konv_fluss}
 
-Die durch die Anwendung der Mittelpunkteregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
+Die durch die Anwendung der Mittelpunktsregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
 Flüsse beinhaltet noch den Variablenwert des Seitenmittelpunkts, der jedoch bei
 zellenorientierter Variablenanordnung nicht gesucht ist. Deshalb muss dieser Wert $\phi_c$ im
 nächsten Schritt durch Variablenwerte in den Kontrollvolumenmittelpunkten ausgedrückt werden.
@@ -118,11 +118,11 @@ bei der Approximation von $\phi_e$ die Variablenwerte $\phi_P$ und $\phi_E$ zu b
 
 Es werden nun einige gängige Approximationen für die Nutzung bei konvektiven Flüssen vorgestellt.
 Es handelt sich hierbei genau genommen um Interpolationen aus den umliegenden Mittelpunkten der Kontrollvolumen.
-Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im eindimensionalen statt,
+Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im Eindimensionalen statt,
 können jedoch problemlos auf höhere Dimensionen übertragen werden.
 
 \paragraph{Upwind-Verfahren}
-Bei Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
+Beim Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
 beziehungsweise durch Integration aus den entsprechenden Diffenrentialgleichungen 
 von der Geschwindigkeit $v$ abhängt.
 
@@ -139,7 +139,7 @@ Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was ein 
 
 
 \paragraph{Zentraldifferenzen-Verfahren}
-Das Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
+Beim Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
 Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonnen.
 
 \begin{equation*}
@@ -187,7 +187,7 @@ Um den konvektiven Fluss (Gl. \ref{eq:disk_dif}) weiter zu approximieren, ist es
 $\phi$ durch die Variablenwerte in den Kontrollvolumenmittelpunkten auszudrücken.
 Beispielhaft soll hier wieder der eindimensionale, kartesische Fall betrachtet werden.
 Für die östliche Seite muss somit die Ableitung $(\partial \phi /\partial x)_e$ approximiert werden.
-Hierfür werden im Allgemeinen Differenzenformeln verwendet, wie sie auch bei der
+Hierfür werden im allgemeinen Differenzenformeln verwendet, wie sie auch bei der
 Finite-Differenzen-Methode eingesetzt werden. Zentraldifferenzen werden hierbei
 gegenüber Vorwärts- oder Rückwärtsdifferenzen bevorzugt eingesetzt, da sie die größte
 Genauigkeit für die gleiche Menge von in die Approximation einbezogenen Anzahl von Gitterpunkten
@@ -199,7 +199,7 @@ Approximation:
   \left({\pder[\phi]{x}}\right)_e \approx \frac{\phi_E -\phi_P}{x_e-x_P}
 \end{equation}
 Zentraldifferenzen können nur genutzt werden, solange auch alle benötigten Variablenwerte
-verfügbar sind. Dies ist an der Rändern des betrachteten Gebiets meist nicht der Fall.
+verfügbar sind. Dies ist an den Rändern des betrachteten Gebiets meist nicht der Fall.
 Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurückgegriffen werden.
 
 
@@ -207,7 +207,7 @@ Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurüc
 
 Die oben gezeigten Approximationstechniken können nun auf die allgemeine Transportgleichung
 \eqref{eq:transportgl} angewendet werden. Beispielhaft soll das hier mit dem CDS-Verfahren für
-die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beide Koordinatenrichtungen seien positiv
+die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beiden Koordinatenrichtungen seien positiv
 und das Gitter orthogonal. Damit ergibt sich die folgende Approximation:
 \begin{align*}
   &\left({\rho v_1 \frac{\phi_P+\phi_E}{2} - \alpha \frac{\phi_E-\phi_P}{x_E-x_P}}\right) (y_n-y_s)\\

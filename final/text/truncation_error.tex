@@ -7,7 +7,7 @@ In der Praxis werden Approximationen, wie die in Abschnitt~\ref{sec:konv_fluss} 
 \ref{sec:dif_fluss} beschriebenen, aus Taylorreihenentwicklungen um die betrachteten
 Punkte gewonnen\footnote{Die Herleitungen sind in Kapitel~\ref{chap:herleitung} ausführlich ausgeführt.}. 
 Da die Approximation jedoch zwangsläufig endlich sein muss, werden
-dabei Glieder der unendlichen Taylorreihenentwicklung abgeschnitten. Der dadruch entstehende
+dabei Glieder der unendlichen Taylorreihenentwicklung abgeschnitten. Der dadurch entstehende
 Fehler wird Abbruchfehler (engl. Truncation Error) genannt.
 Die restlichen, für die Approximation nicht genutzten Terme können zur Fehlerabschätzung
 bei numerischen Berechnungen genutzt werden. Die grundlegenden Zusammenhänge sollen hier an einem einfachen Beispiel gezeigt werden.
@@ -26,7 +26,7 @@ Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $x_0 =0$ bere
 
 Nun wird die Approximation für $\sin(x)$ festgelegt. Diese soll in diesem Beispiel
 $x-\frac{x^3}{6} $ sein. In Abbildung~\ref{fig:taylor_example} sieht man, wie sich die Güte der
-Approximation mit zunehmenden Abstand von $0$ verschlechtert.
+Approximation mit zunehmendem Abstand von $0$ verschlechtert.
 
 \begin{figure}[h]
 \begin{tikzpicture}
@@ -53,7 +53,7 @@ Da der Abbruchfehler selbst wieder eine unendliche Summe darstellt muss zur Ausw
 wieder eine endliche Anzahl von Termen abgetrennt werden. Dies stellt jedoch im allgemeinen
 kein Problem dar, da der Einfluss der Terme mit steigendem Exponenten stark abnimmt.
 
-Zur Abschätzund des Fehlers sollen im Beispiel zwei Glieder genutzt werden. Aus
+Zur Abschätzung des Fehlers sollen im Beispiel zwei Glieder genutzt werden. Aus
 Gleichung~\eqref{eq:taylor_example_te} ergibt sich damit der Fehlerindikator zu
 $\frac{x^5}{5!} -\frac{x^7}{7!} $.
 \begin{figure}[h]

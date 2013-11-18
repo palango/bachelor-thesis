@@ -21,7 +21,7 @@ Mittelpunkten der Kontrollvolumen bekannt, kann sie beispielsweise durch lineare
 auf die Gitterpunkte überführt werden.
 
 Anschließend wird aus der Anpassungsfunktion $\theta_i$ eine Gewichtungsfunktion
-erstellt $W_i$ erzeugt.
+$W_i$ erzeugt.
 Der frei wählbare Exponent $q$ wird in dieser Arbeit auf eins gesetzt.
 \begin{equation}
   W_i = \vert\theta_i \vert^q
@@ -33,7 +33,7 @@ anschließend geglättet. Dies geschieht iterativ über folgende Formel:
 \begin{equation}
   W_i = \frac{W_{i-1} + 4W_i + W_{i+1}}{6}
 \end{equation}
-Das den geglätteten Gewichten $W_i$ können nun die Federkonstanten berechnet werden, wobei
+Aus den geglätteten Gewichten $W_i$ können nun die Federkonstanten berechnet werden, wobei
 die Federkonstante $k_{i+1/2}$ die Feder beschreibt, die die Punkte $x_{i}$ und $x_{i+1}$ verbindet.
 \begin{equation}
   k_{i+1/2} = \frac{W_i + W_{i+1}}{2}

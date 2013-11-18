@@ -2,7 +2,7 @@
 \label{sec:verifik_allg}
 
 Die Verifikation von numerischen Simulationen spielt eine wichtige Rolle
-für deren weiter Verwendung zur Produktentwicklung und -verbesserung.
+für deren weitere Verwendung zur Produktentwicklung und -verbesserung.
 Man unterscheidet zwei Arten von Verifikationen: die Code-Verifikation und die Lösungsverifikation
 \cite{veluri}.
 Bei der Code-Verifikation wird nachgewiesen, dass keine Fehler oder Inkonsistenzen im numerischen
@@ -26,7 +26,7 @@ der diskretisierten Gleichung gewonnen.
 \begin{equation}
   f''_i = \frac{f_{i+1}-2f_i +f_{i-1}}{\Delta x^2} -\frac{1}{12} f^{IV}_i \Delta x^2 + HOT
 \end{equation}
-Bei der hier diskretisierten zweiten Ableitung einer Funktion $f$ sieht man das der führende
+Bei der hier diskretisierten zweiten Ableitung einer Funktion $f$ sieht man, dass der führende
 Term des Abbruchfehlers quadratisch von $\Delta x$ abhängt. Die formale Konvergenzordnung im Bezug
 auf $x$ ist somit zwei.
 
@@ -37,7 +37,7 @@ während sie im Raum zwei ist.
 
 \subsubsection{Beobachtete Konvergenzordnung}
 
-Die beobachtetet Konvergenzordnung wird direkt aus den Ergebnissen der Berechnung mit systematisch
+Die beobachtete Konvergenzordnung wird direkt aus den Ergebnissen der Berechnung mit systematisch
 verfeinerten Gittern gewonnen. Sollte die berechnete Konvergenzordnung nicht mit der formalen
 Konvergenzordnung übereinstimmen ist von Fehlern im Programm oder fehlerhaften numerischen Algorithmen auszugehen.
 
@@ -49,7 +49,7 @@ Der Diskretisierungsfehler $DE$ ist definiert als Differenz zwischen der exakten
 der Differentialgleichungen und der exakten Lösung $f(\Delta)$ der diskreten Gleichungen.
 Da jedoch die exakte Lösung der diskreten Gleichungen, die für verschiedene Gitter unterschiedlich ist,
 nicht bekannt ist, wird stattdessen die numerische Lösung verwendet. Hierbei beachtet man dementsprechend
-Iterationsfehler und Rundungsfehler nicht. Für eine Gitter $k$ lässt sich somit der Diskretisierungsfehler
+Iterationsfehler und Rundungsfehler nicht. Für ein Gitter $k$ lässt sich somit der Diskretisierungsfehler
 über folgende Gleichung beschreiben:
 \begin{equation*}
   DE_k=f(\Delta_k) - f_{exakt} = g_p h_k^p + HOT
@@ -80,7 +80,8 @@ Lösungen (engl. Manufactured Solution) lassen sich exakte Lösungen für Verifi
 
 Die Methode der konstruierten Lösungen bietet viele Vorteile. So kann sie neben der Finite-Volumen Methode auch
 für Finite-Elemente- oder Finite-Differenzen-Verfahren genutzt werden. Außerdem ist sie auch bei nichtlinearen
-oder mehreren Gleichungen (z.B. Navier-Stokes-Gleichungen) anwendbar. Weiterhin wurde nachgewiesen~\cite{roache_book} das sich
+oder mehreren Gleichungen (z.B. Navier-Stokes-Gleichungen) anwendbar. Weiterhin wurde nachgewiesen~\cite{roache_book},
+dass sich mit der Methode der konstruierten Lösung
 sehr empfindliche Fehler erkennen lassen.
 
 Das Vorgehen bei der Konstruktion einer Lösung soll anhand einer stationären, eindimensionalen Transportgleichung
@@ -134,7 +135,7 @@ Die haben den Vorteil unendlich viele glatte Ableitungen zu haben. Trigonometris
 sich zudem leicht in ihrem Wertebereich anpassen.
 
 Weiterhin sollte, auch wenn von der konstruierten Lösung keine physikalische Realität erwartet wird, möglichst
-erreichbare physikalische Zustände dargestellt werden. Werden beispielsweise Schallgeschwindigkeiten aus
+erreichbare physikalische Zustände dargestellt werden. Werden beispielsweise Schallgeschwindigkeiten
 aus Temperaturen berechnet, so setzt diese Berechnung positive Temperaturen voraus. Die konstruierte Lösung sollte dies wiederspiegeln
 und positive Temperaturen zurückgeben.
 

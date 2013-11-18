@@ -3,11 +3,11 @@
 
 Sind das mathematische Modell mit seinen Differentialgleichungen sowie den nötigen
 Rand- sowie gegebenenfalls Anfangsbedingungen festgelegt, besteht der nächste Schritt
-bei der Anwendung eines numerischen Berechnungsverfahren darin, das kontinuierliche
-Gebiet von Raum und ggf. Zeit durch eine endliche Menge von Teilgebieten zu approximieren,
-in denen dann der Wert des gesuchten Größe berechnet wird.
+bei der Anwendung eines numerischen Berechnungsverfahrens darin, das kontinuierliche
+Gebiet von Raum und gegebenenfalls Zeit durch eine endliche Menge von Teilgebieten zu approximieren,
+in denen dann der Wert der gesuchten Größe berechnet wird.
 
-Diese Teilgebiete werden im Allgemeinen in Form eines Gitters über den zu untersuchenden
+Diese Teilgebiete werden im allgemeinen in Form eines Gitters über den zu untersuchenden
 Bereich $V$ gelegt, weshalb dieser Arbeitsschritt auch oft Gittergenerierung genannt wird.
 
 Ein wichtiges Unterscheidungskriterium ist die Anordnung der Gitterpunkte.
@@ -15,7 +15,7 @@ Man unterscheidet grundsätzlich zwischen strukturierten und unstrukturierten Gi
 
 Bei strukturierten Gittern ist die Lage der Gitterpunkte zueinander festgelegt. Diese
 Lagebeziehungen müssen deshalb nicht aufwendig gespeichert werden und die Gittergenerierung
-ist schnell und ohne großen Rechenaufwand nötig. Zwar ist es möglich bestimmte Gebiete
+ist schnell und ohne großen Rechenaufwand möglich. Zwar ist es möglich bestimmte Gebiete
 aus der Gittergenerierung auszuschließen, eine Anpassung an die Problemgeometrie ist
 jedoch nur innerhalb der vorgegebenen Lagebeziehungen möglich.
 
@@ -62,6 +62,6 @@ Da die Transformation bijektiv sein muss, darf die Determinante der Jakobimatrix
   \label{eq:detj}
 \end{equation}
 Die Ableitungen der pysikalischen nach logischen Koordinaten wie
-zum Beispiel $x_{\xi}$ werden Metriken genannt. Sie beschrieben Eigenschaften
+zum Beispiel $x_{\xi}$ werden Metriken genannt. Sie beschreiben Eigenschaften
 des Gitters und sind damit nicht lösungsabhängig. Sie existieren auch
 für höhere Ableitungen, beispielsweise $x_{\xi\xi}$ oder $y_{\eta\eta}$.

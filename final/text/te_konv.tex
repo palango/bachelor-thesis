@@ -10,9 +10,9 @@ der Integralapproximation, der bereits in Abschnitt~\ref{sec:source1d} hergeleit
 \subsection{CDS-Verfahren}
 \label{sec:te_cds}
 
-Für die Herleitung des Abbruchfehlers für das Zentraldifferenzen-Verfahren sei hier am Beispiel des östlichen Randes dargestellt.
+Die Herleitung des Abbruchfehlers für das Zentraldifferenzen-Verfahren sei hier am Beispiel des östlichen Randes dargestellt.
 Man entwickelt zuerst die Taylorreihe von $\phi$ um den Entwicklungspunkt $x_P$ und wertet sie anschließend
-an den Punkten $x_e$ und $x_E$ aus. Es ergeben sich die folgenden Reihendarstellungen.
+an den Punkten $x_e$ und $x_E$ aus. Es ergeben sich die folgenden Reihendarstellungen:
 \begin{align}
   \phi_e &= \phi_P + \phi'_P(x_e-x_P)+\frac{1}{2}\phi''_P(x_e-x_P)^2
   +\frac{1}{6}\phi'''_P(x_e-x_P)^3+HOT
@@ -151,7 +151,7 @@ mit dem CDS-Verfahren.
 
 \subsection{UDS-Verfahren}
 
-Um der Abbruchfehler des Upwind-Verfahrens herzuleiten, wertet man die
+Um den Abbruchfehler des Upwind-Verfahrens herzuleiten, wertet man die
 Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_e$
 aus.
 
@@ -187,9 +187,9 @@ Abbruchfehler lautet damit:
 
 \subsubsection{Randwerte}
 
-Auch beim UDS-Verfahren müssen am Rand die Approximationen der verwendeten Ableitungen
+Auch beim UDS-Verfahren müssen am Rand die Approximationen die verwendeten Ableitungen
 so angepasst werden, dass nur vorhandene Werte benutzt werden.
-Für den östlichen Rand der Kontrollvolumens können dabei die in Abschnitt~\ref{sec:te_cds_rand}
+Für den östlichen Rand des Kontrollvolumens können dabei die in Abschnitt~\ref{sec:te_cds_rand}
 gezeigten Differenzenquotienten genutzt werden.
 
 Für das Kontrollvolumen direkt am Rand ist der konvektive Fluss gegeben. Es gibt somit keinen
@@ -269,7 +269,7 @@ Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
 
 \subsection{Zweidimensionale Probleme}
 Die gezeigten Herleitungen lassen sich problemlos ins Zweidimensionale übertragen. Es muss
-jedoch darauf geachtet werdenn den Fehler aus der Integralapproximation nicht zu vergessen.
+jedoch darauf geachtet werden den Fehler aus der Integralapproximation nicht zu vergessen.
 Dieser lautet für die Ostseite:
 \begin{equation}
   TE_{e,int} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
