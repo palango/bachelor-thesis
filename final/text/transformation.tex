@@ -154,7 +154,7 @@
 \section{Abbruchfehler für nicht-orthogonale Gitter}
 
 Bei der Verwendung von orthogonalen Gittern vereinfachen sich viele Terme oder
-heben sich mit der Gegenseite auf. Diese müssen aber im Falle eines nicht-orthogonalen
+heben sich mit der Gegenseite auf. Diese müssen im Falle eines nicht-orthogonalen
 numerischen Gitters beachtet werden, soll die Berechnung realistische Werte liefern.
 
 Da viele der zusätzlichen Terme auf der Verzerrtheit des Gitters beruhen und eine
@@ -171,7 +171,7 @@ den logischen Bereich ist in Abbildung~\ref{fig:no-trans} dargestellt.
 \label{fig:no-trans}
 \end{figure}
 
-Die Ableitung des Abbruchfehler soll hier beispielhaft an der östlichen Seite des Kontrollvolumens
+Die Ableitung des Abbruchfehlers soll hier beispielhaft an der östlichen Seite des Kontrollvolumens
 gezeigt werden. Bei einer Transportgleichung mit konvektivem und diffusivem Term entsteht damit folgendes
 Integral:
 \begin{equation}
@@ -179,7 +179,7 @@ Integral:
   \label{eq:int_trans}
 \end{equation}
 Hierbei bezeichnen $\mathbf{x}_{e1}$ und $\mathbf{x}_{e2}$ Anfangs- und Endpunkt, sowie $\mathbf{n}_e$
-den Einheitsnormalenvektor der Ostseite wie in Abbildung~\ref{fig:no-trans} gezeigt.
+den Einheitsnormalenvektor der Ostseite, wie in Abbildung~\ref{fig:no-trans} gezeigt.
 Statt der direkten Auswertung erfolgt nun die Transformation ins logische Gebiet. Dazu wird die
 Transformationsregel eines Wegintegrals genutzt.
 \begin{equation}
@@ -228,7 +228,7 @@ Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
 \end{align*}
 Hierbei wird die Abkürzung $C$ zur Übersichtlichkeit eingeführt und $\tilde{e}$ bezeichnet den Mittelpunkt
 der transformierten Ostseite (siehe Abbildung~\ref{fig:no-trans}).  Nach dem allgemeinen Vorgehen bei der
-Methode der finiten Volumen muss nun $C\vert_{\tilde{e}}$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
+Methode der Finiten Volumen muss nun $C\vert_{\tilde{e}}$ durch die umgebenden Zellenmittelpunkte ausgedrückt werden.
 Dies soll hier mit dem Zentraldifferenzenschema gezeigt werden.
 \begin{align*}
    C\big\vert_{\tilde{e}}
@@ -348,8 +348,8 @@ von der Lösungsfunktion abhängen. Diese werden Metriken genannt.
 Meistens handelt es sich hierbei um physikalische Variablen, die nach logischen Koordinaten abgeleitet werden.
 Beispiele sind $x_{\xi}$ oder $y_{\eta\eta}$.
 
-Auch die Metriken sind analytische Größen und müssen im Rahmen der Berechnung diskretisiert werden.
-Treten die Metriken hierbei bei einer Approximation über die Grenzen des Kontrollvolumens hinweg auf,
+Metriken sind analytische Größen und müssen im Rahmen der Berechnung diskretisiert werden.
+Treten die Metriken bei einer Approximation über die Grenzen des Kontrollvolumens auf,
 ist die Diskretisierung verschieden zur Approximation innerhalb der Grenzen eines Kontrollvolumens.
 
 \paragraph{Diskretisierung innerhalb eines Kontrollvolumens}

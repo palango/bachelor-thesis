@@ -1,0 +1,18 @@
+In der vorliegenden Arbeit wurde der Abbruchfehler als Indikator zur
+Gitteradaption untersucht. Dazu wurde er für skalare Tranbsportgleichungen 
+im Ein- und Zweidimensionalen hergeleitet. Dies geschah für kartesische,
+orthogonale und nicht-orthogonale Gitter.
+Anschließend wurden die Ergebnisse verifiziert. Die dafür nötigen Lösungsprogramme
+wurden implementiert und nach gängigen Methoden auf ihre Korrektheit überprüft.
+Anschließend wurde der Abbruchfehler berechnet und mit anderen fehlerindikatoren verglichen.
+Hier stellte sich eine gute Übereinstimmung heraus. Schlussendlich
+wurde der Abbruchfehler als indikator dur adaptiven Gitterverfeinerung mit dem r-Verfahren genutzt.
+Auch hier konnten Vorteile gegenüber anderen gängigen Indikatoren nachgewiesen werden.
+
+Der abgeleite Abbruchfehler verwendet zur Diskretisierung von Ableitungen
+finite Differenzen. Dies führt gerade am Rand des problemgebietes zu ungenauen Vorhersagen.
+Alternativ kann hier die Verwendung von Interpolationspolynomen 
+zur Ableitungsdiskretisierung geprüft werden.
+Desweiteren steht eine Implementation des Abbruchfehlers für nicht-orthogonale Gitter
+noch aus. Dies ist gerade im Hinblick auf die Nutzung gängiger Programmpakete zur Gitteradaption
+sinnvoll.
