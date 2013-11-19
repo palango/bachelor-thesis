@@ -9,27 +9,28 @@ ist $D = 1$.
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth, scaled y ticks=false]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth, scaled y ticks=true,
+    xlabel=$x$,
+    ylabel=Absoluter Fehler]
       \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_err.txt};
     \end{axis}
   \end{tikzpicture}
-     \caption{Absoluter Fehler}\label{fig:figA}
+     \caption{Absoluter Fehler}
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
+     \vspace{15pt}
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth, scaled y ticks=true]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth, scaled y ticks=true,
+    xlabel=$x$,
+    ylabel=Residuum/Abbruchfehler]
       \addplot[tud9c, mark=*, very thick] file {data/1/1_cos_aqui_te.txt};
       \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_res.txt};
       \legend{Abbruchfehler, Residuum}
     \end{axis}
   \end{tikzpicture}
-  \caption{Residuum der Lösung und Abbruchfehler}\label{fig:figB}
+  \caption{Residuum der Lösung und Abbruchfehler}
    \end{subfigure}
-\caption{Lösungseigenschaften} \label{fig:twofigs}
+   \caption{Lösungseigenschaften (Testfall 1)}
 \end{figure}
 Man sieht gut das der absolute Lösungsfehler schon bei zwanzig Kontrollvolumen klein ist.
 Außerdem hat das Residuum am Rand Sprünge. Diese werden auch vom Abbruchfehlerindikator abgebildet,
@@ -41,25 +42,25 @@ Residuum und Abbruchfehler besser vergleichen zu können.
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_teres.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{Mit Randsprüngen}\label{fig:figA}
+  \caption{Mit Randsprüngen}
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_teres2.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{Ohne Randsprünge}\label{fig:figB}
+  \caption{Ohne Randsprünge}
    \end{subfigure}
-\caption{Differenz Residuum und Abbruchfehler} \label{fig:twofigs}
+   \caption{Differenz Residuum und Abbruchfehler (Testfall 1)}
 \end{figure}
 Auf feineren Gittern erwartet man einen kleineren Abbruchfehler. Dies
 wird durch die folgenden Diagramme bestätigt, in denen der Abbruchfehler auf
@@ -68,22 +69,22 @@ Die Verbesserung beträgt ungefähr eine halbe Ordnung pro Verdoppelung der Schr
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
-  \begin{axis}[width=0.7\textwidth, scaled y ticks=false]
-  %xlabel=$x$,
-  %ylabel=$y$]
+  \begin{axis}[width=0.7\textwidth, scaled y ticks=false,
+  xlabel=$x$,
+  ylabel=Abbruchfehler]
     \addplot[tud2d, mark=*, very thick] file {data/1/1_cos_aqui_te2.txt};
     %\addplot[tud2d, mark=+, thick] file {data/1/1_cos_aqui_res2.txt};
   \end{axis}
 \end{tikzpicture}
-\caption{Abbruchfehler ohne Randsprünge} \label{fig:twofigs}
+\caption{Abbruchfehler ohne Randsprünge (Testfall 1)}
 \end{figure}
 \begin{figure}[ht]
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=Abbruchfehler]
       \addplot[tud2d, mark=*, very thick] file {data/5/cos_kart_10.txt};
     \end{axis}
   \end{tikzpicture}
@@ -91,19 +92,18 @@ Die Verbesserung beträgt ungefähr eine halbe Ordnung pro Verdoppelung der Schr
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=Abbruchfehler]
       \addplot[tud2d, mark=*, very thick] file {data/5/cos_kart_40.txt};
     \end{axis}
   \end{tikzpicture}
   \caption{N=40}\label{fig:figB}
    \end{subfigure}
-\caption{Abbruchfehler ohne Randsprünge} \label{fig:twofigs}
+   \caption{Abbruchfehler ohne Randsprünge für veränderte Gitter (Testfall 1)}
 \end{figure}
 
 
-\clearpage
 
 
 \paragraph{Testfall 2}
@@ -114,27 +114,27 @@ Expansionsfaktor $\alpha=0,9$. Es gibt wieder zwanzig Kontrollvolumen.
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=Absoluter Fehler]
       \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_err.txt};
     \end{axis}
   \end{tikzpicture}
-     \caption{Absoluter Fehler}\label{fig:figA}
+     \caption{Absoluter Fehler}
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=Residuum/Abbruchfehler]
       \addplot[tud9c, mark=*, very thick] file {data/2/2_sin_var_te.txt};
       \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_res.txt};
       \legend{Abbruchfehler, Residuum}
     \end{axis}
   \end{tikzpicture}
-  \caption{Residuum der Lösung und Abbruchfehler}\label{fig:figB}
+  \caption{Residuum der Lösung und Abbruchfehler}
    \end{subfigure}
-\caption{Lösungseigenschaften} \label{fig:twofigs}
+   \caption{Lösungseigenschaften (Testfall 2)}
 \end{figure}
 Die Abhängigkeit des absoluten Fehlers vom Gitter ist gut zu erkennen. Im groben
 Bereich steigt der Fehler, während er im fein aufgelösten Bereich sinkt.
@@ -156,54 +156,54 @@ der einseitigen Differenzenquotienten am Rand bewirkt wieder Abweichungen an den
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_teres.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{Mit Randsprüngen}\label{fig:figA}
+  \caption{Mit Randsprüngen}
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/2/2_sin_var_teres2.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{Ohne Randsprünge}\label{fig:figB}
+  \caption{Ohne Randsprünge}
    \end{subfigure}
-\caption{Differenz Residuum und Abbruchfehler} \label{fig:twofigs}
+   \caption{Differenz Residuum und Abbruchfehler (Testfall 2)}
 \end{figure}
 
 Eine weitere Bedingung ist, dass der Abbruchfehler unabhängig von
-Diffusions- und Konvektionskoeffizient ist. Dazu wird jeweils einer der Beiden
+Diffusions- und Konvektionskoeffizient ist. Dazu wird jeweils einer der beiden Koeffizienten
 um eine Ordnung vergrößert. Die Ergebnisse sind in den folgenden Diagrammen zu sehen.
-Man erkennt, dass die Genauigkeit im Vergleich zu Koeffizienten gleicher Größe
+Man erkennt, das die Genauigkeit im Vergleich zu Koeffizienten gleicher Größe
 um etwa eine Größenordnung abnimmt.
 \begin{figure}[ht]
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/5/sin_orth_DIF10.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{DIV=10}\label{fig:figA}
+  \caption{DIV=10, KONV=1}
    \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{axis}[width=\textwidth]
-    %xlabel=$x$,
-    %ylabel=$y$]
+    \begin{axis}[width=\textwidth,
+    xlabel=$x$,
+    ylabel=RES--TE]
       \addplot[tud2d, mark=*, very thick] file {data/5/sin_orth_KONV10.txt};
     \end{axis}
   \end{tikzpicture}
-  \caption{KONV=10}\label{fig:figB}
+  \caption{DIF=1, KONV=10}
    \end{subfigure}
-\caption{Differenz Residuum und Abbruchfehler} \label{fig:twofigs}
+   \caption{Differenz Residuum und Abbruchfehler mit angepassten Koeffizienten (Testfall 2)}
 \end{figure}
 \clearpage
