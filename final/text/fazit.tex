@@ -1,18 +1,39 @@
-In der vorliegenden Arbeit wurde der Abbruchfehler als Indikator zur
-Gitteradaption untersucht. Dazu wurde er für skalare Tranbsportgleichungen 
-im Ein- und Zweidimensionalen hergeleitet. Dies geschah für kartesische,
-orthogonale und nicht-orthogonale Gitter.
-Anschließend wurden die Ergebnisse verifiziert. Die dafür nötigen Lösungsprogramme
-wurden implementiert und nach gängigen Methoden auf ihre Korrektheit überprüft.
-Anschließend wurde der Abbruchfehler berechnet und mit anderen fehlerindikatoren verglichen.
-Hier stellte sich eine gute Übereinstimmung heraus. Schlussendlich
-wurde der Abbruchfehler als indikator dur adaptiven Gitterverfeinerung mit dem r-Verfahren genutzt.
-Auch hier konnten Vorteile gegenüber anderen gängigen Indikatoren nachgewiesen werden.
+In der vorliegenden Arbeit wurde der Abbruchfehler zur Fehlerabschätzung
+in Finite-Volumen Berechnungen und als Indikator zur
+adaptiven Gitterverfeinerung untersucht.
 
-Der abgeleite Abbruchfehler verwendet zur Diskretisierung von Ableitungen
-Finite Differenzen. Dies führt gerade am Rand des Problemgebietes zu ungenauen Vorhersagen.
+Im ersten Teil der Arbeit wurden die theoretischen Grundlagen zusammengefasst
+und für das Verständnis der Arbeit wichtige Begriffe eingeführt.
+Anschließend wurde der Abbruchfehler für skalare Transportgleichungen abgeleitet.
+Dabei musste er für Quellterme, Diffusionsterm und Konvektionsterme hergeleitet werden.
+Die Herleitung umfasste dabei ein- und zweidimensionale Problemgebiete und kartesische und orthogonale
+numerische Gitter. Für die Herleitung des Abbruchfehlers auf nicht-orthogonalen Gittern
+wurde die Transformation von physikalischen ins logische Gebiet durchgeführt. Die
+dabei auftretenden Metriken wurden ebenfalls abgeleitet und
+diskretisiert.
+
+Zur Implementierung des Abbruchfehlerindikators ist die Lösung der Transportgleichung
+auf dem Problemgebiet nötig. Hierfür wurden Lösungsprogramme für ein- und zweidimensionale
+Problemgebiete in Matlab implementiert. Die Gitter können dabei kartesische und orthogonale
+Form annehmen. Das Lösungsprogramm für nicht-orthogonale Gitter konnte aus Zeitgründen nicht vollendet werden.
+
+Die Lösungsprogramme wurden anschließend nach den vorher gezeigten Methoden
+verifiziert und ihre Korrektheit bewiesen.
+Anschließend wurde der Abbruchfehlerindikator implementiert und mit anderen Fehlerindikatoren verglichen.
+Hier stellte sich eine sehr gute Übereinstimmung heraus.
+
+Schlussendlich
+wurde der Abbruchfehler als Indikator zur adaptiven Gitterverfeinerung mit dem r-Verfahren genutzt.
+Er wurde dabei mit anderen Indikatoren verglichen. Bei diesen handelte es sich um den
+Lösungsgradienten, den Zweigitter-Fehlerschätzer sowie den Richardson-Extrapolations-Indikator.
+Der Abbruchfehlerindikator konnte hier das beste Ergebnis liefern und so seine Eignung
+als Indikator zur Gitteradaption zeigen.
+
+Der in der vorliegenden Arbeit abgeleite Abbruchfehler verwendet zur Diskretisierung von Ableitungen
+Finite Differenzen. Dies führt gerade am Rand des Problemgebietes zu ungenauen Vorhersagen, was
+auch im Vergleich mit dem Residuum bemerkt wurde.
 Alternativ kann hier die Verwendung von Interpolationspolynomen 
-zur Ableitungsdiskretisierung geprüft werden.
+zur Ableitungsdiskretisierung geprüft werden, um die Ergebnisse am Rand zu verbessern.
 Desweiteren steht eine Implementation des Abbruchfehlers für nicht-orthogonale Gitter
 noch aus. Dies ist gerade im Hinblick auf die Nutzung gängiger Programmpakete zur Gitteradaption
 sinnvoll.

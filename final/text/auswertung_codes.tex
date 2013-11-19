@@ -9,21 +9,22 @@ oder kombinierte Diffusions- und Konvektionsprobleme lösen.
 Vor der Verifizierung des abgeleiteten Indikators für den Abbruchfehler muss daher die
 korrekte Funktion der Programme nachgewiesen werden. Dies geschieht wie in Abschnitt
 \ref{sec:verifik_allg} beschrieben über den Vergleich der formalen mit der beobachteten
-Konvergenzordnung.
+Konvergenzordnung. Die formale Konvergenzordnung ist hierbei abhängig vom
+verwendeten Diskretisierungsverfahren. Die beobachtete Konvergenzordnung wird mit
+Gleichung~\ref{eq:beobachtet} berechnet.
 
-
-
-Die beobachtete Konvergenzordnung lässt sich neben den berechneten Zahlenwerten auch gut
-an der Steigung in einem doppelt-logarithmischen Diagramm ablesen. Entsteht dort eine
-Gerade, so bedeutet das, dass die Lösung mit einen festen Koeffizienten konvergiert.
+%Die beobachtete Konvergenzordnung lässt sich neben den berechneten Zahlenwerten auch gut
+%an der Steigung in einem doppelt-logarithmischen Diagramm ablesen. Entsteht dort eine
+%Gerade, so bedeutet das, dass die Lösung mit einen festen Koeffizienten konvergiert.
 
 \paragraph{Eindimensionales Problemgebiet, Diffusion}
+\noindent
 Hier wurde ein kartesisches Gitter verwendet und sukzessive verfeinert. Die
 formale Konvergenzordnung beträgt zwei.
 \begin{table}[h]
-  \begin{tabular}{r r l}
+  \begin{tabular}{r r r}
   \toprule
-  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  N & Gemittelter Fehler & Beobachtete Konvergenzordnung \\
   \midrule
   5  & $3.33\cdot10^{-2}$ & \multirow{2}{*}{2,020}\\
   10 & $8.21\cdot10^{-3}$ & \multirow{2}{*}{2,005}\\
@@ -38,17 +39,17 @@ formale Konvergenzordnung beträgt zwei.
 
 
 
-\paragraph{Eindimensionales Problemgebiet, Diffussion und Konvektion (CDS)}
+\paragraph{Eindimensionales Problemgebiet, Diffusion und Konvektion (CDS)}
+\noindent
 Hier wurde ein orthogonales Gitter mit dem Koeffizienten $\alpha=0,9$ erstellt.
 Bei der Berechnung der beobachteten Konvergenzordnung muss beachtet werden, dass mit dem
 feinsten Gitter begonnen wird und dieses schrittweise ausgedünnt wird. Andernfalls
 wird die Konvergenzordnung falsch bestimmt.
-
 Die formale Konvergenzordnung beträgt zwei.
 \begin{table}[h]
-  \begin{tabular}{r r l}
+  \begin{tabular}{r r r}
   \toprule
-  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  N & Gemittelter Fehler & Beobachtete Konvergenzordnung \\
   \midrule
   5  & $1,27\cdot10^{-1}$ & \multirow{2}{*}{2,731}\\
   10 & $1.91\cdot10^{-2}$ & \multirow{2}{*}{2,227}\\
@@ -56,37 +57,39 @@ Die formale Konvergenzordnung beträgt zwei.
   40 & $9.96\cdot10^{-4}$ & \\
   \bottomrule
 \end{tabular}
-\caption{Konvergenzordnung eindimensionale Diffusion und Konvektion}
+\caption{Konvergenzordnung eindimensionale Diffusion und Konvektion (CDS)}
 \end{table}
 
-\begin{figure}[htb]
-  \begin{tikzpicture}
-  \begin{loglogaxis}[%xlabel=Anzahl der Kontrollvolumen
-    %$N$,ylabel=Gemittelter Fehler,
-  width=0.55\textwidth,height=7cm]
-  \addplot[color=tud2d,mark=*, very thick] coordinates {
-    (5, 1.2662511400e-01)
-    (10,1.9068695077e-02)
-    (20,4.0741696509e-03)
-    (40,9.9564249986e-04)
-  };
-  \end{loglogaxis}
-\end{tikzpicture}
-\caption{Fehlerentwicklung eindimensionale Diffusion und Konvektion}
-\end{figure}
+%\begin{figure}[htb]
+  %\begin{tikzpicture}
+  %\begin{loglogaxis}[%xlabel=Anzahl der Kontrollvolumen
+    %%$N$,
+%ylabel=Absoluter Fehler,
+  %width=0.55\textwidth,height=4.2cm]
+  %\addplot[color=tud2d,mark=*, very thick] coordinates {
+    %(5, 1.2662511400e-01)
+    %(10,1.9068695077e-02)
+    %(20,4.0741696509e-03)
+    %(40,9.9564249986e-04)
+  %};
+  %\end{loglogaxis}
+%\end{tikzpicture}
+%\caption{Fehlerentwicklung eindimensionale Diffusion und Konvektion}
+%\end{figure}
 
 
-\vspace{2cm}
+\vspace{4cm}
 
 
 \paragraph{Eindimensionales Problemgebiet, Diffusion und Konvektion (Flux-Blending)}
+\noindent
 Hier wurde ein kartesisches Gitter verwendet und sukzessive verfeinert. Der
 Gewichtungsfaktor $\beta$ wurde auf den Wert $0,5$ gesetzt. Die formale
 Konvergenzordnung liegt aufgrund des Flux-Blending Verfahrens bei eins.
 \begin{table}[h]
-  \begin{tabular}{r r l}
+  \begin{tabular}{r r r}
   \toprule
-  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  N & Gemittelter Fehler & Beobachtete Konvergenzordnung \\
   \midrule
   5  & $4,73\cdot10^{-2}$ & \multirow{2}{*}{1,215}\\
   10 & $2,04\cdot10^{-2}$ & \multirow{2}{*}{1,113}\\
@@ -95,17 +98,18 @@ Konvergenzordnung liegt aufgrund des Flux-Blending Verfahrens bei eins.
   80 & $2,22\cdot10^{-3}$ & \\
   \bottomrule
 \end{tabular}
-\caption{Konvergenzordnung eindimensionale Diffusion und Konvektion}
+\caption{Konvergenzordnung eindimensionale Diffusion und Konvektion (Flux-Blending)}
 \end{table}
 
 
-\paragraph{Zweidimensionales Problemgebiet, Diffussion}
+\paragraph{Zweidimensionales Problemgebiet, Diffusion}
+\noindent
 Hier wird ein orthogonales Gitter mit $\alpha=0,95$ verwendet. 
 Die formale Konvergenzordnung beträgt zwei. 
 \begin{table}[h]
-  \begin{tabular}{r r l}
+  \begin{tabular}{r r r}
   \toprule
-  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  N & Gemittelter Fehler & Beobachtete Konvergenzordnung \\
   \midrule
   5  & $2,55\cdot10^{-2}$ & \multirow{2}{*}{2,272}\\
   10 & $5,28\cdot10^{-3}$ & \multirow{2}{*}{2,058}\\
@@ -117,13 +121,14 @@ Die formale Konvergenzordnung beträgt zwei.
 \end{table}
 
 
-\paragraph{Zweidimensionales Problemgebiet, Diffussion und Konvektion (CDS)}
+\paragraph{Zweidimensionales Problemgebiet, Diffusion und Konvektion (CDS)}
+\noindent
 Hier wird ein orthogonales Gitter mit $\alpha=0,9$ verwendet. Die
 formale Konvergenzordnung beträgt zwei.
 \begin{table}[h]
-  \begin{tabular}{r r l}
+  \begin{tabular}{r r r}
   \toprule
-  N & Summierter Fehler & Beobachtete Konvergenzordnung \\
+  N & Gemittelter Fehler & Beobachtete Konvergenzordnung \\
   \midrule
   5  & $5,78\cdot10^{-2}$ & \multirow{2}{*}{2,651}\\
   10 & $9,21\cdot10^{-3}$ & \multirow{2}{*}{2,160}\\
@@ -133,4 +138,11 @@ formale Konvergenzordnung beträgt zwei.
 \end{tabular}
 \caption{Konvergenzordnung zweidimensionale Diffusion und Konvektion}
 \end{table}
-\vspace{5cm}
+
+
+\paragraph{Fazit}
+\noindent
+Mit den verwendeten Testfällen werden kartesische und orthogonale Gitter getestet.
+Die Testfunktionen überprüfen zudem alle Randbedingungen.
+Bei allen Lösungsprogrammen stimmen formale und beobachtete Konvergenzordnung überein, was auf
+eine korrekte Implementierung hindeutet.

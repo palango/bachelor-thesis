@@ -6,13 +6,13 @@ genannt. Fügt man weitere Gitterpunkte zum Gitter hinzu, so handelt es sich um 
 Zuletzt kann lokal die Ordnung der Approximationen erhört werden, was p-Adaption genannt wird.
 Es existieren zudem Mischformen der oben genannten Verfahren.
 
-Während bei unstrukturierten Gittern heute hauptsächlich h-Adaption verwendet wird, ist bei
-strukturierten Gittern die r-Adaption am gebräuchlichsten. Diese soll auch in der vorliegenden
-Arbeit angewandt werden.
+Heutzutage wird Gitterverfeinerung hauptsächlich mittels h-Adaption durchgeführt. Im Gegensatz dazu
+soll hier eine r-Adaption verwendet werden.
 
 Im Folgenden sollen nun verschiedene Lösungseigenschaften zur Gitteradaption verglichen werden.
 Ausgangspunkt ist dabei immer ein Gitter mit zwanzig Kontrollvolumen, dass mit dem
 Expansionsfaktor $\alpha=0.5$ erzeugt wurde. Die Anzahl der Iterationen ist auf 350 festgelegt.
+Als Lösung wurde Testfunktion 2 gewählt. Damit ergeben sich Randwerte von $x(0)=0$ und $x(1)=-2$.
 Die betrachteten Verfahren sind:
 \begin{itemize}
   \item Lösungsgradient
@@ -20,6 +20,7 @@ Die betrachteten Verfahren sind:
   \item Richardson-Extrapolations-Indikator
   \item Zweigitter-Fehlerschätzer
 \end{itemize}
+Weitere Informationen zu den Indikatoren können in \cite{celik} gefunden werden.
 
 
 
@@ -64,37 +65,44 @@ Gitters steht.
 \section{Abbruchfehler}
 
 Hier wird der berechnete Abbruchfehler als Indikator für die Güte der Lösung verwendet.
-Damit wird $\theta_i = TE_i$ gesetzt.
+Damit wird $\theta_i = TE_i$ gesetzt. Man erkennt da sich das Gitter in Richtung
+eines kartsischen Gitters entwickelt.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
-  \begin{axis}[width=0.7\textwidth, scaled y ticks=false,height=6cm,
+  \begin{axis}[width=0.7\textwidth, scaled y ticks=false,height=8cm,
   xlabel=$x$,
   ylabel=Absoluter Fehler]
     \addplot[tud2d, mark=*, very thick] file {anwendung/te/err1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/te/err2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster Abbruchfehler}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert}
+\caption{Vergleich absoluter Fehler}
 \end{figure}
-
-
+\noindent
+Der gemittelter Abbruchfehler und der gemittelte absolute Fehler
+oszillieren während der Optimierung und haben bei ungefähr 320 Iterationen
+ihren kleinsten Wert erreicht.
 \begin{figure}[h]
 \centering
-   \begin{subfigure}{0.49\linewidth} \centering
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
-    %xlabel=$x$,
+    \begin{semilogyaxis}[width=\textwidth,height=7cm,
+        ylabel=Gemittelter Abbruchfehler,
+      xlabel=Iterationen]
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/te/te_serr_data.txt};
     \end{semilogyaxis}
   \end{tikzpicture}
   \caption{Abbruchfehler}
 \end{subfigure}
-   \begin{subfigure}{0.49\linewidth} \centering
+\hspace{5mm}
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
+    \begin{semilogyaxis}[width=\textwidth,height=7cm,
+        ylabel=Gemittelter absoluter Fehler,
+      xlabel=Iterationen]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/te/serr_data.txt};
@@ -110,17 +118,16 @@ Damit wird $\theta_i = TE_i$ gesetzt.
 \centering
 \begin{tikzpicture}
   \begin{axis}[width=0.7\textwidth, scaled y ticks=false,
-%  xlabel=$x$,
+  xlabel=$x$,
   ylabel=Abbruchfehler,height=5cm]
     \addplot[tud2d, mark=*, very thick] file {anwendung/te/te1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/te/te2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster Abbruchfehler}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich Abbruchfehler von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich Abbruchfehler}
 \end{figure}
 
-\clearpage
 
 
 
@@ -139,18 +146,20 @@ Damit wird $\theta_i = \frac{\partial \phi}{\partial x} \big\vert_i$ gesetzt.
   ylabel=Absoluter Fehler]
     \addplot[tud2d, mark=*, very thick] file {anwendung/grad/err1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/grad/err2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster Gradient}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich absoluter Fehler} 
 \end{figure}
-
+Die Iteration mti dem Lösungsgradient konvergiert schnell und verbessert sich
+nach 100 Iterationen nur noch minimal.
 
 \begin{figure}[h]
 \centering
-   \begin{subfigure}{0.49\linewidth} \centering
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+    xlabel=Iterationen,ylabel=Gemittelter Gradient]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/grad/grad_serr_data.txt};
@@ -158,9 +167,11 @@ Damit wird $\theta_i = \frac{\partial \phi}{\partial x} \big\vert_i$ gesetzt.
   \end{tikzpicture}
   \caption{Summierter Gradient}
 \end{subfigure}
-   \begin{subfigure}{0.49\linewidth} \centering
+\hspace{4mm}
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+    xlabel=Iterationen,ylabel=Gemittelter abs. Fehler]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/grad/serr_data.txt};
@@ -170,8 +181,22 @@ Damit wird $\theta_i = \frac{\partial \phi}{\partial x} \big\vert_i$ gesetzt.
 \end{subfigure}
 \caption{Verlauf der Gitteradaption}
 \end{figure}
-\clearpage
 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=0.7\textwidth, scaled y ticks=false,
+  xlabel=$x$,
+  ylabel=Lösungsgradient,height=7cm,legend style={anchor=south east, at={(0.98,0.02)}}]
+    \addplot[tud2d, mark=*, very thick] file {anwendung/grad/grad1_data.txt};
+    \addplot[tud9d, mark=*, very thick] file {anwendung/grad/grad2_data.txt};
+    \legend{Startwert,Kleinster Gradient}
+  \end{axis}
+\end{tikzpicture}
+\caption{Vergleich Lösungsgradient}
+\end{figure}
+
+\vspace{2cm}
 
 
 
@@ -179,7 +204,8 @@ Damit wird $\theta_i = \frac{\partial \phi}{\partial x} \big\vert_i$ gesetzt.
 
 Bei der Richardson-Extrapolation ($RE$) \cite{roy} wird die Lösungs des Problems auf einem groben und einem
 verfeinerten Gitter berechnet. Aus den beiden Lösungen lasst sich dann eine verbesserte
-Lösung extrapolieren. Um diese als Indikator verwenden zu können, wird die Differenz der berechneten Lösung ($T$)
+Lösung extrapolieren. Um diese als Indikator zur Gitteradaption
+verwenden zu können, wird die Differenz der berechneten Lösung ($T$)
 und der Richardson-Extrapolation berechnet.
 \begin{equation}
   REI_i = RE_i - T_i
@@ -192,10 +218,10 @@ und der Richardson-Extrapolation berechnet.
 ylabel=Absoluter Fehler]
     \addplot[tud2d, mark=*, very thick] file {anwendung/rich/err1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/rich/err2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster REI}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich absoluter Fehler} \label{fig:twofigs}
 \end{figure}
 
 
@@ -203,7 +229,8 @@ ylabel=Absoluter Fehler]
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+      xlabel=Iterationen]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/rich/rich_serr_data.txt};
@@ -213,7 +240,8 @@ ylabel=Absoluter Fehler]
 \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+    xlabel=Iterationen]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/rich/serr_data.txt};
@@ -233,7 +261,7 @@ ylabel=Absoluter Fehler]
   ylabel=REI,legend style={anchor=south east, at={(0.98,0.02)}}]
     \addplot[tud2d, mark=*, very thick] file {anwendung/rich/rich1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/rich/rich2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster REI}
   \end{axis}
 \end{tikzpicture}
 \caption{Vergleich Richardson-Extrapolations-Indikator von Start- und Optimalwert} \label{fig:twofigs}
@@ -272,7 +300,8 @@ ylabel=Absoluter Fehler]
 \centering
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+      xlabel=Iterationen]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/zg/zg_serr_data.txt};
@@ -282,7 +311,8 @@ ylabel=Absoluter Fehler]
 \end{subfigure}
    \begin{subfigure}{0.49\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm]
+    \begin{semilogyaxis}[width=\textwidth,height=5cm,
+      xlabel=Iterationen]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/zg/serr_data.txt};
@@ -325,7 +355,7 @@ leichte Schwächen an den Rändern des Problemgebiets auf.
 \begin{tikzpicture}
   \begin{axis}[width=0.9\textwidth, height=12cm,scaled y ticks=false,
   xlabel=$x$,
-%ylabel=Absoluter Fehler]
+ylabel=Absoluter Fehler
 ]
     \addplot[tud2d, mark=*, very thick] file {anwendung/zg/err1_data.txt};
     \addplot[tud4d, mark=*, very thick] file {anwendung/te/err2_data.txt};
@@ -338,21 +368,38 @@ leichte Schwächen an den Rändern des Problemgebiets auf.
 \caption{Vergleich absoluter Fehler von Start- und Optimalwert}
 \end{figure}
 
-Im folgenden Diagramm sind die relativen Verbesserungen des absoluten Fehlers für jeden
-Indikator aufgetragen. Die Gewinne sind beim Abbruchfehler mit 97,7\% am größten.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=0.9\textwidth,
-    symbolic x coords={Abbruchfehler, Gradient, Richardson, Zweigitter},
-    xtick=data]
-    \addplot[ybar,fill=tud2d] coordinates {
-      (Abbruchfehler, 97.77)
-        (Gradient, 89.63)
-        (Richardson, 90.82)
-        (Zweigitter, 65.94)
-    };
-\end{axis}
+  \begin{axis}[width=0.9\textwidth, height=12cm,scaled y ticks=false,
+  xlabel=Iteration,
+ylabel=Absoluter Fehler
+]
+    \addplot[tud4d, very thick] file {anwendung/te/serr_data.txt};
+    \addplot[tud9d, very thick] file {anwendung/grad/serr_data.txt};
+    \addplot[tud6d, very thick] file {anwendung/rich/serr_data.txt};
+    \addplot[tud1d, very thick] file {anwendung/zg/serr_data.txt};
+    \legend{Abbruchfehler, Gradient, Richardson, Zweigitter}
+  \end{axis}
 \end{tikzpicture}
-\caption{Relative Verbesserung des absoluten Fehlers in Prozent}
+\caption{Vergleich absoluter Fehler von Start- und Optimalwert}
 \end{figure}
+
+In Tabelle~\ref{tab:verb} sind die relativen Verbesserungen des absoluten Fehlers für jeden
+Indikator aufgetragen. Die Gewinne sind beim Abbruchfehler mit 97,7\% am größten.
+
+
+\begin{table}[h]
+  \begin{tabular}{l r}
+  \toprule
+  Indikator & Relative Verbesserung in \% \\
+  \midrule
+      Abbruchfehler & 97.77\\
+      Gradient & 93.56\\
+      Richardson & 90.82\\
+      Zweigitter & 65.94\\
+  \bottomrule
+\end{tabular}
+\caption{Relative Verbesserung des absoluten Fehlers}
+\label{tab:verb}
+\end{table}
