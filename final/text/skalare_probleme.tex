@@ -1,9 +1,9 @@
 \section{Skalare Probleme}
 
 Eine Vielzahl praktisch relevanter Probleme lässt sich durch skalare (partielle)
-Differentialgleichungen beschreiben. Anwendungsgebiete reichen hier von Wärmetransportproblemen
-über strukturmechanische Probleme (z.B. Auslenkung von Stäben und Membranen bei elastischem
-Werkstoffverhalten) bis hin zu strömungsmechanischen Problemen (z.B. Geschwindigkeitspotential
+Differential\-glei\-chungen beschreiben. Anwendungsgebiete reichen hier von Wärmetransportproblemen
+über strukturmechanische Probleme (zum BEispiel die Auslenkung von Stäben und Membranen bei elastischem
+Werkstoffverhalten) bis hin zu strömungsmechanischen Problemen (zum Beispiel das Geschwindigkeitspotential
 wirbelfreier Strömungsfelder).
 
 \subsection{Einfache Feldprobleme}
@@ -32,9 +32,9 @@ gegeben sein. Üblich sind hierbei folgende Typen von Randbedingungen:
 Hierbei sind $\phi_S$, $b_S$ und $c_S$ vorgegebene Funktionen auf dem Rand $S$. Die
 Komponenten des nach außen gerichteten Normaleneinheitsvektors an $S$ werden mit $n_i$ bezeichnet.
 
-Treten mehrere Randbedingungstypen in einem Problem auf spricht man von gemischten Randwertproblemen.
+Treten mehrere Randbedingungstypen in einem Problem auf spricht man von gemischten Rand\-wert\-problemen.
 
-Die mit Gleichung~\eqref{eq:feldproblem_stat} beschriebenen Probleme beinhalten keine Zeitabhängigkeit
+Die mit Gleichung~\ref{eq:feldproblem_stat} beschriebenen Probleme beinhalten keine Zeitabhängigkeit
 und werden deshalb als stationär bezeichnet.
 Im instationären, also zeitabhängigem Fall, erhalten alle Größen neben der Ortsabhängigkeit
 eine Zeitabhängigkeit. Die entsprechende Differentialgleichung lautet damit
@@ -44,7 +44,7 @@ eine Zeitabhängigkeit. Die entsprechende Differentialgleichung lautet damit
   \label{eq:feldproblem_instat}
 \end{equation}
 für die unbekannte Größe $\phi=\phi(\mathbf{x}, t)$.
-Für instationäre Probleme muss neben den Randbedingungen auch eine Anfangsbedingung
+Für instationäre Probleme muss neben den Rand\-beding\-ungen auch eine Anfangsbedingung
 $\phi(\mathbf{x}, t_0) = \phi_0(\mathbf{x})$ gegeben werden.
 
 Im weiteren Verlauf der Arbeit werden nur stationäre Probleme betrachtet. Alle Ergebnisse
@@ -65,21 +65,22 @@ Stationäre Transportprobleme können in Differentialform durch die Gleichung
 \end{equation}
 beschrieben werden. Die auftretenden Terme werden wie folgt benannt:
 \begin{itemize}
-  \item Quellterm $f$
-  \item Konvektionsterm $\frac{\partial}{\partial x_i} \rho v_i \phi$
-  \item Diffusionsterm $\alpha \frac{\partial^2 \phi}{\partial x_i \partial x_i}$
+  \item Quellterm $\quad f$
+  \item Konvektionsterm $\quad\frac{\partial}{\partial x_i} \rho v_i \phi$
+  \item Diffusionsterm $\quad\alpha \frac{\partial^2 \phi}{\partial x_i \partial x_i}$
 \end{itemize}
-Für spezielle Probleme müssen die entsprechenden Parameter angepasst werden (s. z.B. \cite{num_maschbau}).
+Für spezielle Probleme müssen die entsprechenden Parameter angepasst werden
+(für nähere Information siehe \cite{num_maschbau}).
 
-Alle Betrachtungen in der vorliegenden Arbeit bauen auf Problemen auf, die durch die
-Transportgleichung beschrieben werden können.
+Alle Betrachtungen in der vorliegenden Arbeit bauen auf Problemen auf, die durch
+Transport\-gleich\-ungen beschrieben werden können.
 
 \section{Navier-Stokes Gleichungen}
 
 Für viele reale Probleme ist es nötig das Verhalten von Fluiden vorherzusagen.
 Teilweise sind auch gleichzeitige Stoff- und Wärmetransportvorgänge interessant.
 Die in praktisch relevanten Problemen am häufigsten auftretenden Fluide werden Newtonsche Fluide genannt.
-Das bedeuted, dass sie linear-viskos und isotrop sind und damit durch den Cauchyschen
+Das bedeutet, dass sie linear-viskos und isotrop sind und damit durch den Cauchyschen
 Spannungstensor $T$ beschrieben werden können, wobei $p$ für den Druck und $\mu$ für die dynamische Viskosität stehen.
 \begin{equation}
   T_{ij} = \mu\left({\frac{\partial v_i}{\partial x_j}

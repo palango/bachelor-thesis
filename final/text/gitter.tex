@@ -23,7 +23,7 @@ Bei unstrukturierten Gittern hingegen gibt es keine Vorschriften zu den Lagebezi
 der einzelnen Gitterpunkte. Diese müssen deshalb aufwendig gespeichert werden, was
 den Speicherverbrauch sowie die Lösung komplizierter macht. Andererseits ist es problemlos möglich
 das Gitter an der Problemgeometrie auszurichten oder in bestimmten Gebieten selektiv zu verfeinern.
-Insgesamt ist die Gittergeneration einfacher zu bewerkstelligen, da keine Rücksicht auf Lageverhältnisse
+Insgesamt ist die Gittergenerierung einfacher zu bewerkstelligen, da keine Rücksicht auf Lageverhältnisse
 genommen werden muss.
 
 \subsubsection{Physikalisches und logisches Gebiet}
@@ -44,7 +44,7 @@ Die Abbildung von physikalischem ($\Omega_p$) auf logisches Gebiet ($\Omega_c$) 
 die Abbildungsfunktion muss bijektiv sein. Formaler lässt sich die Transformation
 $\Omega_c \rightarrow \Omega_p$ wie folgt ausdrücken:
 \begin{equation}
-  (x,y) = (x(\xi, \eta), y(\xi, \eta)) \quad bzw. \quad (\xi,\eta) = (\xi(x, y), \eta(x,y))
+  (x,y) = (x(\xi, \eta), y(\xi, \eta)) \quad \text{bzw.} \quad (\xi,\eta) = (\xi(x, y), \eta(x,y))
 \end{equation}
 Hierbei sind $\xi$ und $\eta$ Variablen im logischen Bereich. Sie nehmen diskrete, im allgemeinen äquidistante,
 Werte an. Bei $x$ und $y$ handelt es sich um die üblicherweise unregelmäßigen Variablen des physikalischen Bereichs.
@@ -57,11 +57,11 @@ Da die Transformation bijektiv sein muss, darf die Determinante der Jakobimatrix
     \frac{\partial x}{\partial \xi} & \frac{\partial x}{\partial \eta} \\
     \frac{\partial y}{\partial \xi} & \frac{\partial y}{\partial \eta}
   \end{pmatrix}
-  \quad und \quad
+  \quad \text{und} \quad
   det (J) = x_{\xi}y_{\eta} - x_{\eta} y_{\xi} \neq 0
   \label{eq:detj}
 \end{equation}
-Die Ableitungen der pysikalischen nach logischen Koordinaten wie
+Die Ableitungen der physikalischen nach logischen Koordinaten wie
 zum Beispiel $x_{\xi}$ werden Metriken genannt. Sie beschreiben Eigenschaften
 des Gitters und sind damit nicht lösungsabhängig. Sie existieren auch
 für höhere Ableitungen, beispielsweise $x_{\xi\xi}$ oder $y_{\eta\eta}$.

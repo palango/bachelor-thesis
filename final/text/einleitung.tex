@@ -1,68 +1,91 @@
 \section{Motivation}
 Durch steigende Computerleistung sowie Verbesserungen in den numerischen Methoden konnten
 sich die simulationsbasierten Produktentwicklungsprozesse einen festen Platz neben
-Experimenten erarbeiten. Neben Kostenvorteilen ist es vor allem die Möglichkeit
+Experimenten erarbeiten. Neben Kostenvorteilen ist es vor allem die Möglichkeit,
 schnell Aussagen über Anpassungen und Modifikationen an Produkten treffen zu können, die
-simulationsbasierten Methoden zum Wachstum verhelfen.
+simulationsbasierten Methoden zu einem stetigen Wachstum verhelfen.
 
 Für die ingenieurmäßige Berechnung von Strömungsproblemen hat sich die Methode der
-finiten Volumen auf breitem Gebiet durchgesetzt. Ihr Fokus liegt hier auf der Simulation
-der Navier-Stokes Gleichungen, oft auch unter Vernachlässigung kompressibler Strömungseffekte und
-anderen zulässigen Vereinfachungen.
+Finiten Volumen auf breitem Gebiet durchgesetzt. Der Fokus liegt hierbei auf der Simulation
+der Navier-Stokes Gleichungen, oft auch bei der Ausnutzung von zulässigen Vereinfachungen
+wie der Vernachlässigung kompressibler Strömungseffekte.
 
 Um die Genauigkeit der Ergebnisse zu verbessern werden immer feinere Gebiete aufgelöst,
-bei denen auch heutige Computersysteme an ihre Grenzen stoßen. Es ist deshalb notwendig
+bei denen auch heutige Computersysteme an ihre Grenzen ihrer Leistungsfähigkeit stoßen. Es ist deshalb notwendig
 auf adaptive Methoden zurückzugreifen, die die Auflösung an interessanten Stellen wie
 zum Beispiel Grenzschichten oder besonders interessanten Strömungsgebieten selektiv erhöhen können.
 Weiterhin sollen Fehler, die durch die numerische Behandlung der kontinuierlichen Strömungsgebiete
-entstehen, minimiert werden. Dafür ist es notwendig, Indikatoren für den Fehler zu definieren.
+entstehen, minimiert werden. Dafür ist es notwendig, Indikatoren für den lokalen Fehler
+der berechneten Lösung zu definieren.
 
 Heutige Methoden schätzen diesen Fehler ab, negieren aber seine Ursachen bei der Diskretisierung
 und damit dem Übergang von der kontinuierlichen Differentialgleichung zur diskreten Gleichung.
-Hier liegt der Ansatzpunkt der Fehlerbetrachtung über den Abbruchfehler. Dieser wird in der
-vorliegenden Arbeit für Transportprobleme hergeleitet und seine Genauigkeit an Beispielen
+Hier liegt der Ansatzpunkt der Fehlerbetrachtung über den Abbruchfehler. Er schätzt
+den durch Diskretisierungen entstandenen Fehler auf Basis von Taylorreihenentwicklungen ab.
+Der Abbruchfehler wird in der
+vorliegenden Arbeit für skalare Transportprobleme hergeleitet und seine Genauigkeit an Beispielen
 verifiziert. Weiterhin wird er zur Gitteradaption eingesetzt.
 
 
 \section{Stand der Forschung}
 
 Der Abbruchfehler als Indikator für die Gitteradaption ist in der Literatur bereits bekannt.
-Roy~\cite{roy2} stellt für die eindimensionale Burger-Gleichung mittels
+Roy~\cite{roy2} leitet ihn für die eindimensionale Burger-Gleichung mittels
 Finiten-Differenzen her und vergleicht anschließend den abbruchfehlerbasierten Fehlerindikator
-mit lösungsbasierten Indikatoren wie Gradient oder Krümmung. Weiterhin wird gezeigt,
+mit lösungsbasierten Indikatoren wie dem Lösungsgradient oder der Lösungskrümmung. Weiterhin wird gezeigt,
 dass für lineare Probleme der Abbruchfehler
-als Quelle des Diskretisierungsfehlers interpretiert werden kann und
-eine Gitterverfeinerung basierend auf dem Abbruchfehler
-somit die Auflösung an der Quelle des Diskretisierungsfehler vergrößert.
-Damit verkleinert sich dann der gesamte Diskretisierungsfehler.
+als Quelle des Diskretisierungsfehlers interpretiert werden kann.
+Dadurch bewirkt eine Gitterverfeinerung basierend auf dem Abbruchfehler
+eine Erhöhung der Auflösung an der Quelle des Diskretisierungsfehlers und
+verringert damit den gesamten Diskretisierungsfehler.
 
 Vor der Gitteradaption muss eine Lösung auf dem Problemgebiet berechnet werden. Diese
-Lösung beziehungsweise das Lösungsprogramm muss verifiziert werden. Veluri~\cite{veluri} demonstriert
-Methoden zur Verifikation von Programm über den Vergleich von formaler und beobachteter
-Konvergenzordnung und stellt außerdem die Methode der konstruierten Lösung vor.
+Lösung und das zu ihrer Berechnung verwendete Lösungsprogramm müssen
+auf ihre Korrektheit überprüft und verifiziert werden. Veluri~\cite{veluri} demonstriert
+Methoden zur Verifikation von Lösungsprogrammen. Diese basieren auf dem Vergleich von formaler und beobachteter
+Konvergenzordnung und stellt außerdem die Methode der konstruierten Lösung vor, die genutzt werden kann
+um analytische Lösungen zum Zweck der Verifikation von Computerprogrammen zu erzeugen.
 Auch Roache~\cite{roache} stellt diese vor und demonstriert ihre Nützlichkeit bei der Verifikation von
 Lösungsprogrammen.
 
-Der Einfluss nicht-orthogonaler Gitter auf die Lösungsgenauigkeit gehen Huang und Prosperetti~\cite{grid_ortho}
-ein. Lee und Tsuei~\cite{lee} zeigen die Ableitung des Abbruchfehlers bei Finite-Differenzen Verfahren
-auf nicht-orthogonalen Gittern. Die Transformation von Kontrollgebieten der Finite-Volumen Methode
-wird von Fath~\cite{fath} gezeigt.
+In praktisch relevanten Problemfällen kann nur in den wenigsten Fällen mit
+kartesischen oder orthogonalen Gittern gerechnet werden. Die Nichtorthogonalität
+von Gittern bewirkt neue Fehlerterme, die bereits untersucht wurden. So gehen
+Huang und Prosperetti~\cite{grid_ortho} auf den Einfluss nicht-orthogonaler Gitter
+auf die Lösungsgenauigkeit gehen 
+ein. Lee und Tsuei~\cite{lee} demonstrieren die Ableitung des Abbruchfehlers für Finite-Differenzen Verfahren
+auf nicht-orthogonalen Gittern.
+
+Einen Überblick über Methoden zur Gitteradaption gibt Fath~\cite{fath}.
+Neben den Grundlagen geht sie auch auf die Ableitung des Abbruchfehlers für
+orthogonale Gitter sowie die Transformation von physikalischen zu logischen Gebiet ein.
+
+
 
 \section{Zielsetzung}
 
-Im ersten Teil der Arbeit werden grundlegende Konzepte und Begriffe der Arbeit erläutert.
-Anschließend wird der Abbruchfehler
-abgeleitet. Dabei werden ein- und zweidimensionale Probleme sowie kartesische, orthogonale
-und nicht-orthogonale Gitter betrachtet. Die Herleitung beschränkt sich hierbei auf
-skalare Transportgleichungen, die bereits die wesentlichen Terme des Navier-Stokes Gleichungen
-bei kleinen Reynoldszahlen abdecken. Die Ergebnisse lassen sich so leichter verifizieren
-und mit anderen Fehlerindikatoren zur Gitteradaption vergleichen.
+Im ersten Teil der vorliegenden Arbeit werden grundlegende Konzepte und Begriffe vorgestellt,
+die für das Verständnis der Thesis notwendig sind. Grundlegende Formeln wie
+die skalare Transportgleichung oder die Navier-Stokes Gleichungen werden vorgestellt
+und ein Überblick über die verwendeten numerischen Methoden gegeben. Außerdem
+wird der Abbruchfehler eingeführt und die Grundlagen der Verifikation von
+Lösungsprogrammen erläutert.
 
-Anschließend wird der abgeleitete Abbruchfehlerindikator an konkreten Testfällen verifiziert.
-Die Funktionsweise und Genauigkeit der dazu nötigen Lösungsprogramme wird ebenfalls
-untersucht. Abschließend wird dann der Abbruchfehler zur lokalen Gitteradaption genutzt
-und hierbei mit anderen bekannten Verfahren verglichen.
+Anschließend wird der Abbruchfehler formal
+abgeleitet. Dabei werden ein- und zweidimensionale Probleme betrachtet.
+ Die geschieht auf kartesischen, orthogonalen
+und nicht-orthogonalen Gittern. Der Abbruchfehler wird für Konvektions-
+und Diffusionsterme sowie für Quellterme hergeleitet. Die Herleitung beschränkt sich damit auf
+skalare Transportgleichungen. Diese decken jedoch bereits die wesentlichen Terme der Navier-Stokes Gleichungen
+ab. Zudem lassen sich die erzielten Ergebnisse leichter untersuchen und verifizieren.
 
+Anschließend wird der abgeleitete Abbruchfehlerindikator an konkreten Testfällen untersucht.
+Dazu werden Lösungsprogramme für ein- und zweidimensionale Problemgebiete implementiert
+und ihre Korrektheit nachgewiesen. Darauf folgt die Implementation
+der Abbruchfehlers sowie die Untersuchung auf den verschiedenen Gittertypen.
 
+Abschließend wird dann der Abbruchfehlerindikator zur lokalen Gitteradaption genutzt.
+Zum Vergleich werden weitere gängige Indikatoren wie der Lösungsgradient oder
+die Fehlerabschätzung mit der Richardson-Extrapolation implementiert und mit dem Abbruchfehler verglichen.
 
 \cleardoublepage

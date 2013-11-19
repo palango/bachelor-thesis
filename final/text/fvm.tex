@@ -2,7 +2,7 @@
 
 Die Finite-Volumen Methoden sind ein numerisches Verfahren zur Lösung von (partiellen)
 Differential\-gleich\-ungen. Sie sind heute das Standardverfahren zur Lösung von Strömungsproblemen
-wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen, aber keineswegs nur darauf beschränkt.
+wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen; aber keineswegs nur darauf beschränkt.
 Die charakteristische Eigenschaft der Finite-Volumen Methoden ist ihre Konservativität, also
 die Erfüllung der den mathematischen Modellen zugrunde liegenden Erhaltungsprinzipien in den
 diskreten Gleichungen.
@@ -36,14 +36,14 @@ Hierbei beschreibt $S$ die Oberfläche des Kontrollvolumens $V$, $dS$ ein Oberfl
 und $n_i$ die Komponenten des Einheitsnormalenvektors auf der Oberfläche.
 
 Geht man nun von beliebig geformten Kontrollvolumen zu viereckigen Kontrollvolumen über,
-so lässt sich das Integral über die Oberfläche $S$ in Gleichung~\eqref{eq:fvm2} durch eine
+so lässt sich das Integral über die Oberfläche $S$ in Gleichung~\ref{eq:fvm2} durch eine
 Summation über die Integrale der vier Seitenflächen umformen. Hierbei beschreibt $c$ die
 einzelnen Seitenflächen und ist bei viereckigen Kontrollvolumen als $c=(e,w,n,s)$ definiert.
 \begin{equation}
   \sum_c \int_{S_c} \left(\rho v_i \phi - \alpha \frac{\partial \phi}{\partial x_i}
 \right) n_{ci} dS_c = \int_V f dV\label{eq:fvm3}
 \end{equation}
-Gleichung~\eqref{eq:fvm3} stellt nun die Bilanzgleichung für die konvektiven Flüsse
+Gleichung~\ref{eq:fvm3} stellt nun die Bilanzgleichung für die konvektiven Flüsse
 $F_c^C$ sowie die diffusiven Flüsse $F_c^D$ durch die Seiten des Kontrollvolumens $V$ dar.
 \begin{align}
   F_c^C &=  \int_{S_c} \left(\rho v_i \phi \right) n_{ci} dS_c \\
@@ -90,7 +90,7 @@ Mittelpunkten der Kontrollvolumen ausgedrückt werden.
 Zunächst soll jedoch die rechte Seite von Gleichung~\eqref{eq:fvm3} betrachtet werden.
 Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im allgemeinen eine Approximation
 mittels numerischer Integration. Oftmals ist hierbei die Nutzung der Mittelpunktsregel mit der Ordnung zwei
-ausreichend. Sie geht von der Annahme aus, dass der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
+ausreichend. Sie geht von der Annahme aus, das der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
 einen Mittelwert über die Werte von $f$ im gesamten Kontrollvolumen darstellt.
 
 Die Auswertung des Volumenintegrals ergibt sich damit im zweidimensionalen Fall zu
@@ -122,7 +122,7 @@ Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im Eindimensi
 können jedoch problemlos auf höhere Dimensionen übertragen werden.
 
 \paragraph{Upwind-Verfahren}
-Beim Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
+\noindent Beim Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
 beziehungsweise durch Integration aus den entsprechenden Diffenrentialgleichungen 
 von der Geschwindigkeit $v$ abhängt.
 
@@ -130,16 +130,15 @@ von der Geschwindigkeit $v$ abhängt.
 \phi_e=\left\{\begin{array}{cl} \phi_P, & \mbox{falls }v>0\\
 \phi_E, & \mbox{falls } v<0\end{array}\right.
 \end{equation*}
-
 Das UDS-Verfahren besitzt einen formalen Interpolationsfehler erster Ordnung, liefert jedoch bei
 Transport\-richt\-ung\-en, die senkrecht zu den Kontrollvolumenseiten liegen vergleichsweise gute Approximationen.
-Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was ein großer Vorteil ist.
+Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was einen großen Vorteil darstellt.
 
 
 
 
 \paragraph{Zentraldifferenzen-Verfahren}
-Beim Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
+\noindent Beim Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
 Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonnen.
 
 \begin{equation*}
@@ -154,7 +153,7 @@ Das CDS-Verfahren besitzt einen formalen Interpolationsfehler zweiter Ordnung. E
 numerischen Oszillationen.
 
 \paragraph{``Flux-Blending''-Verfahren}
-
+\noindent
 Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
 Ordnung zu verbinden. So hat das UDS-Verfahren einen Interpolationsfehler erster Ordnung,
 während das CDS-Verfahren zu numerischen Oszillationen neigt.
@@ -171,12 +170,13 @@ $\beta = 0$ das UDS-Verfahren.
 
 
 \paragraph{Weitere Verfahren}
-Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
+\noindent Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
 die Variablen im Zentrum eines Kontrollvolumens.
 
 So wird beim QUICK-Verfahren (Quadratic Upwind Interpolation for Convective
 Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
-zur Approximation genutzt.
+zur Approximation genutzt. Bei der Wahl der Approximation muss immer eine Entscheidung
+zwischen Rechenaufwand und Genauigkeit getroffen werden.
 
 
 
@@ -198,7 +198,7 @@ Approximation:
 \begin{equation}
   \left({\pder[\phi]{x}}\right)_e \approx \frac{\phi_E -\phi_P}{x_e-x_P}
 \end{equation}
-Zentraldifferenzen können nur genutzt werden, solange auch alle benötigten Variablenwerte
+Zentraldifferenzen können nur genutzt werden, solange alle benötigten Variablenwerte
 verfügbar sind. Dies ist an den Rändern des betrachteten Gebiets meist nicht der Fall.
 Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurückgegriffen werden.
 
@@ -239,5 +239,5 @@ wie folgt ausgedrückt werden.
 \end{equation}
 Hierbei bezeichnet $c$ die Nachbarkontrollvolumen und $i=1,\dots,N$ das
 betrachtete Kontrollvolumen. Somit entsteht ein lineares Gleichungssystem mit $N$ Gleichungen,
-das gelöst werden kann.
+dass mit gängigen Methoden gelöst werden kann.
 \clearpage
