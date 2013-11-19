@@ -3,11 +3,12 @@
 
 Die Testfälle im eindimensionalen Raum setzen als Problemgebiet das
 Intervall $[0,1]$ fest. Eine Transformation von diesem Intervall auf jedes 
-andere ist möglich.
+andere zusammenhängende Intervall ist möglich.
 
 Der erste eindimensionale Testfall stellt eine symmetrische Sinusfunktion
 dar. Es wird eine halbe Periode genutzt. Um auch die Randbedingungen zu testen,
-wird sie eine Einheit nach oben geschoben.
+wird sie eine Einheit nach oben geschoben. Die Randbedingungen sind demnach
+$x(0) =1$ und $x(1)=1$.
 \begin{equation}
 f(x) = \sin(\pi x)+1
 \end{equation}
@@ -17,11 +18,11 @@ f(x) = \sin(\pi x)+1
 xlabel=$x$,
 ylabel={$f(x)$},
 domain=0:1,
-height=5cm,
+height=4.5cm,
 width=0.6*\textwidth
 ]
 % use TeX as calculator:
-\addplot +[mark=none, samples=100,very thick]{sin(pi*deg(x))};
+\addplot +[mark=none, samples=100,very thick]{sin(pi*deg(x))+1};
 \end{axis}
 \end{tikzpicture}
 \centering
@@ -32,6 +33,9 @@ width=0.6*\textwidth
 
 Der zweite Testfall stellt eine unsymmetrische Funktion dar. Es handelt sich um
 die halbe Periode der Kosinusfunktion, welche um eine Einheit nach unten verschoben wurde.
+Die Randbedingungen sind damit
+$x(0) =0$ und $x(1)=-2$.
+
 \begin{equation}
 f(x) = \cos(\pi x) -1
 \end{equation}
@@ -41,7 +45,7 @@ f(x) = \cos(\pi x) -1
 xlabel=$x$,
 ylabel={$f(x)$},
 domain=0:1,
-height=5cm,
+height=4.5cm,
 width=0.6*\textwidth
 ]
 \addplot +[mark=none,samples=100, very thick]{cos(pi*deg(x))-1};
@@ -57,9 +61,9 @@ width=0.6*\textwidth
 
 Auch die zweidimensionalen Testfälle legen als Problemgebiet das Intervall
 $[0,1]\times[0,1]$ fest. Wie im Eindimensionalen kann dieses durch Transformation
-in jedes andere überführt werden.
+in jedes andere zusammenhängende Intervall überführt werden.
 
-Der erste zweidimensionale Testfall ist wiederrum symmetrisch und testet alle
+Der erste zweidimensionale Testfall ist symmetrisch und testet alle
 Randbedingungen.
 \begin{equation}
 f(x,y) = \sin(\pi x) \sin(\pi y) + 1
