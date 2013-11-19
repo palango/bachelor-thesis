@@ -134,7 +134,7 @@ ihren kleinsten Wert erreicht.
 
 
 
-\section{Gradient}
+\section{Lösungsgradient}
 
 Hier wird der berechnete Abbruchfehler als Indikator für die Güte der Lösung verwendet.
 Damit wird $\theta_i = \frac{\partial \phi}{\partial x} \big\vert_i$ gesetzt.
@@ -215,7 +215,7 @@ und der Richardson-Extrapolation berechnet.
 \begin{tikzpicture}
   \begin{axis}[width=0.7\textwidth, scaled y ticks=false,
   xlabel=$x$,
-ylabel=Absoluter Fehler]
+ylabel=Absoluter Fehler,height=8cm]
     \addplot[tud2d, mark=*, very thick] file {anwendung/rich/err1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/rich/err2_data.txt};
     \legend{Startwert,Kleinster REI}
@@ -227,10 +227,10 @@ ylabel=Absoluter Fehler]
 
 \begin{figure}[h]
 \centering
-   \begin{subfigure}{0.49\linewidth} \centering
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
     \begin{semilogyaxis}[width=\textwidth,height=5cm,
-      xlabel=Iterationen]
+      xlabel=Iterationen,ylabel=Gemittelter REI]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/rich/rich_serr_data.txt};
@@ -238,10 +238,11 @@ ylabel=Absoluter Fehler]
   \end{tikzpicture}
   \caption{Summierte Differenz zur Richardson-Extrapolation}
 \end{subfigure}
-   \begin{subfigure}{0.49\linewidth} \centering
+\hspace{4mm}
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
     \begin{semilogyaxis}[width=\textwidth,height=5cm,
-    xlabel=Iterationen]
+    xlabel=Iterationen,ylabel=Gemittelter abs. Fehler]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/rich/serr_data.txt};
@@ -264,12 +265,12 @@ ylabel=Absoluter Fehler]
     \legend{Startwert,Kleinster REI}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich Richardson-Extrapolations-Indikator von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich Richardson-Extrapolations-Indikator}
 \end{figure}
 
 
 
-
+\vspace{3cm}
 
 
 
@@ -277,9 +278,9 @@ ylabel=Absoluter Fehler]
 \section{Zweigitter-Fehlerschätzer}
 Hier wird ebenfalls die Lösungs des Problems auf einem groben ($T_c$) und einem
 verfeinerten Gitter ($T_f$) berechnet. Allerdings wird dann keine neue Lösung extrapoliert sondern
-beide Lösungen verglichen.
+die Differenz der beiden Lösungen als Fehlerindikator verwendet.
 \begin{equation}
-  ZG = T_g\vert_i - T_{f}\vert_{i1} - T_{f}\vert_{i2}
+  ZGF = T_g\vert_i - T_{f}\vert_{i1} - T_{f}\vert_{i2}
 \end{equation}
 \begin{figure}[h]
 \centering
@@ -289,19 +290,19 @@ beide Lösungen verglichen.
 ylabel=Absoluter Fehler]
     \addplot[tud2d, mark=*, very thick] file {anwendung/zg/err1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/zg/err2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster ZGF}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich absoluter Fehler} \label{fig:twofigs}
 \end{figure}
 
 
 \begin{figure}[h]
 \centering
-   \begin{subfigure}{0.49\linewidth} \centering
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm,
-      xlabel=Iterationen]
+    \begin{semilogyaxis}[width=\textwidth,height=7cm,
+      xlabel=Iterationen,ylabel=Gemittelter ZGF]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/zg/zg_serr_data.txt};
@@ -309,10 +310,11 @@ ylabel=Absoluter Fehler]
   \end{tikzpicture}
   \caption{Summierter Zweigitter-Fehler}
 \end{subfigure}
-   \begin{subfigure}{0.49\linewidth} \centering
+\hspace{4mm}
+   \begin{subfigure}{0.45\linewidth} \centering
   \begin{tikzpicture}
-    \begin{semilogyaxis}[width=\textwidth,height=5cm,
-      xlabel=Iterationen]
+    \begin{semilogyaxis}[width=\textwidth,height=7cm,
+      xlabel=Iterationen, ylabel=Gemittelter abs. Fehler]
     %xlabel=$x$,
     %ylabel=$y$]
       \addplot[tud2d, very thick] file {anwendung/zg/serr_data.txt};
@@ -327,14 +329,14 @@ ylabel=Absoluter Fehler]
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
-  \begin{axis}[width=0.7\textwidth, xlabel=$x$,height=5cm,
+  \begin{axis}[width=0.7\textwidth, xlabel=$x$,height=8cm,
   ylabel=Abbruchfehler,legend style={anchor=south east, at={(0.98,0.02)}}]
     \addplot[tud2d, mark=*, very thick] file {anwendung/zg/zg1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/zg/zg2_data.txt};
-    \legend{Startwert,Optimalwert}
+    \legend{Startwert,Kleinster ZGF}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich Zweigitter-Fehler von Start- und Optimalwert} \label{fig:twofigs}
+\caption{Vergleich Zweigitter-Fehler} \label{fig:twofigs}
 \end{figure}
 \clearpage
 
@@ -365,7 +367,7 @@ ylabel=Absoluter Fehler
     \legend{Startwert,Abbruchfehler, Gradient, Richardson, Zweigitter}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert}
+\caption{Vergleich absoluter Fehler der untersuchten Indikatoren}
 \end{figure}
 
 \begin{figure}[h]
@@ -373,7 +375,7 @@ ylabel=Absoluter Fehler
 \begin{tikzpicture}
   \begin{axis}[width=0.9\textwidth, height=12cm,scaled y ticks=false,
   xlabel=Iteration,
-ylabel=Absoluter Fehler
+ylabel=Gemittelter absoluter Fehler
 ]
     \addplot[tud4d, very thick] file {anwendung/te/serr_data.txt};
     \addplot[tud9d, very thick] file {anwendung/grad/serr_data.txt};
@@ -382,12 +384,13 @@ ylabel=Absoluter Fehler
     \legend{Abbruchfehler, Gradient, Richardson, Zweigitter}
   \end{axis}
 \end{tikzpicture}
-\caption{Vergleich absoluter Fehler von Start- und Optimalwert}
+\caption{Gemittelter absoluter Fehler der untersuchten Indikatoren während der Iteration}
 \end{figure}
-
+\noindent
 In Tabelle~\ref{tab:verb} sind die relativen Verbesserungen des absoluten Fehlers für jeden
 Indikator aufgetragen. Die Gewinne sind beim Abbruchfehler mit 97,7\% am größten.
-
+Dicht dahinter folgen der Lösungsgradient und der Richardson-Extrapolations-Indikator.
+Der Zweigitter-Fehlerschätzer sit mit 65,94\% Verbesserung weit abgeschlagen.
 
 \begin{table}[h]
   \begin{tabular}{l r}
@@ -403,3 +406,5 @@ Indikator aufgetragen. Die Gewinne sind beim Abbruchfehler mit 97,7\% am größt
 \caption{Relative Verbesserung des absoluten Fehlers}
 \label{tab:verb}
 \end{table}
+
+
