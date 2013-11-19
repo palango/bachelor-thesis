@@ -171,7 +171,7 @@ den logischen Bereich ist in Abbildung~\ref{fig:no-trans} dargestellt.
 \label{fig:no-trans}
 \end{figure}
 
-Die Ableitung des Abbruchfehlers soll hier beispielhaft an der östlichen Seite des Kontrollvolumens
+\noindent Die Ableitung des Abbruchfehlers soll hier beispielhaft an der östlichen Seite des Kontrollvolumens
 gezeigt werden. Bei einer Transportgleichung mit konvektivem und diffusivem Term entsteht damit folgendes
 Integral:
 \begin{equation}
@@ -211,7 +211,12 @@ da hier die zweite Komponente des Einheitsnormalenvektors Null wäre.
 Im Folgenden werden nun wieder Abbruchfehler der einzelnen Terme abgeleitet. Bei den Flüssen muss dabei
 einerseits der Abbruchfehler der Integralapproximation über die Mittelpunktsregel ermittelt werden.
 Andererseits muss der Abbruchfehler aus der Fluss- bzw. Ableitungsapproximation ermittelt werden.
+
+
+
 \paragraph{Konvektive Terme}
+
+\noindent
 Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
 \begin{equation*}
   C=(\rho v_1 \phi n_{e1})
@@ -224,7 +229,7 @@ Bei Integration mit der Mittelpunktsregel folgt für Term $I$:
   +\frac{1}{6} \frac{\partial^2 C}{\partial \eta^2}\bigg\vert_{\tilde{e}}
   \underbrace{\left({(\etaii-\etilde)^3-(\etai-\etilde)^3}\right)}_{=\frac{1}{4}} + HOT\\
   &= C \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^2 C}{\partial \eta^2}
-\bigg\vert_{\tilde{e}}+HOT}_{TE_{int,konv}}
+\bigg\vert_{\tilde{e}}+HOT}_{TE_{C,\,int,\,e}}
 \end{align*}
 Hierbei wird die Abkürzung $C$ zur Übersichtlichkeit eingeführt und $\tilde{e}$ bezeichnet den Mittelpunkt
 der transformierten Ostseite (siehe Abbildung~\ref{fig:no-trans}).  Nach dem allgemeinen Vorgehen bei der
@@ -242,12 +247,13 @@ Dies soll hier mit dem Zentraldifferenzenschema gezeigt werden.
    (\xi_{\tilde{e}}-\xi_{\tilde{P}}) + HOT\\
    =&\frac{1}{2} C \big\vert_{\tilde{E}} + \frac{1}{2} C \big\vert_{\tilde{P}}
    \underbrace{- \frac{1}{8} \frac{\partial^2 C}{\partial \xi^2}\bigg\vert_{\tilde{P}}
-   - \frac{1}{16} \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}} + HOT}_{TE_{konv}}
+   - \frac{1}{16} \frac{\partial^3 C}{\partial \xi^3}\bigg\vert_{\tilde{P}} + HOT}_{TE_{CDS,\,e}}
 \end{align*}
 
 
 
 \paragraph{Diffusive Terme}
+\noindent
 Bei Term $II$ wird ebenfalls die Mittelpunktsregel angewandt. Mit der Abkürzung $D$
 ergibt sich hier:
 \begin{equation*}
@@ -262,7 +268,7 @@ ergibt sich hier:
   +\frac{1}{6} \frac{\partial^3 D}{\partial \eta^3}\bigg\vert_{\tilde{e}}
   \underbrace{\left({(\etaii-\etilde)^3-(\etai-\etilde)^3}\right)}_{=\frac{1}{4}} + HOT\\
   &= D \big\vert_{\tilde{e}}+ \underbrace{\frac{1}{24}  \frac{\partial^3 D}{\partial \eta^3}
-\bigg\vert_{\tilde{e}}+HOT}_{TE_{int, dif}}
+\bigg\vert_{\tilde{e}}+HOT}_{TE_{D,\,int,\,e}}
 \end{align*}
 Hier muss nun beachtet werden, dass $D$ selbst noch die Ableitung $\pder[\phi]{x}$ im physikalischen Gebiet enthält.
 Diese muss wie das Kontrollvolumen ins logische Gebiet transformiert werden. Die Transformation ergibt
@@ -294,7 +300,7 @@ muss ebenfalls die $\frac{\partial \phi}{\partial x}$ transformiert werden. Dami
   \Bigg(\yeta(\phi_{\tilde{E}}-\phi_{\tilde{P}}) - \yxi(\phi_{\tilde{ne}}-\phi_{\tilde{se}})
       \underbrace{ -\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
       +\frac{\yeta}{6} \frac{\partial^3 \phi}{\partial \xi^3} \bigg\vert_{\etilde}
-+ HOT}_{TE_{konv}}\Bigg)
++ HOT}_{TE_{D,\,e}}\Bigg)
 \end{align*}
 Auch $\phi_{\tilde{ne}}$ und $\phi_{\tilde{se}}$ müssen durch die umliegenden Zellenwerte ausgedrückt werden.
 Dies kann beispielsweise durch lineare Interpolation erfolgen.
@@ -311,7 +317,7 @@ wird in Abschnitt~\ref{sec:verz-metrik} gezeigt.
 
 
 \paragraph{Quellterm}
-
+\noindent
 Zur Berechnung des Abbruchfehlers des Quellterms von nicht-orthogonalen Gittern wird der Transformationssatz benötigt.
 Dieser lautet im zweidimensionalen Fall:
 \begin{equation}
@@ -329,7 +335,7 @@ Angewandt auf den Quellterm und der Abkürzung $Q$ ergibt sich für den Quellter
   & &+ Q_{\xi\eta}\big\vert_{\tilde{P}} \frac{(\xi_e-\xi_P)^2 - (\xi_w-\xi_P)^2}{2} \cdot
   \frac{(\eta_n-\eta_P)^2-(\eta_s-\eta_P)^2}{2} + HOT\\
   &=&Q\big\vert_{\tilde{P}} + \underbrace{\frac{1}{24} \left({Q_{\xi\xi}\big\vert_{\tilde{P}}+Q_{\eta\eta}\big\vert_{\tilde{P}}}\right)
-+ HOT}_{TE_{source}}
++ HOT}_{TE_{Q}}
 \end{IEEEeqnarraybox}
 \end{equation}
 Die gezeigten Ableitungen müssen nun für die anderen Seiten des Kontrollvolumens wiederholt werden.
@@ -358,9 +364,11 @@ ist die Diskretisierung verschieden zur Approximation innerhalb der Grenzen eine
 \centering
 \caption{Größen für die Berechnung der Metriken innerhalb des Kontrollvolumens}
 \end{figure}
+
+\noindent
 Die Metriken innerhalb eines Kontrollvolumens sind beispielsweise für die Transformation
 des Quellterms nötig. Zur Diskretisierung der Metriken werden
-Differenzenquotienten als Approximationen genutzt\cite{lee}.
+Differenzenquotienten als Approximationen genutzt \cite{lee}.
 Beispielsweise ergibt sich auf einem zweidimensionalen nicht-orthogonalen
 Gitter mit $\Delta\xi = \Delta \eta = 1$:
 \begin{equation}
@@ -401,6 +409,7 @@ des Kontrollvolumens.
 
 \paragraph{Diskretisierung über Kontrollvolumengrenzen}
 
+\noindent
 Bei der Approximation der diffusiven und konvektiven Flüsse werden meist
 auch die Grenzen eines Kontrollvolumens überschritten. Damit kommt auch
 die Geometrie des Nachbarkontrollvolumens zum Tragen und die Diskretisierung der

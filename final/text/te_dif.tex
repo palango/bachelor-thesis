@@ -17,7 +17,7 @@ für die Ableitungen erster Ordnung hergeleitet. Dazu werden die Taylorreihendar
 Werte in der unmittelbaren Umgebung genutzt. Beispielhaft soll das anhand des östlichen
 Randes des Kontrollvolumens geschehen.
 
-Zuerst entwickeln wir die Taylordarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
+Zuerst entwickeln wir die Taylorreihendarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
 Kontrollvolumenmittelpunkte $\phi_E$ und $\phi_P$.
 \begin{align}
   \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
@@ -59,7 +59,7 @@ lässt sich damit über folgende Gleichung beschreiben.
 \begin{align}
 \begin{split}
     \begin{IEEEeqnarraybox}[][c]{rCl}
-      {TE}_e &=& \frac{1}{2 (x_E-x_P)}\left({
+      {TE}_{D,\,e} &=& \frac{1}{2 (x_E-x_P)}\left({
 \frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
 &&+
 \left({
@@ -78,7 +78,7 @@ gezeigten Herleitung im Osten. Es ergibt sich:
 \begin{align}
   \begin{split}
     \begin{IEEEeqnarraybox}[][c]{rCl}
-      TE_w &=& \frac{1}{2 (x_P-x_W)} \left({
+      TE_{D,\,w} &=& \frac{1}{2 (x_P-x_W)} \left({
 \frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
   \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)\\
   &&+
@@ -127,7 +127,7 @@ gezeigten Herleitung im Osten. Es ergibt sich:
 \subsubsection{Kontrollvolumen am Rand}
 \label{sec:te_dif_rand}
 
-Kontrollvolumen, die in der Nähe des Randes des Problemgebietes liegen müssen wie schon beim
+Kontrollvolumen, die in der Nähe des Randes des Problemgebiets liegen, müssen wie schon beim
 Abbruchfehler von Quelltermen besonders behandelt werden. Hierbei muss unterschieden werden ob es sich
 bei der zu approximierenden Ableitung um die Ableitung genau am Rand oder weiter im Inneren des
 Problemgebiets handelt.
@@ -155,7 +155,7 @@ Nach Umstellen ergibt sich für $\phi'_w$ der folgende Wert:
 Hier lässt sich ebenfalls der Abbruchfehler ablesen. Mit der Approximation der Ableitung
 ergibt sich:
 \begin{equation}
-  TE_{diff, Rand} = -\frac{1}{2} \left({\frac{\phi_e-\phi^w}{x_e-x_w}-
+  TE_{D,\ W-Rand} = -\frac{1}{2} \left({\frac{\phi_e-\phi^w}{x_e-x_w}-
   \frac{\phi_P-\phi^w}{x_p-x_w} }\right)
 \end{equation}
 Wird die Ableitung nicht direkt auf dem Rand betrachtet, kann der Zentraldifferenzenquotient
@@ -314,7 +314,7 @@ Beim zweidimensionalen Fall ist zudem besonders auf die Ecken zu achten.
 
 \subsection{Zweidimensionale Probleme}
 \paragraph{Abbruchfehler der Integralapproximation}
-Der Abbruchfehler der Integralapproximation für die Mittelpunktsregel entspricht
+\noindent Der Abbruchfehler der Integralapproximation für die Mittelpunktsregel entspricht
 der Herleitung des Abbruchfehlers für Quellterme bei eindimensionalen
 Problemen in Abschnitt~\ref{sec:source1d}. Die Funktion $f$ stellt hierbei die Ableitung
 $\frac{\partial \phi}{\partial x_i}$ dar. Es ergibt sich beispielsweise für
@@ -326,18 +326,21 @@ die Ostseite folgende Reihendarstellung.
 \end{equation}
 Der Abbruchfehler lässt sich damit ablesen zu:
 \begin{equation}
-  TE_{e,int} = \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
+  TE_{D,\,int,\,e} = \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
     \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
 \end{equation}
 \paragraph{Abbruchfehler der Ableitungsapproximation}
-Die Abbruchfehler aus der Approximation der Ableitung erfolgen für Nord- und Südseite äquivalent
-zur Ost- und Westseite wie in Abschnitt~\ref{sec:te_dif_1d} beschrieben. Zu diesem Fehler muss
-nun der Fehler aus der Integralapproximation addiert werden.
+\noindent Die Abbruchfehler aus der Approximation der Ableitung erfolgen für Nord- und Südseite äquivalent
+zur Ost- und Westseite wie in Abschnitt~\ref{sec:te_dif_1d} beschrieben.
+
+\paragraph{Gesamtabbruchfehler}
+\noindent Um den Gesamtabbruchfehler eines Diffusionsterms zu berechnen werden die
+Abbruchfehler aus Integralapproximation und Ableitungsapproximation addiert.
 Für die Ostseite ergibt sich somit:
 \begin{align}
 \begin{split}
     \begin{IEEEeqnarraybox}[][c]{rCl}
-      {TE}_e &=& \frac{1}{2 (x_E-x_P)}\left({
+      {TE}_{D,\,2D,\,e} &=& \frac{1}{2 (x_E-x_P)}\left({
 \frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
 &&+
 \left({

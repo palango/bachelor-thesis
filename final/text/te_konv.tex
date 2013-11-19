@@ -56,14 +56,15 @@ Die hier vorliegenden analytischen Ableitungen werden im nächsten Schritt durch
 Der Abbruchfehler ergibt sich damit zu folgendem Term.
 \begin{equation}
   \begin{IEEEeqnarraybox}{rCl}
-    TE_{e, CDS} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+    TE_{CDS,\,e} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
   - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E) (x_e-x_P) \nonumber \\
   &&+
- \frac{1}{(x_e-x_w)} \left({
-  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+ \frac{1}{(x_e-x_w)} \bigg(
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)
+  \\&&-
   \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
-  }\right) \nonumber \\
-  &&\frac{1}{6} \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
+  \bigg) \nonumber \\
+  &&\cdot \frac{1}{6} \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
   \end{IEEEeqnarraybox}
 \end{equation}
 Im Westen wird die Ableitung äquivalent zum Osten durchgeführt. Für den Abbruchfehler ergibt sich letztendlich
@@ -84,12 +85,13 @@ folgender Term:
 
 \begin{equation}
   \begin{IEEEeqnarraybox}[][b]{rCl}
-    TE_{w, CDS} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+    TE_{CDS,\,w} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
   - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) \left({x_w-x_W}\right)(x_w-x_P)  \nonumber\\
-  &&+ \frac{1}{(x_e-x_w)} \left({
-  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  &&+ \frac{1}{(x_e-x_w)} \bigg(
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)
+  \\ && -
   \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
-  }\right) \nonumber\\
+  \bigg) \nonumber\\
   &&\frac{1}{6}  \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)
   \end{IEEEeqnarraybox}
 \end{equation}
@@ -134,11 +136,11 @@ Für äquidistante Gitter ergeben sich die folgenden vereinfachten Formeln zur B
 mit dem CDS-Verfahren.
 
 \begin{equation*}
-  TE_{e, CDS} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) - \frac{1}{32}
+  TE_{CDS,\,e} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) - \frac{1}{32}
   (\phi_{EE} - 2\phi_E + 2\phi_W - \phi_{WW})
 \end{equation*}
 \begin{equation*}
-  TE_{w, CDS} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) + \frac{1}{32}
+  TE_{CDS,\,w} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) + \frac{1}{32}
   (\phi_{EE} - 2\phi_E + 2\phi_W - \phi_{WW})
 \end{equation*}
 
@@ -161,24 +163,24 @@ aus.
 Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_e$ mit $\phi_P$
 gleichsetzt, lässt sich der Abbruchfehler hier direkt ablesen.
 \begin{equation*}
-  TE_{e, UDS} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
+  TE_{UDS,\,e} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
 \end{equation*}
 Setzt man nun die diskretisierten Ableitungen aus Abschnitt~\ref{sec:te_cds} ein,
 ergibt sich die Formel für den Abbruchfehler.
 \begin{equation}
-  TE_{e, UDS} = (x_e-x_P) \frac{\phi_E-\phi_W}{x_E-x_W}+
+  TE_{UDS,\,e} = (x_e-x_P) \frac{\phi_E-\phi_W}{x_E-x_W}+
   \frac{1}{2} \frac{(x_e-x_P)^2}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
   - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)+HOT
 \end{equation}
 Betrachtet man den westlichen Rand und geht von einer positiven Geschwindigkeit aus,
 so ergibt sich der folgende Abbruchfehler:
 \begin{equation*}
-  TE_{w, UDS} = (x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W + HOT
+  TE_{UDS,\,w} = (x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W + HOT
 \end{equation*}
 Hier werden nun wiederum die Ableitungen $\phi'_W$ und $\phi''_W$ diskretisiert. Der
 Abbruchfehler lautet damit:
 \begin{equation}
-  TE_{w, UDS} = (x_w-x_W) \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}+
+  TE_{UDS,\,w} = (x_w-x_W) \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}+
   \frac{1}{2} \frac{(x_w-x_W)^2}{(x_w-x_{ww})} \left({\frac{\phi_P-\phi_W}{x_P-x_W}
   - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}} }\right)+HOT
 \end{equation}
@@ -187,7 +189,7 @@ Abbruchfehler lautet damit:
 
 \subsubsection{Randwerte}
 
-Auch beim UDS-Verfahren müssen am Rand die Approximationen die verwendeten Ableitungen
+Auch beim UDS-Verfahren müssen am Rand die Approximationen der verwendeten Ableitungen
 so angepasst werden, dass nur vorhandene Werte benutzt werden.
 Für den östlichen Rand des Kontrollvolumens können dabei die in Abschnitt~\ref{sec:te_cds_rand}
 gezeigten Differenzenquotienten genutzt werden.
@@ -219,13 +221,13 @@ $\phi_w$ wird hier beispielsweise aus der linearen Interpolation von $\phi_P$ un
   %\phi'_W  &= \frac{1}{2\Delta x} \phi_P + \frac{1}{2\Delta x} \phi_W - \phi^w\\
   %\phi''_W &= \frac{1}{\Delta x^2} \phi_P -\frac{1}{\Delta x^2} \phi_W
 %\end{align*}
-Für äquidistante Gitter ereben sich folgende Gleichungen für den Abbruchfehler.
+Für äquidistante Gitter ergeben sich folgende Gleichungen für den Abbruchfehler.
 
 \begin{equation*}
-  TE_{e, UDS} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
+  TE_{UDS,\,e} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
 \end{equation*}
 \begin{equation*}
-  TE_{w, UDS} = \frac{3}{8} \phi_P-\frac{1}{4} \phi_W - \frac{1}{8} \phi_{WW}
+  TE_{UDS,\,w} = \frac{3}{8} \phi_P-\frac{1}{4} \phi_W - \frac{1}{8} \phi_{WW}
 \end{equation*}
 
 
@@ -269,10 +271,10 @@ Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
 
 \subsection{Zweidimensionale Probleme}
 Die gezeigten Herleitungen lassen sich problemlos ins Zweidimensionale übertragen. Es muss
-jedoch darauf geachtet werden den Fehler aus der Integralapproximation nicht zu vergessen.
+jedoch darauf geachtet werden, den Fehler aus der Integralapproximation nicht zu vergessen.
 Dieser lautet für die Ostseite:
 \begin{equation}
-  TE_{e,int} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
+  TE_{C,\,int,\,e} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
     \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
 \end{equation}
 Er lässt sich leicht auf die anderen Seiten des Kontrollvolumens übertragen. Die Diskretisierung

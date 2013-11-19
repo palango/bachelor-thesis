@@ -1,9 +1,9 @@
 Um den Abbruchfehler eines Kontrollvolumens zu bestimmen, werden die
-Abbruchfehler aller zu betrachtenden Terme addiert. Nach Gleichung~\eqref{eq:fvm3}
+Abbruchfehler aller zu betrachtenden Terme addiert. Nach Gleichung~\ref{eq:fvm3}
 müssen demnach die Abbruchfehler für diffusive und konvektive Flüsse sowie
 für Quellterme bestimmt werden.
 
-Das Vorgehen zur Ableitung des Abbruchfehlers ist bei allen Terme das gleiche.
+Das Vorgehen zur Ableitung des Abbruchfehlers ist bei allen Terme gleich.
 Für alle in den Diskretisierungen vorkommenden Terme werden Taylorreihendarstellungen
 um den zu betrachtenden Punkt entwickelt. Diese werden dann so umgeformt, dass die
 verwendete Approximation entsteht. Die zusätzlichen Terme, die in der Approximation nicht
@@ -27,18 +27,18 @@ liefert:
 \end{equation*}
 Nach Integration im Intervall $[a, b]$ ergibt sich:
 \begin{align*}
-  \int_a^b f(x) dx &= \int_a^b f(x_0) dx + \int_a^b f'(x_0)(x-x_0) dx
+  \int_a^b f(x) dx =& \int_a^b f(x_0) dx + \int_a^b f'(x_0)(x-x_0) dx
 + \int_a^b \frac{1}{2} f''(x_0)(x-x_0)^2 dx + HOT\\
-&= f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}
-+ \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
+=& f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}\\
+ &+ \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
 \end{align*}
 Die Anwendung auf ein eindimensionales Kontrollvolumen (siehe Abbildung~\ref{fig:kv1d}) mit den Randpunkten $x_e$ und
 $x_w$ sowie dem Mittelpunkt $x_P$ ergibt damit die folgende Formel:
-\begin{equation*}
-  \int_{x_w}^{x_e} f(x)dx = f_P(x_e-x_w)
-  + \frac{1}{2} f'_P \underbrace{\left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]}_{=0}
-+ \frac{1}{6} f''_P \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
-\end{equation*}
+\begin{align*}
+  \int_{x_w}^{x_e} f(x)dx =& f_P(x_e-x_w)
+  + \frac{1}{2} f'_P \underbrace{\left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]}_{=0}\\
+  &+ \frac{1}{6} f''_P \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align*}
 Der sich der ersten Ableitung von $f$ anschließende Term wird immer Null, da nach
 Definition der Finite-Volumen Methode der Mittelpunkt eines Kontrollvolumens immer
 zwischen seinen Grenzen liegt.
@@ -48,10 +48,10 @@ beschrieben.
   \label{eq:diskretisierung_f''P}
   f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
 \end{equation}
-Der Truncation Error der Diskretisierung des Quelltermes lässt sich damit über die
+Der Abbruchfehler der Diskretisierung des Quellterms lässt sich damit über die
 folgende Gleichung beschreiben.
 \begin{equation}
-  TE_{source,1D} =
+  TE_{Q,1D} =
 \frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
 \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT\label{eq:te_source1}
 \end{equation}
@@ -79,7 +79,7 @@ dirichletsche Randbedingung gegeben sein kann, zu:
 Eingesetzt ergibt sich damit folgende Formel für den Abbruchfehler des Quellterms
 für Kontrollvolumen am Rand.
 \begin{equation}
-  TE_{source, W-Rand} =
+  TE_{Q,\ W-Rand} =
 \frac{1}{6\,(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f^w}{x_P-x_w}\right)
   \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
 \end{equation}
@@ -97,28 +97,28 @@ dargestelltem Kontrollvolumen der folgende Ausdruck:
 \begin{equation}
   \begin{IEEEeqnarraybox}[][c]{rCl}
   \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &=& f_P (x_e-x_w)(y_n-y_s)\\
-  & &+ \pderf{x} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} (y_n-y_s)\\
-  && + \pderf{y} \underbrace{\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}}_{=0} (x_e-x_w) \\
-  & &+ \frac{1}{2} \pderfs{x^2}\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
-  &&+ \frac{1}{2} \pderfs{y^2} \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
-  & &+ \pderfs{x\partial y} \underbrace{\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}}_{=0} \cdot
-  \underbrace{\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}}_{=0} + HOT
+  & &+ \pderf{x}\bigg\vert_P {\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}} (y_n-y_s)\\
+  && + \pderf{y}\bigg\vert_P {\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}} (x_e-x_w) \\
+  & &+ \frac{1}{2} \pderfs{x^2}\bigg\vert_P\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
+  &&+ \frac{1}{2} \pderfs{y^2}\bigg\vert_P \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
+  & &+ \pderfs{x\partial y}\bigg\vert_P {\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}} \cdot
+  {\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}} + HOT
 \end{IEEEeqnarraybox}
 \end{equation}
 Die sich den ersten Ableitungen anschließenden Terme ergeben bei Auswertung wiederum Null
 und müssen deshalb nicht weiter beachtet werden.
 Der Wert von $f$ ist im Mittelpunkt des Kontrollvolumens bekannt, nicht aber die auftretenden
 Ableitungen von $f$. Diese müssen deshalb diskretisiert werden. Man kann hierbei auf
-Gleichung~\eqref{eq:diskretisierung_f''P} zurückgreifen und ebenfalls für die $y$-Richtung anpassen.
+Gleichung~\ref{eq:diskretisierung_f''P} zurückgreifen und ebenfalls für die $y$-Richtung anpassen.
 Der Abbruchfehler ergibt sich damit zu:
 \begin{align}
   \begin{split}
-  TE_{source, 2D} &=                \frac{1}{2}
+    TE_{Q, 2D} =&                \frac{1}{2}
   \left[{\frac{f_E-f_P}{(x_E-x_P)(x_e-x_w)}-\frac{f_P-f_W}{(x_P-x_W)(x_e-x_w)}  }\right]
   \frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
-  &+ \frac{1}{2}
+  +& \frac{1}{2}
   \left[{\frac{f_N-f_P}{(y_N-y_P)(y_n-y_s)}-\frac{f_P-f_S}{(y_P-y_S)(y_n-y_s)}  }\right]
-  \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w)+HOT \\
+  \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\ +&\ HOT
   \end{split}
 \end{align}
 Die Betrachtung von Randkontrollvolumen erfolgt äquivalent zum Eindimensionalen. Es müssen
@@ -131,8 +131,8 @@ Für äquidistante Gitter vereinfacht sich der Terme des Abbruchfehlers und es e
 für ein- und zweidimensionale Fälle die folgenden Gleichungen.
 
 \begin{align*}
-  TE_{source,\ Q,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
-  TE_{source,\ Q,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
+  TE_{Q,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
+  TE_{Q,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
 \end{align*}
 
 \newpage
