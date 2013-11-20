@@ -1,6 +1,7 @@
 \section{Eindimensionale Testfälle}
 
 \paragraph{Testfall 1}
+\noindent
 Der erste Testfall ist ein reines Diffusionsproblem auf kartesischem
 Gitter. Die Testfunktion ist Nummer~2 (siehe Abbildung~\ref{fig:testfn2}).
 Die Anzahl der Kontrollvolumen beträgt $N=20$ und der Diffusionskoeffizient
@@ -62,6 +63,7 @@ Residuum und Abbruchfehler besser vergleichen zu können.
    \end{subfigure}
    \caption{Differenz Residuum und Abbruchfehler (Testfall 1)}
 \end{figure}
+\noindent
 Auf feineren Gittern erwartet man einen kleineren Abbruchfehler. Dies
 wird durch die folgenden Diagramme bestätigt, in denen der Abbruchfehler auf
 Gittern mit $N=10$ und $N=40$ mit dem Abbruchfehler des Testfalles verglichen werden.
@@ -103,10 +105,11 @@ Die Verbesserung beträgt ungefähr eine halbe Ordnung pro Verdoppelung der Schr
    \caption{Abbruchfehler ohne Randsprünge für veränderte Gitter (Testfall 1)}
 \end{figure}
 
-
+\vspace{2cm}
 
 
 \paragraph{Testfall 2}
+\noindent
 Der zweite Testfall verwendet Testfunktion 1 auf einem orthogonalen Gitter mit
 Expansionsfaktor $\alpha=0,9$. Es gibt wieder zwanzig Kontrollvolumen.
 
@@ -136,6 +139,7 @@ Expansionsfaktor $\alpha=0,9$. Es gibt wieder zwanzig Kontrollvolumen.
    \end{subfigure}
    \caption{Lösungseigenschaften (Testfall 2)}
 \end{figure}
+\noindent
 Die Abhängigkeit des absoluten Fehlers vom Gitter ist gut zu erkennen. Im groben
 Bereich steigt der Fehler, während er im fein aufgelösten Bereich sinkt.
 Auch Abbruchfehler und Residuum stimmen gut überein. Die verminderte Genauigkeit

@@ -228,6 +228,7 @@ ylabel=Absoluter Fehler,height=8cm]
 \begin{figure}[h]
 \centering
    \begin{subfigure}{0.45\linewidth} \centering
+     \vspace{15pt}
   \begin{tikzpicture}
     \begin{semilogyaxis}[width=\textwidth,height=5cm,
       xlabel=Iterationen,ylabel=Gemittelter REI]
@@ -330,7 +331,7 @@ ylabel=Absoluter Fehler]
 \centering
 \begin{tikzpicture}
   \begin{axis}[width=0.7\textwidth, xlabel=$x$,height=8cm,
-  ylabel=Abbruchfehler,legend style={anchor=south east, at={(0.98,0.02)}}]
+  ylabel=Zweigitter-Fehler,legend style={anchor=south east, at={(0.98,0.02)}}]
     \addplot[tud2d, mark=*, very thick] file {anwendung/zg/zg1_data.txt};
     \addplot[tud9d, mark=*, very thick] file {anwendung/zg/zg2_data.txt};
     \legend{Startwert,Kleinster ZGF}
@@ -385,12 +386,13 @@ ylabel=Gemittelter absoluter Fehler
   \end{axis}
 \end{tikzpicture}
 \caption{Gemittelter absoluter Fehler der untersuchten Indikatoren während der Iteration}
+\label{fig:it_all}
 \end{figure}
 \noindent
 In Tabelle~\ref{tab:verb} sind die relativen Verbesserungen des absoluten Fehlers für jeden
 Indikator aufgetragen. Die Gewinne sind beim Abbruchfehler mit 97,7\% am größten.
 Dicht dahinter folgen der Lösungsgradient und der Richardson-Extrapolations-Indikator.
-Der Zweigitter-Fehlerschätzer sit mit 65,94\% Verbesserung weit abgeschlagen.
+Der Zweigitter-Fehlerschätzer ist mit 65,94\% Verbesserung weit abgeschlagen.
 
 \begin{table}[h]
   \begin{tabular}{l r}
@@ -406,5 +408,10 @@ Der Zweigitter-Fehlerschätzer sit mit 65,94\% Verbesserung weit abgeschlagen.
 \caption{Relative Verbesserung des absoluten Fehlers}
 \label{tab:verb}
 \end{table}
+\vspace{2cm}
 
-
+In Abbildung~\ref{fig:it_all} sind die Verläufe des gemittelten absoluten
+Fehlers über die Iterationen aufgetragen. Man sieht das es bei allen Indikatoren
+am Anfang eine starke Verbesserung gibt. Beim Zweigitter-Fehlerschätzer
+verringert sich dann schnell die Verbesserung pro Iteration, während es bei den anderen
+Verfahren weiter eine starke Reduktion des absoluten Fehlers pro Iteration gibt.

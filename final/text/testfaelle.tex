@@ -22,7 +22,7 @@ height=4.5cm,
 width=0.6*\textwidth
 ]
 % use TeX as calculator:
-\addplot +[mark=none, samples=100,very thick]{sin(pi*deg(x))+1};
+\addplot +[mark=none, samples=100,very thick,tud2d]{sin(pi*deg(x))+1};
 \end{axis}
 \end{tikzpicture}
 \centering
@@ -31,6 +31,7 @@ width=0.6*\textwidth
 \end{figure}
 
 
+\noindent
 Der zweite Testfall stellt eine unsymmetrische Funktion dar. Es handelt sich um
 die halbe Periode der Kosinusfunktion, welche um eine Einheit nach unten verschoben wurde.
 Die Randbedingungen sind damit
@@ -48,7 +49,7 @@ domain=0:1,
 height=4.5cm,
 width=0.6*\textwidth
 ]
-\addplot +[mark=none,samples=100, very thick]{cos(pi*deg(x))-1};
+\addplot +[mark=none,samples=100, very thick,tud2d]{cos(pi*deg(x))-1};
 \end{axis}
 \end{tikzpicture}
 \centering
@@ -106,6 +107,7 @@ file {data/3_contour.txt};
 \caption{Testfunktion 3 im Intervall [0,1]$\times$[0,1]}\label{fig:tf3}
 \end{figure}
 
+\noindent
 Die zweite zweidimensionale Testfunktion ist unsymmetrisch. Ihre Gleichung lautet:
 \begin{equation}
 f(x,y) = \sin(\frac{\pi}{2} x) \sin(\frac{\pi}{2} y)

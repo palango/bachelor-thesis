@@ -1,9 +1,11 @@
 \documentclass[colorback,longdoc,blackrule,oneside,bigchapter,accentcolor=tud2d,11pt]{tudreport}
 
+\usepackage{ngerman}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 
+\usepackage[]{bibgerm}
+%\usepackage[]{babelbib}
 
 %Seitenränder einstellen
 \usepackage{geometry}
@@ -39,6 +41,7 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{floatrow}
+
 
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
@@ -120,9 +123,9 @@ In der abgegebenen Thesis stimmen die schriftliche und elektronische Fassung üb
 \cleardoublepage
 
 \chapter{Verifizierung des Abbruchfehlerindikators}
-\input{text/testfaelle} %done
-\input{text/auswertung_codes} % done
-\input{text/auswertung_1d} % done
+\input{text/testfaelle}
+\input{text/auswertung_codes}
+\input{text/auswertung_1d}
 \input{text/auswertung_2d}
 
 
@@ -136,7 +139,7 @@ In der abgegebenen Thesis stimmen die schriftliche und elektronische Fassung üb
 \cleardoublepage
 
 %% Bibliographie
-\bibliographystyle{abbrv}
+\bibliographystyle{gerplain}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliography{bib}
 \nocite{*}

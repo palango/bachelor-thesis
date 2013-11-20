@@ -2,6 +2,7 @@
 
 \paragraph{Testfall 3}
 
+\noindent
 Im dritten Testfall wird ein reines Diffusionsproblem im Zweidimensionalen
 betrachtet. Das genutzte Gitter ist orthogonal und hat in beiden Dimensionen
 einen Expansionsfaktor $\alpha=0,95$. Zum Test wurde Testfunktion 4
@@ -175,13 +176,13 @@ width=\textwidth
 \label{fig:t3_teerr}
 \end{figure}
 %\clearpage
-\vspace{4cm}
+\vspace{5cm}
 
 \clearpage
 
-
 \paragraph{Testfall 4}
 
+\noindent
 Im vierten Testfall wird ein kombiniertes Diffusions- und Konvektionsproblem im Zweidimensionalen
 betrachtet. Das genutzte Gitter ist orthogonal und hat in beiden Dimensionen
 einen Expansionsfaktor $\alpha=0,9$. Hier wird Testfunktion 3 verwendet. Der
@@ -372,5 +373,13 @@ Der Abbruchfehlerindikator wurde daraufhin im Ein- und Zweidimensionalen untersu
 Die Ergebnisse bescheinigen eine sehr gute Übereinstimmung mit dem Residuum
 der Lösung. Lediglich am Rand des Problemgebiets kommt es, bedingt durch die dortige Verwendung von
 einseitigen Differenzenquotienten, zu einer Verringerung der Genauigkeit.
+
+Bei einer Verfeinerung erhöht sich erwartungsgemäß auch die Genauigkeit
+des Abbruchfehlers. Die Erhöhung beträgt dabei ungefähr eine halbe Ordnung
+bei einer Halbierung der Zellengröße. Sind Diffusions- und Konvektionskoeffizient
+nicht von der gleichen Größenordnung verringert sich die Genauigkeit
+des Abbruchfehlers um eine ungefähr eine halbe Ordnung.
+
+
 
 \clearpage

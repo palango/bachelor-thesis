@@ -24,8 +24,8 @@ vorgestellten stationären Transportgleichung im zweidimensionalen Fall
 - \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
 \label{eq:transp_fvm}
 \end{equation}
-Durch Integration von Gleichung~\eqref{eq:transp_fvm} über ein Kontrollvolumen $V$ (Gl.~\ref{eq:fvm1})
-erhält man bei anschließender Anwendung des Gaußschen Integralsatzes die in Gleichung~\eqref{eq:fvm2} beschriebene Beziehung.
+Durch Integration von Gleichung~\ref{eq:transp_fvm} über ein Kontrollvolumen $V$ (Gl.~\ref{eq:fvm1})
+erhält man bei anschließender Anwendung des Gaußschen Integralsatzes die in Gleichung~\ref{eq:fvm2} beschriebene Beziehung.
 \begin{align}
   \int_V \frac{\partial}{\partial x_i} \left({\rho v_i \phi
 - \alpha \frac{\partial \phi}{\partial x_i} }\right) dV &= \int_V f dV \label{eq:fvm1}\\
@@ -87,7 +87,7 @@ wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
 
 Im nächsten Schritt muss nun der Variablenwert $\phi_c$ durch die Variablenwerte in den
 Mittelpunkten der Kontrollvolumen ausgedrückt werden.
-Zunächst soll jedoch die rechte Seite von Gleichung~\eqref{eq:fvm3} betrachtet werden.
+Zunächst soll jedoch die rechte Seite von Gleichung~\ref{eq:fvm3} betrachtet werden.
 Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im allgemeinen eine Approximation
 mittels numerischer Integration. Oftmals ist hierbei die Nutzung der Mittelpunktsregel mit der Ordnung zwei
 ausreichend. Sie geht von der Annahme aus, das der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
@@ -206,7 +206,7 @@ Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurüc
 \subsubsection{Gesamtgleichungssystem}
 
 Die oben gezeigten Approximationstechniken können nun auf die allgemeine Transportgleichung
-\eqref{eq:transportgl} angewendet werden. Beispielhaft soll das hier mit dem CDS-Verfahren für
+\ref{eq:transportgl} angewendet werden. Beispielhaft soll das hier mit dem CDS-Verfahren für
 die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beiden Koordinatenrichtungen seien positiv
 und das Gitter orthogonal. Damit ergibt sich die folgende Approximation:
 \begin{align*}
@@ -232,7 +232,7 @@ Die Koeffizienten ergeben sich hierbei zu:
   b_P &= f_P
 \end{align*}
 Diese Koeffizienten können für jedes Kontrollvolumen berechnet werden. Da die Nachbarn jedes
-Kontrollvolumens für die Approximationen genutzt werden, kann Gleichung~\eqref{eq:fvm_kv} auch
+Kontrollvolumens für die Approximationen genutzt werden, kann Gleichung~\ref{eq:fvm_kv} auch
 wie folgt ausgedrückt werden.
 \begin{equation}
   a^i_P\phi^i_P - \sum_c a^i_c\phi^i_c = b^i_p
