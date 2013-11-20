@@ -15,7 +15,7 @@
 %\usepackage[]{natbib}
 \usepackage[]{amsmath}
 %\usepackage{dsfont}
-\usepackage{color}
+%\usepackage{color}
 %Zur Darstellung von Code
 %\usepackage[ruled,chapter]{algorithm}
 %\usepackage[]{algorithmic}
@@ -39,8 +39,6 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{floatrow}
-% Table float box with bottom caption, box width adjusted to content
-\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderf}[1]{\frac{\partial f}{\partial#1}}
@@ -71,10 +69,10 @@ Finite Volumen diskretisierten Navier-Stokes Gleichungen\linebreak[1]}
 
 % %%%%%%%%%%%%%%%%%%% Hier beginnt das Dokument
 \begin{document}
-\maketitle
+%\maketitle
 
 % Verzeichnisse mit römischen Seitenzahlen
-\cleardoublepage
+%\cleardoublepage
 \setcounter{page}{1}
 \pagenumbering{roman}
 
@@ -93,7 +91,7 @@ In der abgegebenen Thesis stimmen die schriftliche und elektronische Fassung üb
 
 \tableofcontents
 \listoffigures
-%\listoftables
+\listoftables
 
 % Eigentlicher Text mit arabischen Seitenzahlen
 \cleardoublepage
@@ -122,15 +120,15 @@ In der abgegebenen Thesis stimmen die schriftliche und elektronische Fassung üb
 \cleardoublepage
 
 \chapter{Verifizierung des Abbruchfehlerindikators}
-%\input{text/testfaelle} %done
-%\input{text/auswertung_codes} % done
-%\input{text/auswertung_1d} % done
+\input{text/testfaelle} %done
+\input{text/auswertung_codes} % done
+\input{text/auswertung_1d} % done
 \input{text/auswertung_2d}
 
 
 \cleardoublepage
 
-%\input{text/anwendung} %done
+\input{text/anwendung} %done
 \cleardoublepage
 
 \chapter{Fazit}
