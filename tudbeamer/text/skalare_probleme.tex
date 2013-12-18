@@ -1,0 +1,140 @@
+\section{Skalare Probleme}
+
+Eine Vielzahl praktisch relevanter Probleme lässt sich durch skalare (partielle)
+Differential\-glei\-chungen beschreiben. Anwendungsgebiete reichen hier von Wärmetransportproblemen
+über strukturmechanische Probleme (zum BEispiel die Auslenkung von Stäben und Membranen bei elastischem
+Werkstoffverhalten) bis hin zu strömungsmechanischen Problemen (zum Beispiel das Geschwindigkeitspotential
+wirbelfreier Strömungsfelder).
+
+\subsection{Einfache Feldprobleme}
+
+Einige kontinuumsmechanische Problemstellungen können durch eine Differentialgleichung
+der Form
+
+\begin{equation}
+  -\frac{\partial}{\partial x_i}\left({\alpha \frac{\partial \phi}{\partial x_i} }\right)=g
+  \label{eq:feldproblem_stat}
+\end{equation}
+ beschrieben werden. Diese muss auf dem gesamten betrachteten Gebiet $V$ gelten, das
+vom Rand $S$ begrenzt wird. Bei $\phi=\phi(\mathbf{x})$ handelt es sich um die gesuchte,
+skalare Feldgröße. $g=g(\mathbf{x})$ und $\alpha=\alpha(\mathbf{x})$ sind vorgegeben.
+
+
+Weiterhin müssen auf dem gesamten Rand $S$ Randbedingungen
+gegeben sein. Üblich sind hierbei folgende Typen von Randbedingungen:
+
+\begin{itemize}
+  \item Dirichletsche Randbedingung: $\quad \phi=\phi_S$
+  \item Neumannsche Randbedingung: $\quad \alpha \frac{\partial \phi}{\partial x_i} n_i = b_s $
+  \item Cauchysche Randbedingung: $\quad c_S \phi + \alpha \frac{\partial \phi}{\partial x_i} n_i = b_s$
+\end{itemize}
+
+Hierbei sind $\phi_S$, $b_S$ und $c_S$ vorgegebene Funktionen auf dem Rand $S$. Die
+Komponenten des nach außen gerichteten Normaleneinheitsvektors an $S$ werden mit $n_i$ bezeichnet.
+
+Treten mehrere Randbedingungstypen in einem Problem auf spricht man von gemischten Rand\-wert\-problemen.
+
+Die mit Gleichung~\ref{eq:feldproblem_stat} beschriebenen Probleme beinhalten keine Zeitabhängigkeit
+und werden deshalb als stationär bezeichnet.
+Im instationären, also zeitabhängigem Fall, erhalten alle Größen neben der Ortsabhängigkeit
+eine Zeitabhängigkeit. Die entsprechende Differentialgleichung lautet damit
+\begin{equation}
+  \frac{\partial \phi}{\partial t}
+  -\frac{\partial}{\partial x_i}\left({\alpha \frac{\partial \phi}{\partial x_i} }\right)=g
+  \label{eq:feldproblem_instat}
+\end{equation}
+für die unbekannte Größe $\phi=\phi(\mathbf{x}, t)$.
+Für instationäre Probleme muss neben den Rand\-beding\-ungen auch eine Anfangsbedingung
+$\phi(\mathbf{x}, t_0) = \phi_0(\mathbf{x})$ gegeben werden.
+
+Im weiteren Verlauf der Arbeit werden nur stationäre Probleme betrachtet. Alle Ergebnisse
+lassen sich aber auf instationäre Probleme übertragen.
+
+\subsection{Allgemeine Transportgleichung}
+\label{sec:transportgl}
+
+Eine wichtige Problemklasse innerhalb des Maschinenbaus stellen Transportprobleme in
+Festkörpern oder Fluiden dar. Bei der transportierten Größe kann es sich dabei beispielsweise
+um joulsche Wärme (Wärmetransportprobleme) oder Stoffmengen (Stofftransportprobleme) handeln.
+
+Stationäre Transportprobleme können in Differentialform durch die Gleichung
+\begin{equation}
+  \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
+\label{eq:transportgl}
+\end{equation}
+beschrieben werden. Die auftretenden Terme werden wie folgt benannt:
+\begin{itemize}
+  \item Quellterm $\quad f$
+  \item Konvektionsterm $\quad\frac{\partial}{\partial x_i} \rho v_i \phi$
+  \item Diffusionsterm $\quad\alpha \frac{\partial^2 \phi}{\partial x_i \partial x_i}$
+\end{itemize}
+Für spezielle Probleme müssen die entsprechenden Parameter angepasst werden
+(für nähere Information siehe \cite{num_maschbau}).
+
+Alle Betrachtungen in der vorliegenden Arbeit bauen auf Problemen auf, die durch
+Transport\-gleich\-ungen beschrieben werden können.
+
+\section{Navier-Stokes Gleichungen}
+
+Für viele reale Probleme ist es nötig das Verhalten von Fluiden vorherzusagen.
+Teilweise sind auch gleichzeitige Stoff- und Wärmetransportvorgänge interessant.
+Die in praktisch relevanten Problemen am häufigsten auftretenden Fluide werden Newtonsche Fluide genannt.
+Das bedeutet, dass sie linear-viskos und isotrop sind und damit durch den Cauchyschen
+Spannungstensor $T$ beschrieben werden können, wobei $p$ für den Druck und $\mu$ für die dynamische Viskosität stehen.
+\begin{equation}
+  T_{ij} = \mu\left({\frac{\partial v_i}{\partial x_j}
+  + \frac{\partial v_j}{\partial x_i}
+-\frac{2}{3} \frac{\partial v_k}{\partial x_k} \delta_{ij}}\right)
+-p\delta_{ij}
+\end{equation}
+Die
+Erhaltungssätze für Masse, Impuls und innere Energie lauten mit diesem Materialgesetz dann:
+\begin{align}
+  \frac{\partial p}{\partial t} + \frac{\partial (\rho v_i)}{\partial x_i} &= 0\\
+  \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
+  \frac{\partial}{\partial x_j} \left[{\mu
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}
+  - \frac{2}{3} \frac{\partial v_k}{\partial x_k}\delta_{ij}}\right)}\right]
+  -\frac{\partial p}{\partial x_i} + \rho f_i\\
+  \frac{\partial (\rho e)}{\partial t} + \frac{\partial (\rho v_i e)}{\partial x_i} &=
+  \mu \left[{\frac{\partial v_i}{\partial x_j}
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)
+  - \frac{2}{3} \left({\frac{\partial v_i}{\partial x_i}}\right)^2}\right]
+  -p\frac{\partial v_i}{\partial x_i} +\frac{\partial}{\partial x_i}
+  \left({\kappa \frac{\partial T}{\partial x_i}}\right)
+  + \rho q
+\end{align}
+Neben diesen Erhaltungsgleichungen benötigt man weiterhin thermische und kalorische Zustands\-gleich\-ungen.
+Diese definieren die thermodynamischen Eigenschaften des Fluids.
+
+Bei
+vielen realen Problemen müssen die obigen Gleichungen nicht in der allgemeinen Form gelöst werden, sondern
+können durch zusätzliche Annahmen vereinfacht werden.
+So wird beispielsweise bei vielen praktischen Anwendungen das Fluid nicht entscheidend komprimiert
+und kann deshalb als inkompressibel angesehen werden. Als Kriterium gilt weithin,
+das die Machzahl ($Ma = v/a$) kleiner~als~0,3 ist. Beispiele für inkompressible Probleme
+sind Strömungen von Flüssigkeiten wie Rohrströmungen oder die Umströmung von Bootsrümpfen.
+Auch die Strömung an langsam fliegenden Flugzeugen, zum Beispiel Segelflugzeugen, kann als
+inkompressibel modelliert werden.
+
+Ist die Bedingung für Inkompressibilität erfüllt,
+vereinfachen sich die obigen Gleichungen für kompressible Fluide und es ergeben sich folgende Gleichungen:
+\begin{align}
+  \frac{\partial v_i}{\partial x_i} &= 0\\
+  \frac{\partial (\rho v_i)}{\partial t} + \frac{\partial (\rho v_i v_j)}{\partial x_j} &=
+  \frac{\partial}{\partial x_j} \left[{\mu
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)}\right]
+  -\frac{\partial p}{\partial x_i} + \rho f_i\\
+  \frac{\partial (\rho e)}{\partial t} + \frac{\partial (\rho v_i e)}{\partial x_i} &=
+  \mu \frac{\partial v_i}{\partial x_j}
+  \left({\frac{\partial v_i}{\partial x_j}
+  +\frac{\partial v_j}{\partial x_i}}\right)
+  +\frac{\partial}{\partial x_i}
+  \left({\kappa \frac{\partial T}{\partial x_i}}\right)
+  + \rho q
+\end{align}
+\clearpage

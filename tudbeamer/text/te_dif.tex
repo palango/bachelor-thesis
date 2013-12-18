@@ -1,0 +1,439 @@
+\section{Abbruchfehler von Diffusionstermen}
+\label{sec:Diffusionsterme}
+
+Bei Diffusionstermen treten durch Approximationen zwei grundsätzliche Fehler auf.
+Zum einen entsteht durch die Anwendung der Mittelpunktsregel zur Integralapproximation
+(siehe Abschnitt~\ref{sec:fvm_intappr}) ein Diskretisierungsfehler.
+Dieser beruht auf der Ausdehnung der Seitenfläche und wird daher im eindimensionalen Fall
+Null.
+
+Der zweite grundsätzliche Fehler entsteht durch die Approximation der Ableitung im
+Seitenmittelpunkt. Beide werden im Folgenden abgeleitet.
+\subsection{Eindimensionale Probleme}
+\label{sec:te_dif_1d}
+
+Um den Abbruchfehler von Diffusionstermen zu bestimmen werden die Differenzenquotienten
+für die Ableitungen erster Ordnung hergeleitet. Dazu werden die Taylorreihendarstellungen der bekannten
+Werte in der unmittelbaren Umgebung genutzt. Beispielhaft soll das anhand des östlichen
+Randes des Kontrollvolumens geschehen.
+
+Zuerst entwickeln wir die Taylorreihendarstellungen vom Punkt $x_e$ aus in Richtung der anliegenden
+Kontrollvolumenmittelpunkte $\phi_E$ und $\phi_P$.
+\begin{align}
+  \phi_E &= \phi_e + \phi'_e(x_E-x_e)+\frac{1}{2}\phi''_e(x_E-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_E-x_e)^3+HOT
+  \label{eq:taylor_eE}\\
+  \phi_P &= \phi_e + \phi'_e(x_P-x_e)+\frac{1}{2}\phi''_e(x_P-x_e)^2
+  +\frac{1}{6}\phi'''_e(x_P-x_e)^3+HOT
+  \label{eq:taylor_eP}
+\end{align}
+Wird nun Gleichung~\ref{eq:taylor_eP} von Gleichung~\ref{eq:taylor_eE} subtrahiert, ergibt sich:
+\begin{equation*}
+  \phi_E-\phi_P=\phi'_e(x_E-x_P)+
+  \frac{1}{2}\phi''_e\left[{{(x_E-x_e)}^2-{(x_P-x_e)}^2}\right]+
+  \frac{1}{6}\phi'''_e\left[{{(x_E-x_e)}^3-{(x_P-x_e)}^3}\right]+HOT
+\end{equation*}
+Nach Umstellen ergibt sich daraus für die Ableitung $\phi'_e$ der folgende Term, aus dem bereits
+der Abbruchfehler abgelesen werden kann.
+\begin{equation}
+  \phi'_e = \frac{\phi_E-\phi_P}{x_E-x_P}+\frac{1}{2}\phi''_e
+\left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)+
+\frac{1}{6} \phi'''_e \left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)+HOT \label{eq:te_dif_e}
+\end{equation}
+Die hier auftretenden Ableitungen $\phi''_e$ und $\phi'''_e$ sind nicht bekannt und
+müssen diskretisiert werden. Bei der Nutzung von
+möglichst lokalen Differenzenquotienten ergeben sich die folgenden Approximationen der Ableitungen.
+Die genutzten Punkte sind in Abbildung~\ref{fig:kv1d} ersichtlich.
+\begin{align*}
+  \phi''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right)\\
+\phi'''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)
+\end{align*}
+Der Abbruchfehler des Diffusionsterms an der östlichen Grenze eines Kontrollvolumens
+lässt sich damit über folgende Gleichung beschreiben.
+\begin{align}
+\begin{split}
+    \begin{IEEEeqnarraybox}[][c]{rCl}
+      {TE}_{D,\,e} &=& \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
+&&+
+\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)\\
+&&\frac{1}{6(x_E-x_P)}\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
++HOT
+    \end{IEEEeqnarraybox}
+\end{split}
+\end{align}
+Der Abbruchfehler für Diffusionsterme im Westen erfolgt äquivalent zur oben
+gezeigten Herleitung im Osten. Es ergibt sich:
+\begin{align}
+  \begin{split}
+    \begin{IEEEeqnarraybox}[][c]{rCl}
+      TE_{D,\,w} &=& \frac{1}{2 (x_P-x_W)} \left({
+\frac{\phi_{E}-\phi_W}{x_{E}-x_W}-\frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}}\right)
+  \left({\frac{{(x_W-x_w)}^2-{(x_P-x_w)}^2}{x_P-x_W}}\right)\\
+  &&+
+\left({
+\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P}-\frac{\phi_P-\phi_W}{x_P-x_W} }\right)
+-\frac{1}{(x_w-x_{ww})}
+\left({\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}  }\right)
+}\right)\\
+&&\frac{1}{6(x_P-x_W)}\left({\frac{{(x_W-x_w)}^3-{(x_P-x_w)}^3}{(x_P-x_W)}}\right)
+  +HOT
+    \end{IEEEeqnarraybox}
+\end{split}
+\end{align}
+
+%\subsection{Äquidistante Gitter}
+
+%Für äquidistante Gitter vereinfache sich die Terme des Truncation Error. So löschen
+%sich beispielsweise die quadratischen Terme gegenseitig aus. Es ergeben sich die
+%folgenden Fehler:
+
+%\begin{align*}
+  %{TE}_e &= \left({
+%\frac{1}{6\Delta x^2}
+%\left({\frac{\phi_{EE}-\phi_E}{\Delta x}-\frac{\phi_E-\phi_P}{\Delta x} }\right)
+%-\frac{1}{6\Delta x^2}
+%\left({\frac{\phi_E-\phi_P}{\Delta x} - \frac{\phi_P-\phi_W}{\Delta x}  }\right)
+%}\right)\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24\Delta x}\left({
+%\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)+HOT
+%\end{align*}
+
+%\begin{align*}
+  %TE_w &=\left({
+%\frac{1}{6 \Delta x^2}
+%\left({\frac{\phi_E-\phi_P}{\Delta x}-\frac{\phi_P-\phi_W}{\Delta x} }\right)
+%-\frac{1}{6\Delta x^2}
+%\left({\frac{\phi_P-\phi_W}{\Delta x} - \frac{\phi_W-\phi_{WW}}{\Delta x}  }\right)
+%}\right)
+%\left({-\frac{\Delta x^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24 \Delta x}\left({
+%\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)+HOT
+%\end{align*}
+
+
+\subsubsection{Kontrollvolumen am Rand}
+\label{sec:te_dif_rand}
+
+Kontrollvolumen, die in der Nähe des Randes des Problemgebiets liegen, müssen wie schon beim
+Abbruchfehler von Quelltermen besonders behandelt werden. Hierbei muss unterschieden werden ob es sich
+bei der zu approximierenden Ableitung um die Ableitung genau am Rand oder weiter im Inneren des
+Problemgebiets handelt.
+
+Muss die Ableitung genau am Rand approximiert werden, so muss der in Gleichung~\ref{eq:te_dif_e} hergeleitete
+Zentraldifferenzenquotient durch einen einseitigen Differenzenquotient ersetzt werden. Je nachdem ob das
+betrachtete Volumen am Ost- oder Westrand liegt, müssen Vorwärts- oder Rückwärtsdifferenzenquotienten genutzt werden.
+\begin{figure}[hb]
+\input{text/images/kv_1d_rand.tex}
+\centering
+\caption{Randkontrollvolumen im eindimensionalen Fall}
+\label{fig:kv1d_rand}
+\end{figure}
+Das Vorgehen soll beispielhaft für die Ableitung $\phi'_w$ für das in Abbildung~\ref{fig:kv1d_rand} markierte Kontrollvolumen
+vorgestellt werden.
+Über die Randbedingung ist der Wert $\phi^w$ bekannt. Nun wird $\phi_P$ als Taylorreihe mit Entwicklungspunkt
+$x_w$ dargestellt.
+\begin{equation*}
+  \phi_P = \phi^w + \phi'_w (x_P-x_w) + \frac{1}{2} \phi''_w (x_P-x_w)^2 + HOT
+\end{equation*}
+Nach Umstellen ergibt sich für $\phi'_w$ der folgende Wert:
+\begin{equation}
+  \phi'_w = \frac{\phi_P-\phi^w}{x_p-x_w} -\frac{1}{2} \phi''_w(x_p-x_w) + HOT
+\end{equation}
+Hier lässt sich ebenfalls der Abbruchfehler ablesen. Mit der Approximation der Ableitung
+ergibt sich:
+\begin{equation}
+  TE_{D,\ W-Rand} = -\frac{1}{2} \left({\frac{\phi_e-\phi^w}{x_e-x_w}-
+  \frac{\phi_P-\phi^w}{x_p-x_w} }\right)
+\end{equation}
+Wird die Ableitung nicht direkt auf dem Rand betrachtet, kann der Zentraldifferenzenquotient
+aus Gleichung~\ref{eq:te_dif_e} genutzt werden. Hier müssen jedoch ebenfalls die verwendeten
+Approximation der höheren Ableitungen angepasst werden, um nicht vorhandene Werte nicht zu verwenden.
+Soll beispielsweise die Ableitung $\phi'_e$ für das in Abbildung~\ref{fig:kv1d_rand} markierte Kontrollvolumen
+berechnet werden, so müssen die Ableitungen $\phi''_e$ und $\phi'''_e$ diskretisiert werden ohne den Wert
+$\phi_W$ zu verwenden. Die sich ergebenden Approximationen lauten damit:
+\begin{align*}
+  \phi''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi^w}{x_E-x_w}}\right)\\
+\phi'''_e &= \frac{1}{(x_E-x_P)}\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi^w}{x_P-x_w}  }\right)
+}\right)
+\end{align*}
+Die oben vorgestellte Behandlung des westlichen Randes kann äquivalent auf die anderen Ränder übertragen werden.
+Beim zweidimensionalen Fall ist zudem besonders auf die Ecken zu achten.
+
+
+%\paragraph{Westlicher Rand}
+
+%Es ergeben sich für gegebenes $\phi_w$:
+
+
+%\begin{equation*}
+  %\phi''_{w, W-Rand} = \frac{1}{(x_P-x_w)}\left({
+%\frac{\phi_{e}-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)
+%\end{equation*}
+
+%Da bei der dritten Ableitung zwei linke Kontrollvolumen genutzt werden, müssen hier
+%vom Kontrollvolumen am Rand sowohl der westliche also auch der östliche Rand
+%betrachtet werden.
+
+%\begin{align*}
+  %\phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  %\frac{1}{(x_e-x_w)} \left({
+    %\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    %}\right) -
+  %\frac{1}{x_P-x_w} \left({
+    %\frac{\phi_e-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    %}\right)
+  %}\right)
+  %\\
+  %\phi'''_{e, W-Rand} &= \frac{1}{(x_E-x_P)} \left({
+  %\frac{1}{(x_{ee}-x_e)} \left({
+      %\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E} - \frac{\phi_E-\phi_P}{x_E-x_P}
+    %}\right) -
+  %\frac{1}{x_e-x_w} \left({
+    %\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    %}\right)
+  %}\right)
+%\end{align*}
+
+%Hier wird noch der Wert $\phi_e$ benutzt, der aber nicht bekannt ist. Er wird deshalb
+%durch eine lineare Interpolation von $\phi_E$ und $\phi_P$ bestimmt.
+
+%\begin{equation}
+  %\phi_e = \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+%\end{equation}
+
+%Damit ergibt sich für $\phi''_{w,Rand}$und $\phi'''_{w, Rand}$:
+
+%\begin{align}
+  %\phi''_{w, W-Rand} &= \frac{1}{(x_P-x_w)}\left({
+%\frac{
+  %\left({\phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+%}\right)
+%-\phi_w}{x_{e}-x_w}-\frac{\phi_P-\phi_w}{x_P-x_w}}\right)\\
+  %\phi'''_{w, W-Rand} &= \frac{1}{(x_p-x_w)} \left({
+  %\frac{1}{(x_e-x_w)} \left({
+    %\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    %}\right) -
+  %\frac{1}{x_P-x_w} \left({
+    %\frac{ \phi_P \frac{x_E-x_e}{x_E-x_P} + \phi_E \frac{x_e-x_P}{x_E-x_P}
+%-\phi_w}{x_e-x_w} - \frac{\phi_P-\phi_w}{x_P-x_w}
+    %}\right)
+  %}\right)
+%\end{align}
+
+
+%\paragraph{Östlicher Rand}
+%Äquivalent ergibt sich $\phi''_{e, E-Rand}$ bei gegebenem $\phi_e$:
+
+%\begin{align*}
+  %\phi''_{e, E-Rand} &= \frac{1}{(x_e-x_P)}\left({
+%\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-\phi_w}{x_e-x_w}}\right)
+%\\
+  %\phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  %\frac{1}{(x_e-x_P)} \left({
+    %\frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e-\phi_w}{x_e-x_w}
+    %}\right) -
+  %\frac{1}{x_e-x_w} \left({
+    %\frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    %}\right)
+  %}\right)
+  %\\
+  %\phi'''_{w, E-Rand} &= \frac{1}{(x_P-x_W)} \left({
+  %\frac{1}{(x_e-x_w)} \left({
+      %\frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    %}\right) -
+    %\frac{1}{x_w-x_{ww}} \left({
+        %\frac{\phi_P-\phi_W}{x_P-x_W} - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}}
+    %}\right)
+  %}\right)
+%\end{align*}
+
+
+%$\phi_w$ wird wie folgt linear interpoliert:
+
+%\begin{equation*}
+  %\phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+%\end{equation*}
+
+%Damit ergibt sich für $\phi''_{e,Rand}$:
+
+%\begin{align}
+  %\phi''_{e,Rand} &= \frac{1}{(x_e-x_P)}\left({
+%\frac{\phi_{e}-\phi_P}{x_{e}-x_P}-\frac{\phi_e-
+  %\left({
+   %\phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+  %}\right)
+%}{x_e-x_w}}\right)
+%\\
+  %\phi'''_{e, E-Rand} &= \frac{1}{(x_e-x_P)} \left({
+  %\frac{1}{(x_e-x_P)} \left({
+    %\frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_e- \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+%}{x_e-x_w}
+    %}\right) -
+  %\frac{1}{x_e-x_w} \left({
+    %\frac{\phi_e-\phi_P}{x_e-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}
+    %}\right)
+  %}\right)
+%\end{align}
+
+
+%\subsubsection{Äquidistante Gitter}
+
+%\paragraph{Westlicher Rand}
+
+%\begin{align}
+  %\phi''_{w, W-Rand} &= \frac{1}{\Delta x^2} (\phi_E-3\phi_P+2\phi_w)\\
+  %\phi'''_{w, W-Rand} &= 0\\
+  %\phi'''_{e, W-Rand} &= \frac{1}{\Delta x^3} (\phi_{EE} -3\phi_E + 4\phi_P -2\phi_w)
+%\end{align}
+
+%\paragraph{Östlicher Rand}
+
+%\begin{align}
+  %\phi''_{e, E-Rand} &= \frac{1}{\Delta x^2} (\phi_W-3\phi_P+2\phi_e)\\
+  %\phi'''_{e, E-Rand} &= 0\\
+  %\phi'''_{w, E-Rand} &= \frac{1}{\Delta x^3} (-\phi_{WW} +3\phi_W - 4\phi_P +2\phi_e)
+%\end{align}
+
+\subsection{Zweidimensionale Probleme}
+\paragraph{Abbruchfehler der Integralapproximation}
+\noindent Der Abbruchfehler der Integralapproximation für die Mittelpunktsregel entspricht
+der Herleitung des Abbruchfehlers für Quellterme bei eindimensionalen
+Problemen in Abschnitt~\ref{sec:source1d}. Die Funktion $f$ stellt hierbei die Ableitung
+$\frac{\partial \phi}{\partial x_i}$ dar. Es ergibt sich beispielsweise für
+die Ostseite folgende Reihendarstellung.
+\begin{equation}
+  \int_{y_s}^{y_n} \pder[\phi]{x} dy = \pder[\phi]{x}\bigg\vert_e(y_n-y_s)
+    + \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
+\end{equation}
+Der Abbruchfehler lässt sich damit ablesen zu:
+\begin{equation}
+  TE_{D,\,int,\,e} = \frac{1}{6} \frac{\partial^3\phi}{\partial x^3}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
+\end{equation}
+\paragraph{Abbruchfehler der Ableitungsapproximation}
+\noindent Die Abbruchfehler aus der Approximation der Ableitung erfolgen für Nord- und Südseite äquivalent
+zur Ost- und Westseite wie in Abschnitt~\ref{sec:te_dif_1d} beschrieben.
+
+\paragraph{Gesamtabbruchfehler}
+\noindent Um den Gesamtabbruchfehler eines Diffusionsterms zu berechnen werden die
+Abbruchfehler aus Integralapproximation und Ableitungsapproximation addiert.
+Für die Ostseite ergibt sich somit:
+\begin{align}
+\begin{split}
+    \begin{IEEEeqnarraybox}[][c]{rCl}
+      {TE}_{D,\,2D,\,e} &=& \frac{1}{2 (x_E-x_P)}\left({
+\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}-\frac{\phi_E-\phi_W}{x_E-x_W}}\right) \left({\frac{{(x_P-x_e)}^2-{(x_E-x_e)}^2}{x_E-x_P}}\right)\\
+&&+
+\left({
+\frac{1}{(x_{ee}-x_e)}
+\left({\frac{\phi_{EE}-\phi_E}{x_{EE}-x_E}-\frac{\phi_E-\phi_P}{x_E-x_P} }\right)
+-\frac{1}{(x_e-x_w)}
+\left({\frac{\phi_E-\phi_P}{x_E-x_P} - \frac{\phi_P-\phi_W}{x_P-x_W}  }\right)
+}\right)\\
+&&\frac{1}{6(x_E-x_P)}\left[{\left({\frac{{(x_P-x_e)}^3-{(x_E-x_e)}^3}{(x_E-x_P)}}\right)
+    +\left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right]
+}\right]+HOT
+    \end{IEEEeqnarraybox}
+\end{split}
+\end{align}
+Die anderen Seiten können auf gleiche Weise betrachtet werden. Die Behandlung für
+Randkontrollvolumen muss ebenso vom eindimensionalen auf den zweidimensionalen Fall
+übertragen werden.
+%Äquivalent zu den Herleitungen des Abbruchfehlers im Osten und Westen ergeben sich
+%sich für die Ableitungen $\phi'_n$ und $\phi'_s$ die folgenden Reihenentwicklungen:
+
+%\begin{equation}
+  %\phi'_n = \frac{\phi_N-\phi_P}{y_N-y_P}+\frac{1}{2}\phi''_n
+%\left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)+
+%\frac{1}{6} \phi'''_n \left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)+HOT
+%\end{equation}
+
+
+%\begin{equation}
+  %\phi'_s = \frac{\phi_P-\phi_S}{y_P-y_S}+\frac{1}{2}\phi''_s
+%\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)+
+%\frac{1}{6} \phi'''_s \left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)+HOT
+%\end{equation}
+%Nach der Diskretisierung der auftretenden, unbekannten Ableitungen ergeben sich die folgenden
+%Terme für den Abbruchfehler:
+
+%\begin{equation}
+  %\begin{IEEEeqnarraybox}[][c]{rCl}
+    %{TE}_n &=& \frac{1}{2\,(y_N-y_P)}\left({
+%\frac{\phi_{NN}-\phi_P}{y_{NN}-y_P}-\frac{\phi_N-\phi_S}{y_N-y_S}}\right) \left({\frac{{(y_P-y_n)}^2-{(y_N-y_n)}^2}{y_N-y_P}}\right)\\
+%&&+
+%\left({
+%\frac{1}{(y_{nn}-y_n)}
+%\left({\frac{\phi_{NN}-\phi_N}{y_{NN}-y_N}-\frac{\phi_N-\phi_P}{y_N-y_P} }\right)
+%-\frac{1}{(y_n-y_s)}
+%\left({\frac{\phi_N-\phi_P}{y_N-y_P} - \frac{\phi_P-\phi_S}{y_P-y_S}  }\right)
+%}\right)\\
+%&&\frac{1}{6\,(y_N-y_P)}\left({\frac{{(y_P-y_n)}^3-{(y_N-y_n)}^3}{y_N-y_P}}\right)
+%+HOT
+%\end{IEEEeqnarraybox}
+%\end{equation}
+
+
+%\begin{equation}
+%\begin{IEEEeqnarraybox}[][c]{rCl}
+  %TE_s &=& \frac{1}{2\,(y_P-y_S)} \left({
+%\frac{\phi_{N}-\phi_S}{y_{N}-y_S}-\frac{\phi_P-\phi_{SS}}{y_P-y_{SS}}}\right)
+  %\left({\frac{{(y_S-y_s)}^2-{(y_P-y_s)}^2}{y_P-y_S}}\right)\\
+  %&&+
+%\left({
+%\frac{1}{(y_n-y_s)}
+%\left({\frac{\phi_N-\phi_P}{y_N-y_P}-\frac{\phi_P-\phi_S}{y_P-y_S} }\right)
+%-\frac{1}{(y_s-y_{ss})}
+%\left({\frac{\phi_P-\phi_S}{y_P-y_S} - \frac{\phi_S-\phi_{SS}}{y_S-y_{SS}}  }\right)
+%}\right)\\
+%&&\frac{1}{6\,(y_P-y_S)}\left({\frac{{(y_S-y_s)}^3-{(y_P-y_s)}^3}{y_P-y_S}}\right)
+  %+HOT
+%\end{IEEEeqnarraybox}
+%\end{equation}
+%Die Behandlung der Randwerte erfolgt ebenfalls wir in Abschnitt~\ref{sec:te_dif_rand} erläutert und wird hier
+%nicht wiederholt.
+
+%\subsection{Äquidistante Gitter}
+
+%\begin{align*}
+  %{TE}_n &= \left({
+%\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_{NN}-\phi_N}{\Delta y}-\frac{\phi_N-\phi_P}{\Delta y} }\right)
+%-\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_N-\phi_P}{\Delta y} - \frac{\phi_P-\phi_S}{\Delta y}  }\right)
+%}\right)\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24\Delta y}\left({
+%\phi_{NN}-3\phi_N+3\phi_P-\phi_S}\right)+HOT
+%\end{align*}
+
+%\begin{align*}
+  %TE_s &=\left({
+%\frac{1}{6 \Delta y^2}
+%\left({\frac{\phi_N-\phi_P}{\Delta y}-\frac{\phi_P-\phi_S}{\Delta y} }\right)
+%-\frac{1}{6\Delta y^2}
+%\left({\frac{\phi_P-\phi_S}{\Delta y} - \frac{\phi_S-\phi_{SS}}{\Delta y}  }\right)
+%}\right)
+%\left({-\frac{\Delta y^2}{4} }\right)+HOT\\
+%&= -\frac{1}{24 \Delta y}\left({
+%\phi_N-3\phi_P+3\phi_S-\phi_{SS}}\right)+HOT
+%\end{align*}
+\clearpage

@@ -1,0 +1,282 @@
+\section{Abbruchfehler von Konvektionstermen}
+
+Wie in Abschnitt~\ref{sec:konv_fluss} beschrieben, existieren verschiedene Verfahren
+um konvektive Flüsse abzuschätzen. Der Abbruchfehler ist vom genutzten Verfahren
+abhängig und muss für jedes Verfahren hergeleitet werden.
+
+Zu diesem Fehler kommt ab der zweiten Dimension wiederum der Abbruchfehler aus
+der Integralapproximation, der bereits in Abschnitt~\ref{sec:source1d} hergeleitet wurde.
+
+\subsection{CDS-Verfahren}
+\label{sec:te_cds}
+
+Die Herleitung des Abbruchfehlers für das Zentraldifferenzen-Verfahren sei hier am Beispiel des östlichen Randes dargestellt.
+Man entwickelt zuerst die Taylorreihe von $\phi$ um den Entwicklungspunkt $x_P$ und wertet sie anschließend
+an den Punkten $x_e$ und $x_E$ aus. Es ergeben sich die folgenden Reihendarstellungen:
+\begin{align}
+  \phi_e &= \phi_P + \phi'_P(x_e-x_P)+\frac{1}{2}\phi''_P(x_e-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_e-x_P)^3+HOT
+  \label{eq:taylor_konv_eP}\\
+  \phi_E &= \phi_P + \phi'_P(x_E-x_P)+\frac{1}{2}\phi''_P(x_E-x_P)^2
+  +\frac{1}{6}\phi'''_P(x_E-x_P)^3+HOT
+  \label{eq:taylor_konv_eE}
+\end{align}
+Werden die Gleichungen~\ref{eq:taylor_konv_eE} und \ref{eq:taylor_konv_eP} nun
+voneinander subtrahiert und nach $\phi_e$ umgestellt, so ergibt sich mit dem
+Interpolationsfaktor $\gamma_e$:
+
+\begin{equation*}
+  \begin{IEEEeqnarraybox}[][c]{rCl}
+    \frac{\phi_e}{x_e-x_P} &=& \frac{\phi_E}{x_E-x_P} + \frac{\phi_P}{x_e-x_P} -
+  \frac{\phi_P}{x_E-x_P} + \frac{1}{2} \phi''_P \left({(x_e-x_P)-(x_E-x_P)}\right)\\
+  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)+HOT\\
+  \phi_e &=& \phi_E \frac{x_e-x_P}{x_E-x_P} + \phi_P \left({1-\frac{x_e-x_P}{x_E-x_P} }\right)
+  + \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
+  &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT\\
+   &=& \phi_E \gamma_e + \phi_P (1-\gamma_e)+ \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)\\
+         &&+ \frac{1}{6} \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
+  \end{IEEEeqnarraybox}
+\end{equation*}
+Der Abbruchfehler lässt sich hier leicht ablesen. Er lautet:
+\begin{equation*}
+  TE_{e, CDS} =  \frac{1}{2} \phi''_P (x_e-x_E)(x_e-x_P)+ \frac{1}{6}
+  \phi'''_P \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
+\end{equation*}
+Die hier vorliegenden analytischen Ableitungen werden im nächsten Schritt durch Approximationen ersetzt.
+\begin{align*}
+  %\phi'_P &= \frac{\phi_E-\phi_W}{x_E-x_W}\\
+  \phi''_P &= \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)\\
+  %\label{eq:ddphip}\\
+  \phi'''_P &= \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  }\right) \label{eq:dddphip}
+\end{align*}
+Der Abbruchfehler ergibt sich damit zu folgendem Term.
+\begin{equation}
+  \begin{IEEEeqnarraybox}{rCl}
+    TE_{CDS,\,e} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) (x_e-x_E) (x_e-x_P) \nonumber \\
+  &&+
+ \frac{1}{(x_e-x_w)} \bigg(
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)
+  \\&&-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  \bigg) \nonumber \\
+  &&\cdot \frac{1}{6} \left({(x_e-x_P)^2-(x_E-x_P)^2}\right)(x_e-x_P)+HOT
+  \end{IEEEeqnarraybox}
+\end{equation}
+Im Westen wird die Ableitung äquivalent zum Osten durchgeführt. Für den Abbruchfehler ergibt sich letztendlich
+folgender Term:
+%\begin{align*}
+  %\begin{IEEEeqnarraybox}{rCl}
+  %\phi_w &= \left({1-\frac{x_w-x_P}{x_W-x_P}}\right)\phi_P + \left({\frac{x_w-x_P}{x_W-x_P} }\right) \phi_W
+  %+ \frac{1}{2} \phi''_P \left({(x_w-x_P)-(x_W-x_P)}\right)(x_w-x_P)\\
+  %&+ \frac{1}{6} \phi'''_P \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)\\
+  %\phi_w &= \left({1-\frac{x_P-x_w}{x_P-x_W}}\right)\phi_P + \left({\frac{x_P-x_w}{x_P-x_W} }\right) \phi_W
+  %+ \frac{1}{2} \phi''_P \left({x_w-x_W}\right)(x_w-x_P)\\
+  %&+ \frac{1}{6} \phi'''_P \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)
+  %\end{IEEEeqnarraybox}
+%\end{align*}
+
+%Der Abbruchfehler lässt sich nach der Diskretisierung der unbekannten Ableitungen nach Gleichung~\ref{eq:ddphip}
+%und \ref{eq:dddphip} leicht ablesen und ergibt sich zu:
+
+\begin{equation}
+  \begin{IEEEeqnarraybox}[][b]{rCl}
+    TE_{CDS,\,w} &=&  \frac{1}{2} \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right) \left({x_w-x_W}\right)(x_w-x_P)  \nonumber\\
+  &&+ \frac{1}{(x_e-x_w)} \bigg(
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi_W}{x_E-x_W} }\right)
+  \\ && -
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}} }\right)
+  \bigg) \nonumber\\
+  &&\frac{1}{6}  \left({(x_w-x_P)^2-(x_W-x_P)^2}\right)(x_w-x_P)
+  \end{IEEEeqnarraybox}
+\end{equation}
+
+\subsubsection{Randwerte}
+\label{sec:te_cds_rand}
+
+Bei Kontrollvolumen direkt am Rand, wie zum Beispiel das in Abbildung~\ref{fig:kv1d_rand}
+hervorgehobene Kontrollvolumen, müssen einige Besonderheiten beachtet werden.
+So ist der konvektive Fluss, der direkt auf dem Rand verläuft, durch die Randbedingung ($\phi^w$) gegeben und
+muss dementsprechend nicht angepasst werden. Am östlichen Rand muss hingegen die Approximation
+der Ableitungen angepasst werden. Sie lauten dann:
+\begin{align*}
+  \phi''_P &= \frac{1}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi^w}{x_P-x_w} }\right)\\
+  \phi'''_P &= \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi^w}{x_E-x_w} }\right)-
+  \frac{1}{(x_P-x_w)} \left({\frac{\phi_E-\phi^w}{x_E-x_w} - \frac{\phi_P-\phi^{w}}{x_P-x_{w}} }\right)
+  }\right)
+\end{align*}
+Hat das betrachtete Kontrollvolumen  einen Abstand von eins zum Rand, so muss nur die Approximation der dritten
+Ableitung angepasst werden.
+\begin{equation*}
+  \phi'''_P = \frac{1}{(x_e-x_w)} \left({
+  \frac{1}{(x_E-x_P)} \left({\frac{\phi_{EE}-\phi_P}{x_{EE}-x_P}- \frac{\phi_E-\phi^w}{x_E-x_w} }\right)-
+  \frac{1}{(x_P-x_W)} \left({\frac{\phi_E-\phi_W}{x_E-x_W} - \frac{\phi_P-\phi^{w}}{x_P-x_{w}} }\right)
+  }\right)
+\end{equation*}
+Auf gleiche Art und Weise kann auch der östliche Rand behandelt werden.
+%Hier muss abschließend $\phi_e$ aus $\phi_E$ und $\phi_P$ interpoliert werden. Letztendlich ergibt
+%sich für äquidistante Gitter folgender Term:
+
+%\begin{equation*}
+  %TE_{e, CDS} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) - \frac{1}{32}
+  %(2\phi^{ee} - 3\phi_E + 2\phi_W - \phi_{WW})
+%\end{equation*}
+
+%Auf gleiche Art und Weise kann auch $TE_{w, CDS}$ berechnet werden.
+\subsubsection{Äquidistante Gitter}
+
+Für äquidistante Gitter ergeben sich die folgenden vereinfachten Formeln zur Berechnung der konvektiven Flüsse
+mit dem CDS-Verfahren.
+
+\begin{equation*}
+  TE_{CDS,\,e} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) - \frac{1}{32}
+  (\phi_{EE} - 2\phi_E + 2\phi_W - \phi_{WW})
+\end{equation*}
+\begin{equation*}
+  TE_{CDS,\,w} = -\frac{1}{8} (\phi_E-2\phi_P+\phi_W) + \frac{1}{32}
+  (\phi_{EE} - 2\phi_E + 2\phi_W - \phi_{WW})
+\end{equation*}
+
+
+
+
+
+
+
+
+\subsection{UDS-Verfahren}
+
+Um den Abbruchfehler des Upwind-Verfahrens herzuleiten, wertet man die
+Taylorreihe von $\phi$ mit dem Entwicklungspunkt $x_P$ im Punkte $\phi_e$
+aus.
+
+\begin{equation*}
+  \phi_e = \phi_P +(x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
+\end{equation*}
+Da im Falle einer positiven Geschwindigkeit das UDS-Verfahren $\phi_e$ mit $\phi_P$
+gleichsetzt, lässt sich der Abbruchfehler hier direkt ablesen.
+\begin{equation*}
+  TE_{UDS,\,e} = (x_e-x_P) \phi'_P + \frac{1}{2} (x_e-x_P)^2 \phi''_P+HOT
+\end{equation*}
+Setzt man nun die diskretisierten Ableitungen aus Abschnitt~\ref{sec:te_cds} ein,
+ergibt sich die Formel für den Abbruchfehler.
+\begin{equation}
+  TE_{UDS,\,e} = (x_e-x_P) \frac{\phi_E-\phi_W}{x_E-x_W}+
+  \frac{1}{2} \frac{(x_e-x_P)^2}{(x_e-x_w)} \left({\frac{\phi_E-\phi_P}{x_E-x_P}
+  - \frac{\phi_P-\phi_W}{x_P-x_W} }\right)+HOT
+\end{equation}
+Betrachtet man den westlichen Rand und geht von einer positiven Geschwindigkeit aus,
+so ergibt sich der folgende Abbruchfehler:
+\begin{equation*}
+  TE_{UDS,\,w} = (x_w-x_W) \phi'_W + \frac{1}{2} (x_w-x_W)^2 \phi''_W + HOT
+\end{equation*}
+Hier werden nun wiederum die Ableitungen $\phi'_W$ und $\phi''_W$ diskretisiert. Der
+Abbruchfehler lautet damit:
+\begin{equation}
+  TE_{UDS,\,w} = (x_w-x_W) \frac{\phi_P-\phi_{WW}}{x_P-x_{WW}}+
+  \frac{1}{2} \frac{(x_w-x_W)^2}{(x_w-x_{ww})} \left({\frac{\phi_P-\phi_W}{x_P-x_W}
+  - \frac{\phi_W-\phi_{WW}}{x_W-x_{WW}} }\right)+HOT
+\end{equation}
+
+
+
+\subsubsection{Randwerte}
+
+Auch beim UDS-Verfahren müssen am Rand die Approximationen der verwendeten Ableitungen
+so angepasst werden, dass nur vorhandene Werte benutzt werden.
+Für den östlichen Rand des Kontrollvolumens können dabei die in Abschnitt~\ref{sec:te_cds_rand}
+gezeigten Differenzenquotienten genutzt werden.
+
+Für das Kontrollvolumen direkt am Rand ist der konvektive Fluss gegeben. Es gibt somit keinen
+Abbruchfehler. Für das daneben liegende Kontrollvolumen müssen die Differenzenquotienten wie folgt angepasst werden:
+\begin{align*}
+  \phi'_W &= \frac{\phi_w-\phi^w}{x_w-x_{ww}}\\
+  \phi''_W &= \frac{1}{x_W-x_{ww}} \left({\frac{\phi_w-\phi^w}{x_w-x_{ww}}
+- \frac{\phi_W-\phi^w}{x_W-x_{ww}} }\right)+HOT
+\end{align*}
+$\phi_w$ wird hier beispielsweise aus der linearen Interpolation von $\phi_P$ und $\phi_W$ berechnet.
+\begin{equation*}
+  \phi_w = \phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+\end{equation*}
+%etzt ergeben sich damit die folgenden Terme.
+%\begin{align}
+  %\phi'_W &= \frac{\phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+%-\phi^w}{x_w-x_{ww}}\\
+  %\phi''_W &= \frac{1}{x_W-x_{ww}} \left({\frac{\phi_W \frac{x_P-x_w}{x_P-x_W} + \phi_P \frac{x_w-x_W}{x_P-x_W}
+%-\phi^w}{x_w-x_{ww}}
+%- \frac{\phi_W-\phi^w}{x_W-x_{ww}} }\right)+HOT
+%\end{align}
+
+
+\subsubsection{Äquidistante Gitter}
+
+%\begin{align*}
+  %\phi'_W  &= \frac{1}{2\Delta x} \phi_P + \frac{1}{2\Delta x} \phi_W - \phi^w\\
+  %\phi''_W &= \frac{1}{\Delta x^2} \phi_P -\frac{1}{\Delta x^2} \phi_W
+%\end{align*}
+Für äquidistante Gitter ergeben sich folgende Gleichungen für den Abbruchfehler.
+
+\begin{equation*}
+  TE_{UDS,\,e} = \frac{3}{8} \phi_E-\frac{1}{4} \phi_P - \frac{1}{8} \phi_W
+\end{equation*}
+\begin{equation*}
+  TE_{UDS,\,w} = \frac{3}{8} \phi_P-\frac{1}{4} \phi_W - \frac{1}{8} \phi_{WW}
+\end{equation*}
+
+
+
+
+
+\subsection{``Flux-Blending''-Verfahren}
+
+Das Flux-Blending-Verfahren setzt sich aus UDS- und CDS-Verfahren zusammen. Beide
+Verfahren werden dabei über den Faktor $\beta$ gewichtet. Dementsprechend müssen auch die
+Abbruchfehler über $\beta$ gewichtet werden um den Abbruchfehler für das ``Flux-Blending''-Verfahren zu berechnen.
+Mit Gleichung~\ref{eq:flux_blending} ergibt sich damit:
+
+\begin{equation}
+  TE_{e, Flux} = (1-\beta) TE_{e, UDS} + \beta TE_{e, CDS}
+\end{equation}
+
+
+
+%\section{Truncation Error eines Kontrollvolumens}
+%\label{sec:Truncation Error eines Kontrollvolumens}
+
+%Der Truncation Error für ein Kontrollvolumen setzt sich nun aus den Fehlern von Quell-
+%und Diffusionstermen zusammen:
+
+%\begin{equation*}
+  %TE = \frac{TE_{source} - TE_e - TE_w}{\Delta x}
+%\end{equation*}
+%Für den äquidistanten Fall ergibt sich damit für zentrale Kontrollvolumen der folgende
+%Truncation Error. Wichtig ist es, hier die durch den Gauß'schen Integralsatz 
+%entstehenden Vorzeichen mit zu beachten. Weiterhin muss durch $\Delta x$ geteilt werden,
+%da die gleiche Transformation beim Aufstellen des Gesamtgleichungsystem angewendet wird.
+
+%\begin{align}
+  %TE &= \frac{\frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right)
+   %+\frac{1}{24\Delta x}\left({
+%\phi_{EE}-3\phi_E+3\phi_P-\phi_W}\right)
+  %-\frac{1}{24 \Delta x}\left({
+%\phi_E-3\phi_P+3\phi_W-\phi_{WW}}\right)}{\Delta x}
+%\end{align}
+
+\subsection{Zweidimensionale Probleme}
+Die gezeigten Herleitungen lassen sich problemlos ins Zweidimensionale übertragen. Es muss
+jedoch darauf geachtet werden, den Fehler aus der Integralapproximation nicht zu vergessen.
+Dieser lautet für die Ostseite:
+\begin{equation}
+  TE_{C,\,int,\,e} = \frac{1}{6} \frac{\partial^2\phi}{\partial x^2}\bigg\vert_e
+    \left[{{(y_n-y_P)}^3-{(y_s-y_P)}^3}\right] + HOT
+\end{equation}
+Er lässt sich leicht auf die anderen Seiten des Kontrollvolumens übertragen. Die Diskretisierung
+der analytischen Ableitung wurde ebenfalls bereits gezeigt.
+\clearpage

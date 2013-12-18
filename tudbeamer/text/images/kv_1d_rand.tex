@@ -1,0 +1,29 @@
+\begin{tikzpicture}[scale=1.1]
+  %\draw[->] (6,0) -- (6.5,0) node[right] {$x$} coordinate(x axis);
+  %\draw[->] (0,6) -- (0,6.5) node[above] {$y$} coordinate(y axis);
+  \fill[tud0a] (2,2) rectangle +(2,2);
+  \draw[step=2cm, thick] (2, 2) grid (8, 4);
+
+  \filldraw[pattern=north east lines, thick] (1,2) rectangle +(1,2);
+
+  \fill (3, 3)  circle[radius=1.5pt];
+  \node (N) at (3,3) [label=above:$P$]{};
+
+  \fill (5, 3)  circle[radius=1.5pt];
+  \node (N) at (5,3) [label=right:$E$]{};
+
+
+  \fill (7, 3)  circle[radius=1.5pt];
+  \node (N) at (7,3) [label=right:$EE$]{};
+
+
+  \fill (4, 3)  circle[radius=1.5pt];
+  \node (N) at (4,3) [label={right=0pt}:$e$]{};
+
+  \fill (2, 3)  circle[radius=1.5pt];
+  \node (N) at (2,3) [label={right=0pt}:$w$]{};
+
+  \fill (6, 3)  circle[radius=1.5pt];
+  \node (N) at (6,3) [label=right:$ee$]{};
+
+\end{tikzpicture}

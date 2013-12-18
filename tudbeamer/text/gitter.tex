@@ -1,0 +1,67 @@
+\subsection{Numerische Gitter}
+\label{sec:num_gitter}
+
+Sind das mathematische Modell mit seinen Differentialgleichungen sowie den nötigen
+Rand- sowie gegebenenfalls Anfangsbedingungen festgelegt, besteht der nächste Schritt
+bei der Anwendung eines numerischen Berechnungsverfahrens darin, das kontinuierliche
+Gebiet von Raum und gegebenenfalls Zeit durch eine endliche Menge von Teilgebieten zu approximieren,
+in denen dann der Wert der gesuchten Größe berechnet wird.
+
+Diese Teilgebiete werden im allgemeinen in Form eines Gitters über den zu untersuchenden
+Bereich $V$ gelegt, weshalb dieser Arbeitsschritt auch oft Gittergenerierung genannt wird.
+
+Ein wichtiges Unterscheidungskriterium ist die Anordnung der Gitterpunkte.
+Man unterscheidet grundsätzlich zwischen strukturierten und unstrukturierten Gittern.
+
+Bei strukturierten Gittern ist die Lage der Gitterpunkte zueinander festgelegt. Diese
+Lagebeziehungen müssen deshalb nicht aufwendig gespeichert werden und die Gittergenerierung
+ist schnell und ohne großen Rechenaufwand möglich. Zwar ist es möglich bestimmte Gebiete
+aus der Gittergenerierung auszuschließen, eine Anpassung an die Problemgeometrie ist
+jedoch nur innerhalb der vorgegebenen Lagebeziehungen möglich.
+
+Bei unstrukturierten Gittern hingegen gibt es keine Vorschriften zu den Lagebeziehungen
+der einzelnen Gitterpunkte. Diese müssen deshalb aufwendig gespeichert werden, was
+den Speicherverbrauch sowie die Lösung komplizierter macht. Andererseits ist es problemlos möglich
+das Gitter an der Problemgeometrie auszurichten oder in bestimmten Gebieten selektiv zu verfeinern.
+Insgesamt ist die Gittergenerierung einfacher zu bewerkstelligen, da keine Rücksicht auf Lageverhältnisse
+genommen werden muss.
+
+\subsubsection{Physikalisches und logisches Gebiet}
+
+Oftmals lässt die Geometrie des zu untersuchenden Problems keine Anwendung eines
+strukturierten Gitters zu. Nicht in jeden Fall ist es jedoch nötig daraufhin unstrukturierte
+Gitter zu verwenden. Vielmehr ist es möglich das physikalische Gebiet des Problems
+mittels einer geeigneten mathematischen Transformation auf ein sogenanntes
+logisches Gebiet abzubilden, auf welchem dann die Anwendung eines strukturierten Gitters
+möglich ist. Exemplarisch ist diese Transformation in Abbildung~\ref{fig:transf} zu sehen.
+\begin{figure}[ht]
+\input{text/images/transformation.tex}
+\centering
+\caption{Transformation vom physikalischen ins logische Gebiet}
+\label{fig:transf}
+\end{figure}
+Die Abbildung von physikalischem ($\Omega_p$) auf logisches Gebiet ($\Omega_c$) muss dabei umkehrbar sein, das heißt
+die Abbildungsfunktion muss bijektiv sein. Formaler lässt sich die Transformation
+$\Omega_c \rightarrow \Omega_p$ wie folgt ausdrücken:
+\begin{equation}
+  (x,y) = (x(\xi, \eta), y(\xi, \eta)) \quad \text{bzw.} \quad (\xi,\eta) = (\xi(x, y), \eta(x,y))
+\end{equation}
+Hierbei sind $\xi$ und $\eta$ Variablen im logischen Bereich. Sie nehmen diskrete, im allgemeinen äquidistante,
+Werte an. Bei $x$ und $y$ handelt es sich um die üblicherweise unregelmäßigen Variablen des physikalischen Bereichs.
+
+Die Jakobimatrix der Transformation stellt einen wichtigen Indikator der Gittereigenschaften dar.
+Da die Transformation bijektiv sein muss, darf die Determinante der Jakobimatrix nicht Null werden.
+\begin{equation}
+  J = 
+  \begin{pmatrix}
+    \frac{\partial x}{\partial \xi} & \frac{\partial x}{\partial \eta} \\
+    \frac{\partial y}{\partial \xi} & \frac{\partial y}{\partial \eta}
+  \end{pmatrix}
+  \quad \text{und} \quad
+  det (J) = x_{\xi}y_{\eta} - x_{\eta} y_{\xi} \neq 0
+  \label{eq:detj}
+\end{equation}
+Die Ableitungen der physikalischen nach logischen Koordinaten wie
+zum Beispiel $x_{\xi}$ werden Metriken genannt. Sie beschreiben Eigenschaften
+des Gitters und sind damit nicht lösungsabhängig. Sie existieren auch
+für höhere Ableitungen, beispielsweise $x_{\xi\xi}$ oder $y_{\eta\eta}$.

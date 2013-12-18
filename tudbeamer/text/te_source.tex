@@ -1,0 +1,138 @@
+Um den Abbruchfehler eines Kontrollvolumens zu bestimmen, werden die
+Abbruchfehler aller zu betrachtenden Terme addiert. Nach Gleichung~\ref{eq:fvm3}
+müssen demnach die Abbruchfehler für diffusive und konvektive Flüsse sowie
+für Quellterme bestimmt werden.
+
+Das Vorgehen zur Ableitung des Abbruchfehlers ist bei allen Terme gleich.
+Für alle in den Diskretisierungen vorkommenden Terme werden Taylorreihendarstellungen
+um den zu betrachtenden Punkt entwickelt. Diese werden dann so umgeformt, dass die
+verwendete Approximation entsteht. Die zusätzlichen Terme, die in der Approximation nicht
+vorkommen, bilden den Abbruchfehler. Dieser enthält, bedingt durch die Taylorreihenentwicklungen,
+noch analytische Ableitungen. Diese werden im letzten Schritt diskretisiert, was zum Beispiel
+mittels finiter Differenzen erfolgen kann.
+
+Die unendlichen Tayloreihenentwicklungen werden in den folgenden Herleitungen nach den benötigten
+Termen abgebrochen. Die weitere Entwicklung wird durch die Abkürzung $HOT$ dargestellt.
+Diese steht für \emph{Higher Order Terms}, zu deutsch: Terme höherer Ordnung.
+
+\section{Abbruchfehler für Quellterme}
+\label{sec:Quellterm}
+
+\subsection{Eindimensionale Probleme}
+\label{sec:source1d}
+Die Taylorreihenentwicklung einer Funktion $f(x)$ um den Punkt $x_0$
+liefert:
+\begin{equation*}
+  f(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{1}{2} f''(x_0)(x-x_0)^2 + HOT
+\end{equation*}
+Nach Integration im Intervall $[a, b]$ ergibt sich:
+\begin{align*}
+  \int_a^b f(x) dx =& \int_a^b f(x_0) dx + \int_a^b f'(x_0)(x-x_0) dx
++ \int_a^b \frac{1}{2} f''(x_0)(x-x_0)^2 dx + HOT\\
+=& f(x_0) (b-a) + f'(x_0) \frac{(b-x_0)^2-(a-x_0)^2}{2}\\
+ &+ \frac{1}{2} f''(x_0) \frac{(b-x_0)^3-(a-x_0)^3}{3} +HOT
+\end{align*}
+Die Anwendung auf ein eindimensionales Kontrollvolumen (siehe Abbildung~\ref{fig:kv1d}) mit den Randpunkten $x_e$ und
+$x_w$ sowie dem Mittelpunkt $x_P$ ergibt damit die folgende Formel:
+\begin{align*}
+  \int_{x_w}^{x_e} f(x)dx =& f_P(x_e-x_w)
+  + \frac{1}{2} f'_P \underbrace{\left[{(x_e-x_P)^2-(x_w-x_P)^2}\right]}_{=0}\\
+  &+ \frac{1}{6} f''_P \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{align*}
+Der sich der ersten Ableitung von $f$ anschließende Term wird immer Null, da nach
+Definition der Finite-Volumen Methode der Mittelpunkt eines Kontrollvolumens immer
+zwischen seinen Grenzen liegt.
+Die verbleibende zweite Ableitung wird nun durch einen Differenzenquotienten
+beschrieben.
+\begin{equation}
+  \label{eq:diskretisierung_f''P}
+  f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\end{equation}
+Der Abbruchfehler der Diskretisierung des Quellterms lässt sich damit über die
+folgende Gleichung beschreiben.
+\begin{equation}
+  TE_{Q,1D} =
+\frac{1}{6(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f_W}{x_P-x_W}\right)
+\left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT\label{eq:te_source1}
+\end{equation}
+
+\begin{figure}[bt]
+\input{text/images/kv_1d.tex}
+\centering
+\caption{Allgemeines Kontrollvolumen im eindimensionalen Fall}
+\label{fig:kv1d}
+\end{figure}
+
+\subsubsection{Kontrollvolumen am Rand}
+
+Bei Kontrollvolumen am Rand sind nicht mehr alle in Gleichung~\ref{eq:te_source1}
+genutzten Werte gegeben. Der genutzte Differenzenquotient muss demnach angepasst werden.
+Da man sich dabei auch von der Form des Zentraldifferenzenquotienten entfernt,
+sinkt gleichzeitig die Genauigkeit in den Randgebieten.
+
+Die Anpassung soll beispielhaft am westlichen Rand gezeigt werden. Der Differenzenquotient
+ergibt sich bei Benutzung des mit $f^w$ bezeichneten Randwerts, der beispielsweise als
+dirichletsche Randbedingung gegeben sein kann, zu:
+\begin{equation}
+  f''_P = \frac{1}{x_e-x_w}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f^w}{x_P-x_w}\right)
+\end{equation}
+Eingesetzt ergibt sich damit folgende Formel für den Abbruchfehler des Quellterms
+für Kontrollvolumen am Rand.
+\begin{equation}
+  TE_{Q,\ W-Rand} =
+\frac{1}{6\,(x_e-x_w)}\left(\frac{f_E-f_P}{x_E-x_P}-\frac{f_P-f^w}{x_P-x_w}\right)
+  \left[{{(x_e-x_P)}^3-{(x_w-x_P)}^3}\right] + HOT
+\end{equation}
+Mit der gleichen Vorgehensweise kann auch der der östliche Rand behandelt werden. Darauf
+sei jedoch hier nicht weiter eingegangen.
+
+
+
+\subsection{Zweidimensionale Probleme}
+
+
+Bei gleichem Vorgehen wie in Abschnitt~\ref{sec:source1d} beschrieben, ergibt sich für
+eine zweidimensionale Funktion $f(x, y)$ in einem in Abbildung~\ref{fig:kv2d} 
+dargestelltem Kontrollvolumen der folgende Ausdruck:
+\begin{equation}
+  \begin{IEEEeqnarraybox}[][c]{rCl}
+  \int_{y_s}^{y_n}\int_{x_w}^{x_e} f dx dy &=& f_P (x_e-x_w)(y_n-y_s)\\
+  & &+ \pderf{x}\bigg\vert_P {\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}} (y_n-y_s)\\
+  && + \pderf{y}\bigg\vert_P {\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}} (x_e-x_w) \\
+  & &+ \frac{1}{2} \pderfs{x^2}\bigg\vert_P\frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
+  &&+ \frac{1}{2} \pderfs{y^2}\bigg\vert_P \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\
+  & &+ \pderfs{x\partial y}\bigg\vert_P {\frac{(x_e-x_P)^2 - (x_w-x_P)^2}{2}} \cdot
+  {\frac{(y_n-y_P)^2-(y_s-y_P)^2}{2}} + HOT
+\end{IEEEeqnarraybox}
+\end{equation}
+Die sich den ersten Ableitungen anschließenden Terme ergeben bei Auswertung wiederum Null
+und müssen deshalb nicht weiter beachtet werden.
+Der Wert von $f$ ist im Mittelpunkt des Kontrollvolumens bekannt, nicht aber die auftretenden
+Ableitungen von $f$. Diese müssen deshalb diskretisiert werden. Man kann hierbei auf
+Gleichung~\ref{eq:diskretisierung_f''P} zurückgreifen und ebenfalls für die $y$-Richtung anpassen.
+Der Abbruchfehler ergibt sich damit zu:
+\begin{align}
+  \begin{split}
+    TE_{Q, 2D} =&                \frac{1}{2}
+  \left[{\frac{f_E-f_P}{(x_E-x_P)(x_e-x_w)}-\frac{f_P-f_W}{(x_P-x_W)(x_e-x_w)}  }\right]
+  \frac{(x_e-x_P)^3 - (x_w-x_P)^3}{3} (y_n-y_s)\\
+  +& \frac{1}{2}
+  \left[{\frac{f_N-f_P}{(y_N-y_P)(y_n-y_s)}-\frac{f_P-f_S}{(y_P-y_S)(y_n-y_s)}  }\right]
+  \frac{(y_n-y_P)^3-(y_s-y_P)^3}{3} (x_e-x_w) \\ +&\ HOT
+  \end{split}
+\end{align}
+Die Betrachtung von Randkontrollvolumen erfolgt äquivalent zum Eindimensionalen. Es müssen
+jedoch auch die Fälle für nördliche und südliche Ränder, als auch die Ecken betrachtet werden.
+\input{text/images/kv_2d.tex}
+
+\subsection{Äquidistante Gitter}
+
+Für äquidistante Gitter vereinfacht sich der Terme des Abbruchfehlers und es ergeben sich
+für ein- und zweidimensionale Fälle die folgenden Gleichungen.
+
+\begin{align*}
+  TE_{Q,\ 1D} &= \frac{\Delta x}{24} \left({f_E-2f_P+f_W}\right) + HOT\\
+  TE_{Q,\ 2D} &= \frac{1}{24} \Delta x \Delta y \left[{f_E+f_W+f_N+f_S - 4f_P} \right] + HOT
+\end{align*}
+
+\newpage

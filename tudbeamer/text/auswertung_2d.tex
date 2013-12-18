@@ -1,0 +1,385 @@
+\section{Zweidimensionale Testfälle}
+
+\paragraph{Testfall 3}
+
+\noindent
+Im dritten Testfall wird ein reines Diffusionsproblem im Zweidimensionalen
+betrachtet. Das genutzte Gitter ist orthogonal und hat in beiden Dimensionen
+einen Expansionsfaktor $\alpha=0,95$. Zum Test wurde Testfunktion 4
+gewählt. Der Quellterm ergibt sich mit der Methode der konstruierten Lösungen zu:
+\begin{equation}
+  f=-\frac{\pi}{2} \sin\left(\frac{\pi}{2} x\right) \sin\left(\frac{\pi}{2} y\right)
+\end{equation}
+Der absolute Fehler ist in Abbildung~\ref{fig:t3_abs} dargestellt.
+Die folgenden Abbildungen vergleichen das Residuum der Lösung mit dem
+Abbruchfehler. Hier wird einmal das komplette Problemgebiet gezeigt, welches
+am Rand Sprünge enthält (Abbildung~\ref{fig:t3_rand}), und im anderen die
+Sprünge zur besseren Vergleichbarkeit ausgeblendet (Abbildung~\ref{fig:t3_krand}).
+
+Abschließend zeigt Abbildung~\ref{fig:t3_teerr} die Differenz von Residuum und
+Abbruchfehler. Man sieht hier die gute Übereinstimmung bei Differenzen
+im Bereich von $10^{-6}$.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+%zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \cos(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/ERR_data.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Oberflächen}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={0}{90},
+xlabel=$x$,
+ylabel=$y$,
+zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \sin(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm
+]
+\addplot3 +[contour prepared,very thick,mark=none, contour prepared format=matlab]
+file {data/3/ERR_contour.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Another subfigure}\label{fig:1b}
+\end{subfigure}
+\caption{Absoluter Fehler (Testfall 3)}
+\label{fig:t3_abs}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RES_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/TE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler mit Randsprüngen (Testfall 3)}
+\label{fig:t3_rand}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RES2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/TE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler ohne Randsprünge (Testfall 3)}
+\label{fig:t3_krand}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={170}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RESTE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Mit Randsprüngen}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={180+20}{35},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/3/RESTE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Ohne Randsprünge}
+\end{subfigure}
+\caption{Differenz Residuum und Abbruchfehler (Testfall 3)}
+\label{fig:t3_teerr}
+\end{figure}
+%\clearpage
+\vspace{5cm}
+
+\clearpage
+
+\paragraph{Testfall 4}
+
+\noindent
+Im vierten Testfall wird ein kombiniertes Diffusions- und Konvektionsproblem im Zweidimensionalen
+betrachtet. Das genutzte Gitter ist orthogonal und hat in beiden Dimensionen
+einen Expansionsfaktor $\alpha=0,9$. Hier wird Testfunktion 3 verwendet. Der
+Quellterm lautet damit:
+\begin{equation}
+  f=-2 \pi \sin(\pi x) \sin(\pi y) + \pi \cos(\pi x)\sin(\pi y) + \pi\sin(\pi x)\cos(\pi y)
+\end{equation}
+Der absolute Fehler ist in Abbildung~\ref{fig:t4_abs} dargestellt. Man erkennt
+gut den größeren Fehler auf dem gröberen Bereich des Gitters und die kleinere
+Abweichung im feiner aufgelösten Gebiet.
+
+Die folgenden Abbildungen vergleichen das Residuum der Lösung mit dem
+Abbruchfehler. Hier wird einmal das komplette Problemgebiet gezeigt, welches
+beim Abbruchfehler am Rand Sprünge enthält (Abbildung~\ref{fig:t4_rand}).
+Diese sind auf die niedrigere Ordnung der Diskretisierungsverfahren am Rand
+zurückzuführen. In Abbildung~\ref{fig:t4_krand} sind diese Sprünge ausgeblendet
+und können so besser mit dem Residuum verglichen werden.
+Abschließend zeigt Abbildung~\ref{fig:t4_teerr} die Differenz von Residuum und
+Abbruchfehler.
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+%view={30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+%zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \cos(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/ERR_data.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Oberflächen}\label{fig:1a}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={0}{90},
+xlabel=$x$,
+ylabel=$y$,
+zlabel={$f(x,y) = \sin(\frac{\pi}{2} x) \sin(\frac{\pi}{2} y)$},
+domain=0:1,
+height=7cm
+]
+\addplot3 +[contour prepared,very thick,mark=none, contour prepared format=matlab]
+file {data/4/ERR_contour.txt};
+\end{axis}
+\end{tikzpicture}
+%\subcaption{Another subfigure}\label{fig:1b}
+\end{subfigure}
+\caption{Absoluter Fehler (Testfall 4)}
+\label{fig:t4_abs}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={-30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/RES_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={-30+180}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/TE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler mit Randsprüngen (Testfall 4)}
+\label{fig:t4_rand}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/RES2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Residuum}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={150}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/TE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Abbruchfehler}
+\end{subfigure}
+\caption{Residuum und Abbruchfehler ohne Randsprünge (Testfall 4)}
+\label{fig:t4_krand}
+\end{figure}
+
+\vspace{2cm}
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={360-30}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/RESTE_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Mit Randsprüngen}
+\end{subfigure}%
+\begin{subfigure}[b]{.5\linewidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+view={180-30}{30},
+xlabel=$x$,
+ylabel=$y$,
+height=6cm,
+width=\textwidth
+]
+\addplot3[surf, mesh/ordering=y varies, faceted color=black] file{data/4/RESTE2_data.txt};
+\end{axis}
+\end{tikzpicture}
+\subcaption{Ohne Randsprünge}
+\end{subfigure}
+\caption{Differenz Residuum und Abbruchfehler (Testfall 4)}
+\label{fig:t4_teerr}
+\end{figure}
+
+
+
+
+\section{Zusammenfassung}
+Nach der Vorstellung der Testfälle mit ihren Randbedingungen wurden
+die Lösungsprogamme verifiziert. Hier konnte über den Vergleich von formaler
+und beobachteter Konvergenzordnung die korrekte Funktionsweise nachgewiesen werden.
+
+Der Abbruchfehlerindikator wurde daraufhin im Ein- und Zweidimensionalen untersucht.
+Die Ergebnisse bescheinigen eine sehr gute Übereinstimmung mit dem Residuum
+der Lösung. Lediglich am Rand des Problemgebiets kommt es, bedingt durch die dortige Verwendung von
+einseitigen Differenzenquotienten, zu einer Verringerung der Genauigkeit.
+
+Bei einer Verfeinerung erhöht sich erwartungsgemäß auch die Genauigkeit
+des Abbruchfehlers. Die Erhöhung beträgt dabei ungefähr eine halbe Ordnung
+bei einer Halbierung der Zellengröße. Sind Diffusions- und Konvektionskoeffizient
+nicht von der gleichen Größenordnung verringert sich die Genauigkeit
+des Abbruchfehlers um eine ungefähr eine Ordnung.
+
+
+
+\clearpage

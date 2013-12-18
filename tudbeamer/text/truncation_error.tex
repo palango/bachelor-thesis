@@ -1,0 +1,71 @@
+\section{Abbruchfehler}
+
+Der Abbruchfehler ist der Fehler der beim Abschneiden einer unendlichen Summe
+und deren Approximation durch eine endliche Summe entsteht.
+
+In der Praxis werden Approximationen, wie die in Abschnitt~\ref{sec:konv_fluss} oder
+\ref{sec:dif_fluss} beschriebenen, aus Taylorreihenentwicklungen um die betrachteten
+Punkte gewonnen\footnote{Die Herleitungen sind in Kapitel~\ref{chap:herleitung} ausführlich ausgeführt.}. 
+Da die Approximation jedoch zwangsläufig endlich sein muss, werden
+dabei Glieder der unendlichen Taylorreihenentwicklung abgeschnitten. Der dadurch entstehende
+Fehler wird Abbruchfehler genannt.
+Die restlichen Terme, für die Approximation nicht genutzt werden, können zur Fehlerabschätzung
+bei numerischen Berechnungen genutzt werden. Die grundlegenden Zusammenhänge sollen hier an einem einfachen Beispiel gezeigt werden.
+
+Wir nehmen an, die Funktion $f=\sin(x)$ soll zur einfacheren Berechenbarkeit durch
+ein Polynom approximiert werden. Anschließend soll ein Indikator für den dabei
+entstehenden Fehler gefunden werden, ohne dabei auf $f$
+selbst zurückzugreifen.
+Zuerst wird die Taylorreihe von $\sin(x)$ um den Entwicklungspunkt $x_0 =0$ berechnet:
+
+\begin{equation}
+  \sin(x) = \sum_{n=0}^{\infty}(-1)^n \frac{x^{2n+1}}{(2n+1)!} = 
+  x-\frac{x^3}{3!} +\frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+ \label{eq:taylor_example}
+\end{equation}
+
+Nun wird die Approximation für $\sin(x)$ festgelegt. Diese soll in diesem Beispiel
+$x-\frac{x^3}{6} $ sein. In Abbildung~\ref{fig:taylor_example} sieht man, wie sich die Güte der
+Approximation mit zunehmendem Abstand von $0$ verschlechtert.
+
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[width=0.8*\textwidth, height=150pt, grid=major]
+  \addplot[domain=-2*pi:2*pi, samples=100, color=tud2c, very thick]{sin(deg(x))};
+  \addplot[domain=-3:3, samples=100, color=tud9c, very thick]{x - x*x*x/6};
+  \legend{$\sin(x)$,$x-\frac{x^3}{6} $}
+\end{axis}
+\end{tikzpicture}
+\centering
+\caption{Vergleich von Funktion und Approximation}
+ \label{fig:taylor_example}
+\end{figure}
+
+Der absolute Fehler kann nun einfach über die Formel $\sin(x) - x + \frac{x^3}{6}$
+berechnet werden und entspricht den übrigen Gliedern der Taylorreihe~\ref{eq:taylor_example}.
+Der absolute Fehler entspricht also in diesem einfachen Beispiel dem Abbruchfehler.
+Dieser wird nach seinem englischen Namen \textit{Truncation Error} mit $TE$ bezeichnet.
+\begin{equation}
+  TE = \frac{x^5}{5!} -\frac{x^7}{7!} +\frac{x^9}{9!}\cdots
+ \label{eq:taylor_example_te}
+\end{equation}
+Da der Abbruchfehler selbst wieder eine unendliche Summe darstellt, muss zur Auswertung
+wieder eine endliche Anzahl von Termen abgetrennt werden. Dies stellt jedoch im allgemeinen
+kein Problem dar, da der Einfluss der Terme mit steigendem Exponenten stark abnimmt.
+
+Zur Abschätzung des Fehlers sollen im Beispiel zwei Glieder genutzt werden. Aus
+Gleichung~\ref{eq:taylor_example_te} ergibt sich damit der Fehlerindikator zu
+$\frac{x^5}{5!} -\frac{x^7}{7!} $.
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[width=0.8*\textwidth, height=150pt, grid=major, legend pos=north west]
+  \addplot[domain=-6:6, samples=100, color=tud2b, very thick]{sin(deg(x))-x+x*x*x/6};
+  \addplot[domain=-6:6, samples=100, color=tud9b, very thick]{x^5/120-x^7/(120*6*7)};
+  \legend{Absoluter Fehler, Fehlerapproximation}
+\end{axis}
+\end{tikzpicture}
+\centering
+\caption{Vergleich des absoluten Fehlers mit der Approximation}
+ \label{fig:taylor_example_te}
+\end{figure}
+In Abbildung~\ref{fig:taylor_example_te} sieht man die gute Übereinstimmung von absolutem Fehler und Fehlerapproximation um den Entwicklungspunkt. Die Genauigkeit kann durch Hinzunahme weiterer Terme aus der Reihenentwicklung des Abbruchfehlers beliebig verbessert werden.

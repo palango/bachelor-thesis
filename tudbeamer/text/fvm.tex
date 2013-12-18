@@ -1,0 +1,243 @@
+\subsection{Finite Volumen Methode}
+
+Die Finite-Volumen Methoden sind ein numerisches Verfahren zur Lösung von (partiellen)
+Differential\-gleich\-ungen. Sie sind heute das Standardverfahren zur Lösung von Strömungsproblemen
+wie zum Beispiel den Euler- oder Navier-Stokes-Gleichungen; aber keineswegs nur darauf beschränkt.
+Die charakteristische Eigenschaft der Finite-Volumen Methoden ist ihre Konservativität, also
+die Erfüllung der den mathematischen Modellen zugrunde liegenden Erhaltungsprinzipien in den
+diskreten Gleichungen.
+
+\subsubsection{Ableitung der Finite Volumen diskretisierten Transportgleichung}
+
+Ausgangspunkt ist die in Abschnitt~\ref{sec:num_gitter} beschriebene Zerlegung des Problemgebiets
+in diskrete Teilgebiete. Diese werden bei der Finite-Volumen Methode Kontrollvolumen
+genannt (im zweidimensionalen Fall steht Volumen stellvertretend für Fläche,
+im Eindimensionalen für Länge).
+Für jedes dieser Kontrollvolumen werden die Erhaltungsgleichungen in Integralform formuliert
+beziehungsweise durch Integration aus den entsprechenden Differentialgleichungen gewonnen.
+
+Beispielhaft soll das Vorgehen hier anhand der in Abschnitt~\ref{sec:transportgl}
+vorgestellten stationären Transportgleichung im zweidimensionalen Fall
+($i=1$, $2$) veranschaulicht werden.
+\begin{equation}
+  \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) = f
+\label{eq:transp_fvm}
+\end{equation}
+Durch Integration von Gleichung~\ref{eq:transp_fvm} über ein Kontrollvolumen $V$ (Gl.~\ref{eq:fvm1})
+erhält man bei anschließender Anwendung des Gaußschen Integralsatzes die in Gleichung~\ref{eq:fvm2} beschriebene Beziehung.
+\begin{align}
+  \int_V \frac{\partial}{\partial x_i} \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) dV &= \int_V f dV \label{eq:fvm1}\\
+  \int_S  \left({\rho v_i \phi
+- \alpha \frac{\partial \phi}{\partial x_i} }\right) n_i dS&= \int_V f dV \label{eq:fvm2}
+\end{align}
+Hierbei beschreibt $S$ die Oberfläche des Kontrollvolumens $V$, $dS$ ein Oberflächenelement
+und $n_i$ die Komponenten des Einheitsnormalenvektors auf der Oberfläche.
+
+Geht man nun von beliebig geformten Kontrollvolumen zu viereckigen Kontrollvolumen über,
+so lässt sich das Integral über die Oberfläche $S$ in Gleichung~\ref{eq:fvm2} durch eine
+Summation über die Integrale der vier Seitenflächen umformen. Hierbei beschreibt $c$ die
+einzelnen Seitenflächen und ist bei viereckigen Kontrollvolumen als $c=(e,w,n,s)$ definiert.
+\begin{equation}
+  \sum_c \int_{S_c} \left(\rho v_i \phi - \alpha \frac{\partial \phi}{\partial x_i}
+\right) n_{ci} dS_c = \int_V f dV\label{eq:fvm3}
+\end{equation}
+Gleichung~\ref{eq:fvm3} stellt nun die Bilanzgleichung für die konvektiven Flüsse
+$F_c^C$ sowie die diffusiven Flüsse $F_c^D$ durch die Seiten des Kontrollvolumens $V$ dar.
+\begin{align}
+  F_c^C &=  \int_{S_c} \left(\rho v_i \phi \right) n_{ci} dS_c \\
+  F_c^D &=  -\int_{S_c} \left(\alpha \frac{\partial \phi}{\partial x_i}\right) n_{ci} dS_c 
+\end{align}
+
+\subsubsection{Integralapproximation}
+\label{sec:fvm_intappr}
+
+In dieser Arbeit wird von einer zellenorientierten Variablenanordnung (siehe \cite{num_maschbau})
+ausgegangen. Damit liegt die gesuchte diskrete Größe im Mittelpunkt jedes Kontrollvolumens.
+Die Integrale der konvektiven und diffusiven Flüsse müssen durch diese Variablen
+approximiert werden. Dabei ist es zweckmäßig zuerst die Oberflächenintegrale durch Variablen
+auf der jeweiligen Seite des Kontrollvolumens zu beschreiben und anschließend diese durch die Werte
+im Zentrum des Kontrollvolumens zu beschreiben.
+
+Beispielhaft soll hier das Oberflächenintegral
+\begin{equation*}
+  \int_{S_w} p_i n_{wi}\,dS_w
+\end{equation*}
+der Westseite $S_w$ betrachtet werden. Hierbei bezeichnet $p_i$ die Komponenten einer allgemeinen
+Funktion $\mathbf{p} = (p_1(\mathbf{x}), p_2(\mathbf{x}))$. Die einfachste
+Approximationsmöglichkeit besteht darin, den Funktionswert von $\mathbf{p}$ im Mittelpunkt
+der Seite zu nutzen.
+\begin{equation}
+  \int_{S_w} p_i n_{wi}\,dS_w \approx q_w \delta S_w
+\end{equation}
+Die Normalkomponenten von $\mathbf{p}$ an der Stelle $w$ werden hierbei mit $q_w = p_{wi} n_{wi}$ bezeichnet.
+Aufgrund der Nutzung des Funktionswertes im Seitenmittelpunkt wird diese Approximation auch Mittelpunktsregel genannt.
+Sie hat eine Ordnung von zwei bezüglich der Seitenlänge $\delta S_w$.
+
+Weitere gängige Approximationen umfassen die Trapezregel oder die Simpsonregel, auf die jedoch
+in der vorliegenden Arbeit nicht näher eingegangen wird.
+
+Für die Flüsse $F_c^C$ und $F_c^D$ ergeben sich mit der Mittelpunktsregel folgende Approximationen:
+\begin{align}
+  F_c^C &\approx \underbrace{\rho v_i n_{ci} \delta S_c}_{\dot{m_c}}  \phi_c \label{eq:disk_konv}\\
+  F_c^D &\approx  -\alpha  n_{ci} \delta S_c \left(\frac{\partial \phi}{\partial x_i}\right)_c\label{eq:disk_dif}
+\end{align}
+wobei $\dot{m_c}$ den Massenstrom durch die Seite $S_c$ bezeichnet.
+
+Im nächsten Schritt muss nun der Variablenwert $\phi_c$ durch die Variablenwerte in den
+Mittelpunkten der Kontrollvolumen ausgedrückt werden.
+Zunächst soll jedoch die rechte Seite von Gleichung~\ref{eq:fvm3} betrachtet werden.
+Da der Quellterm $f$ oft nicht analytisch integrierbar ist erfolgt im allgemeinen eine Approximation
+mittels numerischer Integration. Oftmals ist hierbei die Nutzung der Mittelpunktsregel mit der Ordnung zwei
+ausreichend. Sie geht von der Annahme aus, das der Wert $f_P$ im Mittelpunkt des Kontrollvolumens
+einen Mittelwert über die Werte von $f$ im gesamten Kontrollvolumen darstellt.
+
+Die Auswertung des Volumenintegrals ergibt sich damit im zweidimensionalen Fall zu
+\begin{equation}
+  \int_V f\,dV \approx f_p\,\delta V
+\end{equation}
+wobei $\delta V$ das Volumen des Kontrollvolumens beschreibt und im Falle eines orthogonalen Gitters
+mittels
+\begin{equation}
+  \delta V = (x_e - x_w)(y_n-y_s) = \Delta x \Delta y
+\end{equation}
+berechnet werden kann. Auf den Abbruchfehler, der bei dieser Appoximation entsteht, wird in
+Abschnitt~\ref{sec:Quellterm} genauer eingegegangen.
+
+
+\subsubsection{Ableitung konvektiver Flüsse}
+\label{sec:konv_fluss}
+
+Die durch die Anwendung der Mittelpunktsregel gewonnene Approximation (Gleichung~\ref{eq:disk_konv}) für konvektive
+Flüsse beinhaltet noch den Variablenwert des Seitenmittelpunkts, der jedoch bei
+zellenorientierter Variablenanordnung nicht gesucht ist. Deshalb muss dieser Wert $\phi_c$ im
+nächsten Schritt durch Variablenwerte in den Kontrollvolumenmittelpunkten ausgedrückt werden.
+Hierbei ist es sinnvoll möglichst lokale Approximationen zu verwenden, also beispielsweise
+bei der Approximation von $\phi_e$ die Variablenwerte $\phi_P$ und $\phi_E$ zu benutzen.
+
+Es werden nun einige gängige Approximationen für die Nutzung bei konvektiven Flüssen vorgestellt.
+Es handelt sich hierbei genau genommen um Interpolationen aus den umliegenden Mittelpunkten der Kontrollvolumen.
+Die Betrachtungen finden dabei aus Gründen der Übersichtlichkeit im Eindimensionalen statt,
+können jedoch problemlos auf höhere Dimensionen übertragen werden.
+
+\paragraph{Upwind-Verfahren}
+\noindent Beim Upwind-Verfahren (auch Upwind Differencing Scheme, UDS) wird der Verlauf von $\phi$ durch eine Treppenfunktion approximiert, die formuliert
+beziehungsweise durch Integration aus den entsprechenden Diffenrentialgleichungen 
+von der Geschwindigkeit $v$ abhängt.
+
+\begin{equation*}
+\phi_e=\left\{\begin{array}{cl} \phi_P, & \mbox{falls }v>0\\
+\phi_E, & \mbox{falls } v<0\end{array}\right.
+\end{equation*}
+Das UDS-Verfahren besitzt einen formalen Interpolationsfehler erster Ordnung, liefert jedoch bei
+Transport\-richt\-ung\-en, die senkrecht zu den Kontrollvolumenseiten liegen vergleichsweise gute Approximationen.
+Außerdem liefert es uneingeschränkt beschränkte Lösungsalgorithmen, was einen großen Vorteil darstellt.
+
+
+
+
+\paragraph{Zentraldifferenzen-Verfahren}
+\noindent Beim Zentraldifferenzen-Verfahren (auch Central Differencing Scheme, CDS) wird der
+Wert $\phi_e$ durch eine lineare Interpolation aus $\phi_P$ und $\phi_E$ gewonnen.
+
+\begin{equation*}
+  \phi_e \approx \phi_E\gamma_e + \phi_P (1-\gamma_e)
+\end{equation*}
+Der Interpolationsfaktor $\gamma_e$ ist hierbei gegeben als:
+\begin{equation}
+  \gamma_e = \frac{x_e-x_P}{x_E-x_P}
+  \label{eq:cds_faktor}
+\end{equation}
+Das CDS-Verfahren besitzt einen formalen Interpolationsfehler zweiter Ordnung. Es neigt jedoch zu
+numerischen Oszillationen.
+
+\paragraph{``Flux-Blending''-Verfahren}
+\noindent
+Beim Flux-Blending versucht man Vor- und Nachteile von Verfahren höherer und niedrigerer
+Ordnung zu verbinden. So hat das UDS-Verfahren einen Interpolationsfehler erster Ordnung,
+während das CDS-Verfahren zu numerischen Oszillationen neigt.
+
+Beim Flux-Blending werden nun beide Verfahren gewichtet zusammengeführt. Der Gewichtungsfaktor
+wird hierbei $\beta$ genannt. Gilt $\beta = 1$, so ergibt sich das CDS-Verfahren, für
+$\beta = 0$ das UDS-Verfahren.
+
+\begin{equation}
+  \phi_e \approx (1-\beta)\phi_e^{UDS} + \beta \phi_e^{CDS}
+  \label{eq:flux_blending}
+\end{equation}
+
+
+
+\paragraph{Weitere Verfahren}
+\noindent Neben UDS und CDS gibt es weitere Verfahren zur Approximation der Randvariablen durch
+die Variablen im Zentrum eines Kontrollvolumens.
+
+So wird beim QUICK-Verfahren (Quadratic Upwind Interpolation for Convective
+Kinematics) ein quadratisches Polynom, welches auf die Flussrichtung abgestimmt ist,
+zur Approximation genutzt. Bei der Wahl der Approximation muss immer eine Entscheidung
+zwischen Rechenaufwand und Genauigkeit getroffen werden.
+
+
+
+\subsubsection{Ableitung diffusiver Flüsse}
+\label{sec:dif_fluss}
+
+Um den konvektiven Fluss (Gl. \ref{eq:disk_dif}) weiter zu approximieren, ist es nötig die Ableitung von
+$\phi$ durch die Variablenwerte in den Kontrollvolumenmittelpunkten auszudrücken.
+Beispielhaft soll hier wieder der eindimensionale, kartesische Fall betrachtet werden.
+Für die östliche Seite muss somit die Ableitung $(\partial \phi /\partial x)_e$ approximiert werden.
+Hierfür werden im allgemeinen Differenzenformeln verwendet, wie sie auch bei der
+Finite-Differenzen-Methode eingesetzt werden. Zentraldifferenzen werden hierbei
+gegenüber Vorwärts- oder Rückwärtsdifferenzen bevorzugt eingesetzt, da sie die größte
+Genauigkeit für die gleiche Menge von in die Approximation einbezogenen Anzahl von Gitterpunkten
+besitzen.
+
+Bei Verwendung einer Zentraldifferenz für die Ostseite des Kontrollvolumens ergibt sich folgende
+Approximation:
+\begin{equation}
+  \left({\pder[\phi]{x}}\right)_e \approx \frac{\phi_E -\phi_P}{x_e-x_P}
+\end{equation}
+Zentraldifferenzen können nur genutzt werden, solange alle benötigten Variablenwerte
+verfügbar sind. Dies ist an den Rändern des betrachteten Gebiets meist nicht der Fall.
+Hier muss dann selektiv auf Vorwärts- oder Rückwärtsdifferenzenformeln zurückgegriffen werden.
+
+
+\subsubsection{Gesamtgleichungssystem}
+
+Die oben gezeigten Approximationstechniken können nun auf die allgemeine Transportgleichung
+\ref{eq:transportgl} angewendet werden. Beispielhaft soll das hier mit dem CDS-Verfahren für
+die konvektiven Flüsse geschehen. Die Geschwindigkeiten in beiden Koordinatenrichtungen seien positiv
+und das Gitter orthogonal. Damit ergibt sich die folgende Approximation:
+\begin{align*}
+  &\left({\rho v_1 \frac{\phi_P+\phi_E}{2} - \alpha \frac{\phi_E-\phi_P}{x_E-x_P}}\right) (y_n-y_s)\\
+  -&\left({\rho v_1 \frac{\phi_W+\phi_P}{2} - \alpha \frac{\phi_P-\phi_W}{x_P-x_W}}\right) (y_n-y_s)\\
+  +&\left({\rho v_2 \frac{\phi_P+\phi_N}{2} - \alpha \frac{\phi_N-\phi_P}{x_N-x_P}}\right) (x_e-x_w)\\
+  -&\left({\rho v_2 \frac{\phi_S+\phi_P}{2} - \alpha \frac{\phi_P-\phi_S}{x_P-x_S}}\right) (x_e-x_w)=
+  f_P (y_n-y_s)(x_e-x_w)
+\end{align*}
+Durch einfaches Umformen kann diese Gleichung in die Form
+\begin{equation}
+  a_P\phi_P = + a_E\phi_E + a_W\phi_W + a_N\phi_N + a_S\phi_S + b_P
+  \label{eq:fvm_kv}
+\end{equation}
+gebracht werden.
+Die Koeffizienten ergeben sich hierbei zu:
+\begin{align*}
+  a_E &= \frac{\alpha}{(x_E-x_P)(x_e-x_w)} - \frac{\rho v_1}{2\,(x_e-x_w)}\\
+  a_W &= \frac{\alpha}{(x_P-x_W)(x_e-x_w)} + \frac{\rho v_1}{2\,(x_e-x_w)}\\
+  a_N &= \frac{\alpha}{(y_N-y_P)(y_n-y_s)} - \frac{\rho v_2}{2\,(y_n-y_s)}\\
+  a_S &= \frac{\alpha}{(y_P-y_S)(y_n-y_s)} + \frac{\rho v_2}{2\,(y_n-y_s)}\\
+  a_P &= \frac{\alpha\, (x_E-x_W)}{(x_E-x_P)(x_e-x_w)} + \frac{\alpha\, (y_N-y_S)}{(y_N-y_P)(y_n-y_s)}\\
+  b_P &= f_P
+\end{align*}
+Diese Koeffizienten können für jedes Kontrollvolumen berechnet werden. Da die Nachbarn jedes
+Kontrollvolumens für die Approximationen genutzt werden, kann Gleichung~\ref{eq:fvm_kv} auch
+wie folgt ausgedrückt werden.
+\begin{equation}
+  a^i_P\phi^i_P - \sum_c a^i_c\phi^i_c = b^i_p
+\end{equation}
+Hierbei bezeichnet $c$ die Nachbarkontrollvolumen und $i=1,\dots,N$ das
+betrachtete Kontrollvolumen. Somit entsteht ein lineares Gleichungssystem mit $N$ Gleichungen,
+dass mit gängigen Methoden gelöst werden kann.
+\clearpage
